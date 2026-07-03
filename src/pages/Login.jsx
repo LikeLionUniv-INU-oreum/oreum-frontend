@@ -1,8 +1,14 @@
 import React from 'react';
 import { useState } from 'react';
 import * as S from './Login.styles';
+import { useNavigate } from 'react-router-dom';
 
-export default function Intro() {
+export default function Login() {
+  const navigate = useNavigate();
+
+  const handleSignUpClick = () => {
+    navigate('/signup');
+  };
 
   return (
     <S.Container>
@@ -27,7 +33,7 @@ export default function Intro() {
       </S.ErrorMessage>
 
       <S.LoginButton>로그인</S.LoginButton>
-      <S.SignUpText>등록된 계정이 없으신가요? <span>회원가입</span></S.SignUpText>
+      <S.SignUpText>등록된 계정이 없으신가요? <span onClick={handleSignUpClick}>회원가입</span></S.SignUpText>
 
 
     </S.Container>
