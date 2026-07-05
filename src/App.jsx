@@ -13,11 +13,11 @@ function App() {
       <AppLayout>
         <Routes>
           <Route path="/" element={<Intro />} />
-          <Route path="/" element={<Login />} />
-          <Route path='/signup' element={<Signup />} />
-          <Route path='/onboardingstart' element={<OnboardingStart />} />
-          <Route path='/onboardinggrade' element={<OnboardingGrade />} />
-          <Route path='/onboardingcomplete' element={<OnboardingComplete />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/signup" element={<Signup />} />
+          <Route path="/onboardingstart" element={<OnboardingStart />} />
+          <Route path="/onboardinggrade" element={<OnboardingGrade />} />
+          <Route path="/onboardingcomplete" element={<OnboardingComplete />} />
         </Routes>
       </AppLayout>
     </BrowserRouter>
