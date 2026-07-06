@@ -21,7 +21,7 @@ export default function OnboardingGrade() {
   const handleNext = () => {
     if (selectedGrade) {
       console.log('저장된 학적 값:', selectedGrade);
-      navigate('/onboarding/next-step');
+      navigate('/onboardingselectdept');
     }
   };
 

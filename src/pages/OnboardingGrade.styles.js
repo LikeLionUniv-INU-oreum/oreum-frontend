@@ -80,7 +80,7 @@ export const FooterBgSection = styled.div`
   display: flex;
   justify-content: center;
   align-items: flex-end;
-  margin-bottom: 2dvh;
+  //margin-bottom: 2dvh;
 `;
 
 export const BgImage = styled.img`
