@@ -9,7 +9,7 @@ export default function OnboardingComplete() {
   const navigate = useNavigate();
 
   const handleStart = () => {
-    navigate('/main');
+    navigate('/home');
   };
 
   return (

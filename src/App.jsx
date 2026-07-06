@@ -7,6 +7,7 @@ import OnboardingStart from './pages/OnboardingStart.jsx';
 import OnboardingGrade from './pages/OnboardingGrade.jsx';
 import OnboardingComplete from './pages/OnboardingComplete.jsx';
 import OnboardingSelectDept from './pages/OnboardingSelectDept.jsx';
+import Home from './pages/Home.jsx';
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
           <Route path="/onboardinggrade" element={<OnboardingGrade />} />
           <Route path="/onboardingcomplete" element={<OnboardingComplete />} />
           <Route path="/onboardingselectdept" element={<OnboardingSelectDept />} />
+          <Route path="/home" element={<Home />} />
         </Routes>
       </AppLayout>
     </BrowserRouter>
