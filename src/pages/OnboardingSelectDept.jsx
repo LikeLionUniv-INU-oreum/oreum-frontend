@@ -146,6 +146,6 @@ export default function OnboardingSelectDept() {
           선택 완료
         </S.NextButton>
       </S.FooterBgSection>
-    </S.Container>
+    </S.Container >
   );
 }
