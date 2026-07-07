@@ -8,10 +8,9 @@ export const Container = styled.div`
   height: 100dvh;
   background-color: #ffffff;
   box-sizing: border-box;
-  overflow: hidden; /* 스크롤을 막고 100dvh 안에 딱 맞춥니다 */
+  overflow: hidden;
 `;
 
-/* 1. 헤더 영역 */
 export const Header = styled.div`
   display: flex;
   flex-direction: column;
@@ -20,10 +19,8 @@ export const Header = styled.div`
   padding-top: 2dvh;
 `;
 
-/* 2. 중간1 영역 (현재 어떤 학적이신가요?) */
 export const MiddleOne = styled.div`
   width: 80%; 
-  //max-width: 360px;
   margin-top: 4dvh;
   margin-bottom: 2.5dvh;
   text-align: left;
@@ -36,7 +33,6 @@ export const Title = styled.h1`
   margin: 0;
 `;
 
-/* 3. 중간2 영역 (선택 박스 리스트) */
 export const MiddleTwo = styled.div`
   display: flex;
   flex-direction: column;
@@ -53,7 +49,7 @@ export const MiddleTwo = styled.div`
 
 export const SelectButton = styled.button`
   width: 100%;
-  height: 54px; /* 버튼 높이 원래대로 복구 */
+  height: 54px;
   background-color: ${({ $isSelected }) => ($isSelected ? '#3b7d5a' : '#f5f5f5')};
   color: ${({ $isSelected }) => ($isSelected ? '#ffffff' : '#555555')};
   border: none;
@@ -69,18 +65,14 @@ export const SelectButton = styled.button`
   }
 `;
 
-/* 4. 푸터 영역 (배경지 + 버튼 합체) */
 export const FooterBgSection = styled.div`
   position: relative; /* 버튼 배치의 기준점 */
   width: 100%;
-  //max-width: 360px;
-  
   /* 💡 핵심: 절대 좌표(absolute)를 빼고 flex의 흐름을 타게 하여 화면 밑바닥에 딱 붙게 만듭니다 */
   margin-top: auto; 
   display: flex;
   justify-content: center;
   align-items: flex-end;
-  //margin-bottom: 2dvh;
 `;
 
 export const BgImage = styled.img`

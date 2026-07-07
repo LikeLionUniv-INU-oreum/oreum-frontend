@@ -5,7 +5,7 @@ export const Container = styled.div`
   flex-direction: column;
   align-items: center;
   width: 100%;
-  height: 100vh; /* 전체 화면 높이 사용 */
+  height: 100vh;
   background-color: #f7f5f5;
 `;
 
@@ -19,13 +19,13 @@ export const Header = styled.div`
 export const TextBox = styled.div`
   width: 80%;
   padding: 0 20px;
-  margin-top: 10vh; /* 상단과의 간격 */
+  margin-top: 10vh;
 `;
 
 export const Title = styled.h1`
   font-size: 22px;
   font-weight: 800;
-  color: #3B7D5A; /* 프로그레스바와 같은 초록 계열 */
+  color: #3B7D5A;
   margin-bottom: 30px;
 `;
 
@@ -60,7 +60,7 @@ export const StartButton = styled.button`
   width: 80%;
   height: 54px;
   
-  background-color: #3B7D5A; /* 시작하기 버튼 색상 */
+  background-color: #3B7D5A;
   color: white;
   border: none;
   border-radius: 12px;

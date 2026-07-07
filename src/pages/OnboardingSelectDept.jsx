@@ -46,18 +46,16 @@ export default function OnboardingSelectDept() {
   const handleNext = () => {
     if (isFormValid) {
       console.log('저장된 값:', { department: deptInput, job: jobInput });
-      navigate('/onboardingcomplete'); // 다음 온보딩 경로로 변경하세요
+      navigate('/onboardingcomplete');
     }
   };
 
   return (
     <S.Container>
-      {/* 1. 상단 헤더 영역 (프로그레스 바 다음 단계 반영) */}
       <S.Header>
         <ProgressBar currentStep={2} totalSteps={3} emojiSrc={Emoji} />
       </S.Header>
 
-      {/* 2. 질문 및 입력 컨텐츠 영역 */}
       <S.ContentArea>
         <S.Title>소속 학과와 관심 직무를<br />선택해주세요.</S.Title>
 
@@ -138,7 +136,6 @@ export default function OnboardingSelectDept() {
         </S.InputWrapper>
       </S.ContentArea>
 
-      {/* 3. 배경 이미지와 그 위에 떠있는 푸터 버튼 영역 */}
       <S.FooterBgSection>
         <S.BgImage src={OnboardingBackground} alt="배경 일러스트" />
         <S.NextButton

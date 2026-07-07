@@ -6,12 +6,11 @@ export const Container = styled.div`
   align-items: center;
   width: 100%;
   height: 100dvh;
-  background-color: #ffffff; /* 전체 바탕은 깨끗한 흰색 */
+  background-color: #ffffff;
   box-sizing: border-box;
   overflow: hidden;
 `;
 
-/* 1. 헤더 영역 */
 export const Header = styled.div`
   display: flex;
   flex-direction: column;
@@ -20,14 +19,12 @@ export const Header = styled.div`
   padding-top: 2dvh;
 `;
 
-/* 2. 이미지 카드 영역 (헤더 밑에 여백을 두고 시작) */
 export const CardSection = styled.div`
   position: relative; /* 내부 콘텐츠를 absolute로 얹기 위한 기준점 */
   width: 100%;
-  //flex: 1; /* 남는 하단 공간을 가득 채움 */
   
   margin-top: 10dvh; /* 💡 핵심: 헤더와 사진 카드 사이의 확실한 여백 */
-  margin-bottom: 2dvh; /* 바닥 화면과의 여백 */
+  margin-bottom: 2dvh;
   
   border-radius: 24px; /* 시안처럼 테두리를 부드럽게 깎음 */
   overflow: hidden; /* 이미지가 라운드 테두리 밖으로 빠져나가는 것 방지 */
@@ -36,11 +33,10 @@ export const CardSection = styled.div`
   align-items: flex-end;
 `;
 
-/* 카드 섹션을 꽉 채우는 통짜 이미지 */
 export const CardImage = styled.img`
   width: 100%;
   height: 100%;
-  object-fit: cover; /* 카드 크기에 맞춰 꽉 채우기 */
+  object-fit: cover;
   object-position: center;
 `;
 
@@ -64,7 +60,7 @@ export const Title = styled.h1`
   transform: translateY(-50%);
   
   width: 100%;
-  color: #3B7D5A; /* 오름 초록색 */
+  color: #3B7D5A;
   font-size: 24px;
   font-weight: 800;
   line-height: 1.45;
@@ -76,7 +72,7 @@ export const Title = styled.h1`
 /* 버튼 위치 가이드: 카드 이미지 하단 도로 일러스트 부근에 오도록 배치 */
 export const StartButton = styled.button`
   position: absolute;
-  bottom: 12dvh; /* 카드 맨 밑바닥 테두리 안쪽 여백 */
+  bottom: 12dvh;
   width: 80%; 
   height: 54px;
   
