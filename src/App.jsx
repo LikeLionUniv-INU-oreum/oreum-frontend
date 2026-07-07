@@ -8,6 +8,8 @@ import OnboardingGrade from './pages/OnboardingGrade.jsx';
 import OnboardingComplete from './pages/OnboardingComplete.jsx';
 import OnboardingSelectDept from './pages/OnboardingSelectDept.jsx';
 import Home from './pages/Home.jsx';
+import Explore from './pages/Explore.jsx';
+import Review from './pages/Review.jsx';
 
 function App() {
   return (
@@ -22,6 +24,8 @@ function App() {
           <Route path="/onboardingcomplete" element={<OnboardingComplete />} />
           <Route path="/onboardingselectdept" element={<OnboardingSelectDept />} />
           <Route path="/home" element={<Home />} />
+          <Route path="/explore" element={<Explore />} />
+          <Route path="/review" element={<Review />} />
         </Routes>
       </AppLayout>
     </BrowserRouter>

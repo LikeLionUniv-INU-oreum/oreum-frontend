@@ -10,12 +10,10 @@ export default function OnboardingStart() {
 
   return (
     <S.Container>
-      {/* 1. 상단 프로그레스바 */}
       <S.Header>
         <ProgressBar currentStep={0} totalSteps={3} emojiSrc={Emoji} />
       </S.Header>
 
-      {/* 2. 중앙 환영 문구 */}
       <S.TextBox>
         <S.Title>오름에 오신 걸 환영해요!</S.Title>
         <S.Subtitle>
@@ -24,7 +22,6 @@ export default function OnboardingStart() {
         </S.Subtitle>
       </S.TextBox>
 
-      {/* 3. 하단 이미지 + 떠있는 버튼 영역 */}
       <S.ImageSection>
         <S.MainImage src={OnboardingStartImg} alt="산 이미지" />
         <S.StartButton onClick={() => navigate('/onboardinggrade')}>

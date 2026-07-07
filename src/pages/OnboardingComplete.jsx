@@ -14,17 +14,13 @@ export default function OnboardingComplete() {
 
   return (
     <S.Container>
-      {/* 1. 상단 독립된 헤더 영역 */}
       <S.Header>
         <ProgressBar currentStep={3} totalSteps={3} emojiSrc={Emoji} />
       </S.Header>
 
-      {/* 2. 헤더 밑에 여백을 두고 시작하는 라운드 카드 구조의 이미지 영역 */}
       <S.CardSection>
-        {/* 카드 영역의 배경으로 들어가는 통짜 사진 */}
         <S.CardImage src={OnboardingCompleteImg} alt="완료 화면 일러스트" />
 
-        {/* 사진 위에 얹어지는 텍스트와 버튼 */}
         <S.CardContent>
           <S.Title>
             오름을 시작하기 위한 준비가<br />

@@ -8,10 +8,16 @@ export const Container = styled.div`
   height: 100dvh;
   background-color: #ffffff;
   box-sizing: border-box;
+<<<<<<< HEAD
+  overflow: hidden;
+`;
+
+=======
   overflow: hidden; /* 스크롤을 막고 100dvh 안에 딱 맞춥니다 */
 `;
 
 /* 1. 헤더 영역 */
+>>>>>>> d002c15c7694baba74eff738a19a81c37af19c79
 export const Header = styled.div`
   display: flex;
   flex-direction: column;
@@ -20,7 +26,10 @@ export const Header = styled.div`
   padding-top: 2dvh;
 `;
 
+<<<<<<< HEAD
+=======
 /* 2. 질문 및 입력 폼 전체를 감싸는 중앙 영역 */
+>>>>>>> d002c15c7694baba74eff738a19a81c37af19c79
 export const ContentArea = styled.div`
   display: flex;
   flex-direction: column;
@@ -153,7 +162,10 @@ export const ItemGroup = styled.span`
   color: #666666;
 `;
 
+<<<<<<< HEAD
+=======
 /* 3. 푸터 영역 (배경지 + 버튼 합체 구조 유지) */
+>>>>>>> d002c15c7694baba74eff738a19a81c37af19c79
 export const FooterBgSection = styled.div`
   position: relative;
   width: 100%;
@@ -161,7 +173,6 @@ export const FooterBgSection = styled.div`
   display: flex;
   justify-content: center;
   align-items: flex-end;
-  //margin-bottom: 2dvh;
 `;
 
 export const BgImage = styled.img`
@@ -187,5 +198,4 @@ export const NextButton = styled.button`
   cursor: ${({ disabled }) => (disabled ? 'not-allowed' : 'pointer')};
   transition: background-color 0.2s ease;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
-  //z-index: 5;
 `;
