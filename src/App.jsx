@@ -10,6 +10,7 @@ import OnboardingSelectDept from './pages/OnboardingSelectDept.jsx';
 import Home from './pages/Home.jsx';
 import Explore from './pages/Explore.jsx';
 import Review from './pages/Review.jsx';
+import Mypage from './pages/Mypage.jsx';
 
 function App() {
   return (
@@ -26,6 +27,7 @@ function App() {
           <Route path="/home" element={<Home />} />
           <Route path="/explore" element={<Explore />} />
           <Route path="/review" element={<Review />} />
+          <Route path="/mypage" element={<Mypage />} />
         </Routes>
       </AppLayout>
     </BrowserRouter>

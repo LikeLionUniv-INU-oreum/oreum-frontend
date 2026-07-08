@@ -53,7 +53,7 @@ export const Input = styled.input`
   background-color: #FFFFFF;
   border: 1.6px solid #3B7D5A;
   border-radius: 10px;
-  padding: 0 10px;
+  padding: 0 40px 0 10px;
   box-sizing: border-box;
   outline: none;
   margin-bottom: 15px;
@@ -61,6 +61,32 @@ export const Input = styled.input`
   &::placeholder {
     color: #3b7d5a;
     opacity: 0.8;
+  }
+`;
+
+export const InputWrapper = styled.div`
+  position: relative;
+  width: 80%;
+  margin-bottom: 15px;
+`;
+
+export const IconButton = styled.button`
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  
+  /* 클릭 시 브라우저 기본 아웃라인 제거 */
+  &:focus {
+    outline: none;
   }
 `;
 
