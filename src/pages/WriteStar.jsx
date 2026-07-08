@@ -1,8 +1,11 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import * as S from './WriteStar.styles';
 import BottomNav from '../components/common/BottomNav';
 
 export default function WriteStar() {
+  const navigate = useNavigate();
+
   // 4대 요소 상태(State) 관리
   const [situation, setSituation] = useState('');
   const [task, setTask] = useState('');
@@ -28,7 +31,7 @@ export default function WriteStar() {
     };
 
     console.log("백엔드로 보낼 STAR 매핑 데이터:", starPayload);
-    alert("축하합니다! 등반 완료 깃발을 획득하셨습니다 🎉");
+    navigate('/completestar');
   };
 
   return (
