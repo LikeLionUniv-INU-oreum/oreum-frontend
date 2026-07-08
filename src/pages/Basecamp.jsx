@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import * as S from './Basecamp.styles';
 import BottomNav from '../components/common/BottomNav';
 import HomeMountain from '../assets/images/HomeMountain.jpg';
@@ -30,6 +31,8 @@ const COURSE_DATA = {
 };
 
 export default function MainPage() {
+  const navigate = useNavigate();
+
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [selectedPeriod, setSelectedPeriod] = useState('2026년 상반기');
 
@@ -113,7 +116,7 @@ export default function MainPage() {
             <h3>내 코스</h3>
             <p>목표를 관리하고 기록해요.</p>
           </div>
-          <S.AddBtn>+ 새 할 일 추가</S.AddBtn>
+          <S.AddBtn onClick={() => navigate('/addcourse')}>+ 새 할 일 추가</S.AddBtn>
         </S.SectionHeader>
 
         {/* 고정된 4가지 카테고리 순서대로 상시 반복 렌더링 */}

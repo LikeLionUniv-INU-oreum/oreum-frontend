@@ -1,8 +1,11 @@
 import React, { useState, useRef } from 'react';
+import { useNavigate } from 'react-router-dom';
 import * as S from './AddReview.styles';
 import BottomNav from '../components/common/BottomNav';
 
 export default function AddReview() {
+  const navigate = useNavigate();
+
   const ratingRef = useRef(null);
 
   // 상태 관리
@@ -144,7 +147,7 @@ export default function AddReview() {
         />
       </S.FormSection>
 
-      <S.SubmitButton disabled={!isFormValid}>
+      <S.SubmitButton disabled={!isFormValid} onClick={() => navigate('/writestar')}>
         다음으로
       </S.SubmitButton>
 

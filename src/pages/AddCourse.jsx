@@ -1,8 +1,11 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import * as S from './AddCourse.styles';
 import BottomNav from '../components/common/BottomNav';
 
 export default function AddCourse() {
+  const navigate = useNavigate();
+
   // 상태 관리 목록
   const [selectedCategory, setSelectedCategory] = useState(null); // 선택된 카테고리 저장
   const [courseName, setCourseName] = useState(''); // 코스명 입력값
@@ -27,7 +30,7 @@ export default function AddCourse() {
       plan: weeklyPlan
     };
     console.log('백엔드로 전송할 데이터:', requestData);
-    alert('코스 설정이 완료되었습니다!');
+    navigate('/basecamp');
   };
 
   return (
