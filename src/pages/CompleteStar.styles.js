@@ -68,26 +68,16 @@ export const Title = styled.h1`
   word-break: keep-all;
 `;
 
-/* 버튼 위치 가이드: 카드 이미지 하단 도로 일러스트 부근에 오도록 배치 */
-export const StartButton = styled.button`
+export const Subtitle = styled.p`
   position: absolute;
-  bottom: 12dvh;
-  width: 80%; 
-  height: 54px;
-  
-  color: #ffffff;
-  background-color: #3b7d5a;
-  
-  border: none;
-  border-radius: 10px;
-  font-weight: bold;
-  font-size: 16px;
-  cursor: pointer;
-  
-  transition: background-color 0.2s ease;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
-
-  &:hover {
-    background-color: #2e6146;
-  }
+  top: 60%; /* 💡 이미지 전체 기준 글씨 위치 오프셋 조정 (시안 맞춤) */
+  transform: translateY(-50%);
+  width: 100%;
+  color: #777777; /* 서브 텍스트에 어울리는 회색 톤 */
+  font-size: 15px;
+  font-weight: 500;
+  line-height: 1.5;
+  text-align: center;
+  margin: 0;
+  word-break: keep-all;
 `;

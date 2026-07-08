@@ -23,10 +23,10 @@ export default function Mypage() {
 
   // 임시 더미 데이터 (나중에 백엔드 API 데이터로 대체 가능)
   const mockStats = [
-    { id: 'activity', title: '교내 활동', count: '3개', avg: '1.8개', percent: 80, avgPercent: 60, details: ['데이터 분석 프로젝트 완성', '데이터 분석 프로젝트 완성', '데이터 분석 프로젝트 완성'] },
-    { id: 'contest', title: '공모전/대회', count: '2개', avg: '1.3개', percent: 70, avgPercent: 50, details: ['공모전 상세 내용 1', '공모전 상세 내용 2'] },
-    { id: 'intern', title: '인턴/프로젝트', count: '0개', avg: '0.6개', percent: 10, avgPercent: 30, details: ['인턴십 상세 내용 1'] },
-    { id: 'certificate', title: '자격증', count: '2개', avg: '0.4개', percent: 65, avgPercent: 20, details: ['정보처리기사 자격증 취득', 'SQLD 자격증 취득'] },
+    { id: 'activity', title: '교내 활동', img: Mypage2, count: '3개', avg: '1.8개', percent: 80, avgPercent: 60, details: ['데이터 분석 프로젝트 완성', '데이터 분석 프로젝트 완성', '데이터 분석 프로젝트 완성'] },
+    { id: 'contest', title: '공모전/대회', img: Mypage3, count: '2개', avg: '1.3개', percent: 70, avgPercent: 50, details: ['공모전 상세 내용 1', '공모전 상세 내용 2'] },
+    { id: 'intern', title: '인턴/프로젝트', img: Mypage4, count: '0개', avg: '0.6개', percent: 10, avgPercent: 30, details: ['인턴십 상세 내용 1'] },
+    { id: 'certificate', title: '자격증', img: Mypage5, count: '2개', avg: '0.4개', percent: 65, avgPercent: 20, details: ['정보처리기사 자격증 취득', 'SQLD 자격증 취득'] },
   ];
 
   const mockWaitingCourses = [
@@ -74,10 +74,13 @@ export default function Mypage() {
         <S.MainTitle>[해외영업 희망] 2학년</S.MainTitle>
 
         <S.RankBanner>
-          <S.RankLabel>
-            <div className="title">[해외영업] 상위</div>
-            <div className="percent">28%</div>
-          </S.RankLabel>
+          <S.RankLeftSection>
+            <S.BannerIcon src={Mypage1} alt="랭킹 아이콘" />
+            <S.RankLabel>
+              <div className="title">[해외영업] 상위</div>
+              <div className="percent">28%</div>
+            </S.RankLabel>
+          </S.RankLeftSection>
           <S.RankText>꾸준한 등반으로 더 높이 올라가고 있어요!</S.RankText>
         </S.RankBanner>
 
@@ -97,7 +100,7 @@ export default function Mypage() {
               <S.StatItemWrapper key={item.id}>
                 <S.StatRow onClick={() => handleCategoryClick(item.id)}>
                   <S.StatNameBox>
-                    <span className="icon">📁</span>
+                    <S.StatIcon src={item.img} alt={item.title} />
                     <span className="title">{item.title}</span>
                   </S.StatNameBox>
 

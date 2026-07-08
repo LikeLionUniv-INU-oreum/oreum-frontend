@@ -156,11 +156,20 @@ export const MainTitle = styled.h3`
 export const RankBanner = styled.div`
   background-color: #f5FDEE;
   border-radius: 14px;
-  padding: 10px 14px;
+  padding: 10px 10px;
   display: flex;
   align-items: center;
   gap: 12px;
   margin-bottom: 20px;
+`;
+
+export const RankLeftSection = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 8px;                         /* 아이콘과 텍스트 사이 간격 */
+  border-right: 1px solid #e2ece6;   /* 라벨 우측에 있던 선을 여기로 이동 */
+  padding-right: 12px;
+  flex-shrink: 0;
 `;
 
 export const RankLabel = styled.div`
@@ -171,6 +180,13 @@ export const RankLabel = styled.div`
   padding-right: 12px;
   .title { font-size: 9px; color: #666; }
   .percent { font-size: 16px; font-weight: bold; color: #3B7D5A; }
+`;
+
+export const BannerIcon = styled.img`
+  width: 22px;
+  height: 22px;
+  object-fit: contain;
+  flex-shrink: 0;
 `;
 
 export const RankText = styled.p`
@@ -342,7 +358,7 @@ export const BottomNavWrapper = styled.div`
   left: 50%;
   transform: translateX(-50%);
   width: 100%;
-  //max-width: 420px; /* 전체 페이지 max-width와 똑같이 맞춰서 깨짐을 방지합니다 */
+  max-width: 100%; /* 전체 페이지 max-width와 똑같이 맞춰서 깨짐을 방지합니다 */
   z-index: 100; /* 카드나 다른 요소 뒤로 숨지 않도록 위로 올립니다 */
 `;
 
@@ -351,4 +367,11 @@ export const ListIcon = styled.img`
   height: 14px;      /* 디자인에 맞춰 적절한 높이 지정 */
   object-fit: contain;
   flex-shrink: 0;    /* 텍스트가 길어져도 이미지가 찌그러지지 않게 방지 */
+`;
+
+export const StatIcon = styled.img`
+  width: 20px;       /* 시안 파일 크기에 맞춘 너비 설정 */
+  height: 20px;      /* 시안 파일 크기에 맞춘 높이 설정 */
+  object-fit: contain;
+  flex-shrink: 0;    /* 레이아웃이 좁아져도 이미지가 구겨지지 않게 방지 */
 `;

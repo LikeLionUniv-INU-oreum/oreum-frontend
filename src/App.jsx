@@ -11,6 +11,12 @@ import Home from './pages/Home.jsx';
 import Explore from './pages/Explore.jsx';
 import Review from './pages/Review.jsx';
 import Mypage from './pages/Mypage.jsx';
+import Basecamp from './pages/Basecamp.jsx';
+import AddCourse from './pages/AddCourse.jsx';
+import EditCourse from './pages/EditCourse.jsx';
+import AddReview from './pages/AddReview.jsx';
+import WriteStar from './pages/WriteStar.jsx';
+import CompleteStar from './pages/CompleteStar.jsx';
 
 function App() {
   return (
@@ -28,6 +34,12 @@ function App() {
           <Route path="/explore" element={<Explore />} />
           <Route path="/review" element={<Review />} />
           <Route path="/mypage" element={<Mypage />} />
+          <Route path="/basecamp" element={<Basecamp />} />
+          <Route path="/addcourse" element={<AddCourse />} />
+          <Route path="/editcourse" element={<EditCourse />} />
+          <Route path="/addreview" element={<AddReview />} />
+          <Route path="/writestar" element={<WriteStar />} />
+          <Route path="/completestar" element={<CompleteStar />} />
         </Routes>
       </AppLayout>
     </BrowserRouter>

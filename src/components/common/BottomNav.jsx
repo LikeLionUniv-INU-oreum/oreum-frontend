@@ -10,7 +10,7 @@ export default function BottomNav() {
 
   return (
     <NavContainer>
-      <NavItem onClick={() => navigate('/')}>
+      <NavItem onClick={() => navigate('/home')}>
         <Icon src={homeIcon} />
         <NavText className="active">홈</NavText>
       </NavItem>
