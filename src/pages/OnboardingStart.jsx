@@ -1,4 +1,3 @@
-import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import * as S from './OnboardingStart.styles';
 import ProgressBar from '../components/common/ProgressBar';

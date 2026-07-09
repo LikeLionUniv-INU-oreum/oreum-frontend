@@ -33,7 +33,7 @@ export default function Login() {
     e.preventDefault(); // 폼 제출 시 새로고침 방지
 
     if (isLoading) return; // 이미 요청 중이면 실행 안 함
-    setErrorMessage('');  // 이전 에러 메시지 초기화
+    setErrorMessage(''); // 이전 에러 메시지 초기화
 
     // 클라이언트 측 기본 유효성 검사
     if (!email) {
@@ -59,7 +59,7 @@ export default function Login() {
           headers: {
             'Content-Type': 'application/json',
           },
-        }
+        },
       );
 
       // 명세서 상 성공 응답 데이터 구조 분해 할당
@@ -71,7 +71,6 @@ export default function Login() {
 
       alert(`${memberResponse.name}님, 환영합니다!`);
       navigate('/'); // 로그인 완료 후 메인/홈 화면으로 이동
-
     } catch (error) {
       // 4. 에러 대응 (명세서의 Error Response 구조인 code, message 활용)
       if (error.response && error.response.data) {
@@ -85,7 +84,9 @@ export default function Login() {
         }
       } else {
         // 서버 연결 자체가 안 되거나 네트워크 에러인 경우
-        setErrorMessage('서버와 통신이 원활하지 않습니다. 네트워크를 확인해주세요.');
+        setErrorMessage(
+          '서버와 통신이 원활하지 않습니다. 네트워크를 확인해주세요.',
+        );
       }
     } finally {
       setIsLoading(false); // 로딩 종료
@@ -133,12 +134,13 @@ export default function Login() {
         type="submit"
         style={{ marginBottom: '16px' }}
         disabled={isLoading}
+        onClick={handleLoginSubmit}
       >
         {isLoading ? '로그인 중...' : '로그인'}
       </LoginButton>
 
       <S.SignUpText>
-        등록된 계정이 없으신가요?{' '}
+        등록된 계정이 없으신가요?
         <span onClick={handleSignUpClick}>회원가입</span>
       </S.SignUpText>
     </S.Container>

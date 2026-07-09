@@ -20,7 +20,7 @@ export const Header = styled.div`
 `;
 
 export const MiddleOne = styled.div`
-  width: 80%; 
+  width: 80%;
   margin-top: 4dvh;
   margin-bottom: 2.5dvh;
   text-align: left;
@@ -36,14 +36,14 @@ export const Title = styled.h1`
 export const MiddleTwo = styled.div`
   display: flex;
   flex-direction: column;
-  width: 80%; 
-  
+  width: 80%;
+
   /* 💡 핵심: 남은 공간을 이 영역이 꽉 채우도록 해서 버튼들이 위로 쏠리지 않게 합니다 */
-  flex: 1; 
+  flex: 1;
   /* 화면 높이에 따라 간격이 유연하게 벌어지도록 분배합니다 */
-  justify-content: flex-start; 
-  gap: 1.5dvh; 
-  
+  justify-content: flex-start;
+  gap: 1.5dvh;
+
   margin-bottom: 2dvh; /* 하단 배경 일러스트 시작점과의 간격 확보 */
 `;
 
@@ -68,8 +68,7 @@ export const SelectButton = styled.button`
 export const FooterBgSection = styled.div`
   position: relative; /* 버튼 배치의 기준점 */
   width: 100%;
-  /* 💡 핵심: 절대 좌표(absolute)를 빼고 flex의 흐름을 타게 하여 화면 밑바닥에 딱 붙게 만듭니다 */
-  margin-top: auto; 
+  margin-top: auto;
   display: flex;
   justify-content: center;
   align-items: flex-end;
@@ -83,19 +82,21 @@ export const BgImage = styled.img`
 `;
 
 export const NextButton = styled.button`
-  position: absolute; /* 일러스트 위로 공중부양 */
-  bottom: 12dvh; /* 시안 버튼 위치처럼 하단 여백에서 적절히 띄움 */
-  width: 80%; 
+  position: absolute;
+  bottom: 6vh;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 80%;
   height: 54px;
-  
+
   color: #ffffff;
   background-color: ${({ disabled }) => (disabled ? '#a3a3a3' : '#3b7d5a')};
-  
+
   border: none;
-  border-radius: 10px;
-  font-weight: bold;
-  font-size: 16px;
-  
+  border-radius: 12px;
+  font-weight: 700;
+  font-size: 18px;
+
   cursor: ${({ disabled }) => (disabled ? 'not-allowed' : 'pointer')};
   transition: background-color 0.2s ease;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);

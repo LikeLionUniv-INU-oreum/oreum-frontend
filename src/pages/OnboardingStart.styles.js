@@ -5,7 +5,7 @@ export const Container = styled.div`
   flex-direction: column;
   align-items: center;
   width: 100%;
-  height: 100vh;
+  height: 100dvh;
   background-color: #f7f5f5;
 `;
 
@@ -17,7 +17,7 @@ export const Header = styled.div`
 `;
 
 export const TextBox = styled.div`
-  width: 80%;
+  width: 90%;
   padding: 0 20px;
   margin-top: 10vh;
 `;
@@ -25,15 +25,16 @@ export const TextBox = styled.div`
 export const Title = styled.h1`
   font-size: 22px;
   font-weight: 800;
-  color: #3B7D5A;
+  color: #3b7d5a;
   margin-bottom: 30px;
 `;
 
 export const Subtitle = styled.p`
-  font-size: 24px;
-  font-weight: 800;
+  font-size: 26px;
+  font-weight: 900;
   color: #3b7d5a;
   line-height: 1.4;
+  word-break: keep-all;
 `;
 
 export const ImageSection = styled.div`
@@ -53,22 +54,21 @@ export const MainImage = styled.img`
 
 export const StartButton = styled.button`
   position: absolute; /* 이미지 위로 띄움 */
-  bottom: 12dvh; /* 바닥에서 50px 띄움 */
+  bottom: 6vh;
   left: 50%;
   transform: translateX(-50%); /* 정확히 가로 중앙 정렬 */
-  
   width: 80%;
   height: 54px;
-  
-  background-color: #3B7D5A;
+
+  background-color: #3b7d5a;
   color: white;
   border: none;
   border-radius: 12px;
-  
-  font-size: 20px;
+
+  font-size: 18px;
   font-weight: 700;
   cursor: pointer;
-  
+
   /* 버튼이 이미지 위에서 더 잘 보이도록 그림자 추가 (선택사항) */
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
 

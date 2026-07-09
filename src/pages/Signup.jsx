@@ -133,7 +133,7 @@ export default function Signup() {
             <S.Text>닉네임</S.Text>
           </S.LabelContainer>
           <S.Input
-            placeholder="2~30자"
+            placeholder="2~15자"
             value={nickname}
             onChange={(e) => setNickname(e.target.value)}
           />
