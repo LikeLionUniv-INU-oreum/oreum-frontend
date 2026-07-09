@@ -33,8 +33,7 @@ const Container = styled.div`
   flex-direction: column;
   align-items: center;
   width: 100%;
-  height: 100%;
-  gap: 16px;
+  height: 100dvh;
 `;
 
 const IntroImg = styled.img`
@@ -46,7 +45,7 @@ const BrandSection = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin: 20px 0;
+  margin: auto 0;
   gap: 10px;
 `;
 
@@ -71,6 +70,7 @@ const BottomSection = styled.div`
   align-items: center;
   width: 100%;
   gap: 30px;
+  margin-bottom: 20px;
 `;
 
 const LoginButton = styled.button`
