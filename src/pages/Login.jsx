@@ -15,23 +15,21 @@ export default function Login() {
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
 
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [errorMessage, setErrorMessage] = useState('');
-  const [isLoading, setIsLoading] = useState(false); // 로딩 상태 추가 (중복 클릭 방지)
+  const [email, setEmail] = useState(''); // 이메일 저장
+  const [password, setPassword] = useState(''); // 비번 저장
+  const [errorMessage, setErrorMessage] = useState(''); // 에러 메세지 저장
+  const [isLoading, setIsLoading] = useState(false); // 중복 클릭 방지
 
-  const handleSignUpClick = () => {
+  const handleSignUpClick = () => { // 회원가입 버튼 클릭 시
     navigate('/signup');
   };
 
-  const togglePasswordVisibility = () => {
+  const togglePasswordVisibility = () => { // 비번 보이게 안보이게 여부
     setShowPassword(!showPassword);
   };
 
   // 2. 로그인 API 연동 함수
-  const handleLoginSubmit = async (e) => {
-    e.preventDefault(); // 폼 제출 시 새로고침 방지
-
+  const handleLoginSubmit = async () => {
     if (isLoading) return; // 이미 요청 중이면 실행 안 함
     setErrorMessage('');  // 이전 에러 메시지 초기화
 
@@ -50,7 +48,7 @@ export default function Login() {
 
       // 명세서에 따른 POST 요청 (Header, Body 세팅)
       const response = await axios.post(
-        '/api/auth/login',
+        '/auth/login',
         {
           universityEmail: email,
           password: password,
@@ -63,13 +61,17 @@ export default function Login() {
       );
 
       // 명세서 상 성공 응답 데이터 구조 분해 할당
-      const { accessToken, grantType, memberResponse } = response.data;
+      const { result } = response.data;
+
+      const { accessToken, userId, universityEmail, nickname, onboardingCompleted } = result;
 
       // 3. 토큰 및 유저 정보 로컬 스토리지 저장 (또는 Context/Recoil 등 전역 상태 저장 가능)
-      localStorage.setItem('accessToken', `${grantType} ${accessToken}`);
-      localStorage.setItem('user', JSON.stringify(memberResponse));
+      localStorage.setItem('accessToken', `Bearer ${accessToken}`);
 
-      alert(`${memberResponse.name}님, 환영합니다!`);
+      const userInfo = { userId, universityEmail, nickname, onboardingCompleted };
+      localStorage.setItem('user', JSON.stringify(userInfo));
+
+      alert(`${nickname}님, 환영합니다!`);
       navigate('/'); // 로그인 완료 후 메인/홈 화면으로 이동
 
     } catch (error) {
@@ -130,7 +132,8 @@ export default function Login() {
       {errorMessage && <S.ErrorMessage>{errorMessage}</S.ErrorMessage>}
 
       <LoginButton
-        type="submit"
+        type="button"
+        onClick={handleLoginSubmit}
         style={{ marginBottom: '16px' }}
         disabled={isLoading}
       >
