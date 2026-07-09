@@ -8,6 +8,7 @@ import OnboardingGrade from './pages/OnboardingGrade.jsx';
 import OnboardingComplete from './pages/OnboardingComplete.jsx';
 import OnboardingSelectDept from './pages/OnboardingSelectDept.jsx';
 import Home from './pages/Home.jsx';
+import Settings from './pages/Settings.jsx';
 import Explore from './pages/Explore.jsx';
 import Review from './pages/Review.jsx';
 import Mypage from './pages/Mypage.jsx';
@@ -31,6 +32,7 @@ function App() {
           <Route path="/onboardingcomplete" element={<OnboardingComplete />} />
           <Route path="/onboardingselectdept" element={<OnboardingSelectDept />} />
           <Route path="/home" element={<Home />} />
+          <Route path="/settings" element={<Settings />} />
           <Route path="/explore" element={<Explore />} />
           <Route path="/review" element={<Review />} />
           <Route path="/mypage" element={<Mypage />} />
