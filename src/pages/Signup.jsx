@@ -3,35 +3,63 @@ import * as S from './Signup.styles';
 import { Header, BackIcon, EgLogo } from './Settings.styles.js';
 import egLogo from '../assets/images/OreumEgLogo.jpg';
 import { useNavigate } from 'react-router-dom';
+import { sendEmailCode, verifyEmailCode, signup } from '../api/auth.js';
 
 export default function Signup() {
   const navigate = useNavigate();
 
-  const [email, setEmail] = useState('');
-  const [code, setCode] = useState('');
-  const [password, setPassword] = useState('');
-  const [nickname, setNickname] = useState('');
+  // 사용자가 입력하는 데이터
+  const [formData, setFormData] = useState({
+    email: '',
+    code: '',
+    password: '',
+    nickname: '',
+  });
 
-  const [showEmailSuccess, setShowEmailSuccess] = useState(false);
-  const [isCodeError, setIsCodeError] = useState(false);
-  const [isPasswordError, setIsPasswordError] = useState(false);
-  const [isNicknameError, setIsNicknameError] = useState(false);
+  // 화면에 띄울 텍스트 메시지
+  const [messages, setMessages] = useState({
+    email: '',
+    code: '',
+    password: '',
+    nickname: '',
+  });
 
-  const [timeLeft, setTimeLeft] = useState(0);
-  const [isTimerActive, setIsTimerActive] = useState(false);
+  // 메시지 표시 여부
+  const [uiState, setUiState] = useState({
+    email: false,
+    code: false,
+    password: false,
+    nickname: false,
+  });
 
+  // 타이머 관련 상태
+  const [timer, setTimer] = useState({
+    timeLeft: 0,
+    isActive: false,
+  });
+
+  /** 입력 변경 함수 */
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
+
+  // 타이머 로직
   useEffect(() => {
-    let timer;
-    if (isTimerActive && timeLeft > 0) {
-      timer = setInterval(() => {
-        setTimeLeft((prev) => prev - 1);
+    let intervalId;
+    if (timer.isActive && timer.timeLeft > 0) {
+      intervalId = setInterval(() => {
+        setTimer((prev) => ({ ...prev, timeLeft: prev.timeLeft - 1 }));
       }, 1000);
-    } else if (timeLeft === 0) {
-      setIsTimerActive(false);
-      clearInterval(timer);
+    } else if (timer.timeLeft === 0) {
+      setTimer((prev) => ({ ...prev, isActive: false }));
+      clearInterval(intervalId);
     }
-    return () => clearInterval(timer);
-  }, [isTimerActive, timeLeft]);
+    return () => clearInterval(intervalId);
+  }, [timer.isActive, timer.timeLeft]);
 
   const formatTime = (seconds) => {
     const mins = Math.floor(seconds / 60);
@@ -39,29 +67,84 @@ export default function Signup() {
     return `${mins}:${secs < 10 ? '0' : ''}${secs}`;
   };
 
-  const handleSendCode = () => {
-    setTimeLeft(180); // 3분 설정
-    setIsTimerActive(true);
-    setShowEmailSuccess(true);
-    alert('인증번호가 전송되었습니다.');
+  /** 이메일 인증번호 전송 API */
+  const handleSendCode = async () => {
+    if (!formData.email.includes('@')) {
+      setMessages((prev) => ({
+        ...prev,
+        email: '유효한 대학 웹메일 주소를 입력해주세요.',
+      }));
+      setUiState((prev) => ({ ...prev, email: true }));
+      return;
+    }
+
+    try {
+      const data = await sendEmailCode(formData.email);
+      if (data.isSuccess) {
+        setTimer({ timeLeft: 180, isActive: true });
+        setMessages((prev) => ({ ...prev, email: data.message }));
+        setUiState((prev) => ({ ...prev, email: true }));
+      } else {
+        setMessages((prev) => ({ ...prev, email: data.message }));
+        setUiState((prev) => ({ ...prev, email: true }));
+      }
+    } catch (error) {
+      const errorMsg =
+        error.response?.data?.message || '서버와의 통신에 실패했습니다.';
+      setMessages((prev) => ({ ...prev, email: errorMsg }));
+      setUiState((prev) => ({ ...prev, email: true }));
+    }
   };
 
-  const handleCodeConfirm = () => {
-    alert('어~ 백엔드 연동해야돼~');
+  /** 이메일 인증번호 확인 API */
+  const handleCodeConfirm = async () => {
+    try {
+      const data = await verifyEmailCode(formData.email, formData.code);
+
+      if (data.isSuccess) {
+        setMessages((prev) => ({ ...prev, code: data.message }));
+        setUiState((prev) => ({ ...prev, code: true }));
+      } else {
+        setMessages((prev) => ({ ...prev, code: data.message }));
+        setUiState((prev) => ({ ...prev, code: true }));
+      }
+    } catch (error) {
+      const errorMsg =
+        error.response?.data?.message || '서버와의 통신에 실패했습니다.';
+      setMessages((prev) => ({ ...prev, code: errorMsg }));
+      setUiState((prev) => ({ ...prev, code: true }));
+    }
+  };
+
+  /** 회원가입 API */
+  const completeSignup = async () => {
+    try {
+      const data = await signup(
+        formData.email,
+        formData.password,
+        formData.nickname,
+      );
+
+      if (data.isSuccess) {
+        alert('회원가입이 완료되었습니다 ⛰️');
+        navigate('/');
+      } else {
+        setMessages((prev) => ({ ...prev, code: data.message }));
+        setUiState((prev) => ({ ...prev, code: true }));
+      }
+    } catch (error) {
+      const errorMsg =
+        error.response?.data?.message || '서버와의 통신에 실패했습니다.';
+      setMessages((prev) => ({ ...prev, code: errorMsg }));
+      setUiState((prev) => ({ ...prev, code: true }));
+    }
   };
 
   const isFormValid =
-    email.includes('@') &&
-    code.length > 0 &&
-    password.length > 0 &&
-    nickname.length > 0;
-
-  const compeletesignup = () => {
-    if (isFormValid) {
-      alert('회원가입이 완료되었습니다 ⛰️');
-      navigate('/');
-    }
-  };
+    formData.email.includes('@') &&
+    formData.code.length > 3 &&
+    formData.password.length > 7 &&
+    formData.nickname.length > 1;
 
   return (
     <S.Container>
@@ -71,6 +154,7 @@ export default function Signup() {
       </Header>
 
       <S.ContentWrapper>
+        {/* 이메일 입력 */}
         <S.InputGroup>
           <S.LabelContainer>
             <S.Text>대학 웹메일 주소</S.Text>
@@ -79,19 +163,23 @@ export default function Signup() {
             </S.SmallButton>
           </S.LabelContainer>
           <S.Input
+            name="email"
             type="email"
             placeholder="example@inu.co.kr"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
+            value={formData.email}
+            onChange={handleChange}
           />
           <S.MessageContainer>
-            <S.ErrorMessage $show={showEmailSuccess}>
-              인증번호가 전송되었습니다.
+            <S.ErrorMessage $show={uiState.email}>
+              {messages.email}
             </S.ErrorMessage>
-            {isTimerActive && <S.TimerText>{formatTime(timeLeft)}</S.TimerText>}
+            {timer.isActive && (
+              <S.TimerText>{formatTime(timer.timeLeft)}</S.TimerText>
+            )}
           </S.MessageContainer>
         </S.InputGroup>
 
+        {/* 인증번호 입력 */}
         <S.InputGroup>
           <S.LabelContainer>
             <S.Text>인증번호</S.Text>
@@ -100,51 +188,56 @@ export default function Signup() {
             </S.SmallButton>
           </S.LabelContainer>
           <S.Input
+            name="code"
             placeholder="숫자 4자리"
-            value={code}
-            onChange={(e) => setCode(e.target.value)}
+            value={formData.code}
+            onChange={handleChange}
           />
           <S.MessageContainer>
-            <S.ErrorMessage $show={isCodeError}>
-              인증번호가 올바르지 않습니다.
+            <S.ErrorMessage $show={uiState.code}>
+              {messages.code}
             </S.ErrorMessage>
           </S.MessageContainer>
         </S.InputGroup>
 
+        {/* 비밀번호 입력 */}
         <S.InputGroup>
           <S.LabelContainer>
             <S.Text>비밀번호 등록</S.Text>
           </S.LabelContainer>
           <S.Input
+            name="password"
             type="password"
             placeholder="8자리 이상"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
+            value={formData.password}
+            onChange={handleChange}
           />
           <S.MessageContainer>
-            <S.ErrorMessage $show={isPasswordError}>
-              비밀번호 형식이 올바르지 않습니다.
+            <S.ErrorMessage $show={uiState.password}>
+              {messages.password}
             </S.ErrorMessage>
           </S.MessageContainer>
         </S.InputGroup>
 
+        {/* 닉네임 입력 */}
         <S.InputGroup>
           <S.LabelContainer>
             <S.Text>닉네임</S.Text>
           </S.LabelContainer>
           <S.Input
+            name="nickname"
             placeholder="2~15자"
-            value={nickname}
-            onChange={(e) => setNickname(e.target.value)}
+            value={formData.nickname}
+            onChange={handleChange}
           />
           <S.MessageContainer>
-            <S.ErrorMessage $show={isNicknameError}>
-              닉네임 형식이 올바르지 않습니다.
+            <S.ErrorMessage $show={uiState.nickname}>
+              {messages.nickname}
             </S.ErrorMessage>
           </S.MessageContainer>
         </S.InputGroup>
 
-        <S.LoginButton disabled={!isFormValid} onClick={compeletesignup}>
+        <S.LoginButton disabled={!isFormValid} onClick={completeSignup}>
           회원가입
         </S.LoginButton>
       </S.ContentWrapper>

@@ -140,7 +140,7 @@ export default function Login() {
       </LoginButton>
 
       <S.SignUpText>
-        등록된 계정이 없으신가요?
+        등록된 계정이 없으신가요?{' '}
         <span onClick={handleSignUpClick}>회원가입</span>
       </S.SignUpText>
     </S.Container>

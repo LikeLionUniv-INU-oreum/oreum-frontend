@@ -35,7 +35,7 @@ export const SmallButton = styled.button`
   color: white;
   border: none;
   border-radius: 12px;
-  padding: 5px 12px;
+  padding: 5px;
   font-size: 11px;
   cursor: pointer;
   margin-bottom: 3px;
@@ -87,12 +87,8 @@ export const MessageContainer = styled.div`
 
 export const ErrorMessage = styled.div`
   color: #ef4444;
-  //width: 80%;
-  font-size: 14px;
+  font-size: 12px;
   font-weight: 500;
-  //text-align: left;
-  //margin-top: -5px;
-  //margin-bottom: 15px;
 `;
 
 export const TimerText = styled.div`
