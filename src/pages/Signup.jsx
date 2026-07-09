@@ -1,6 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import * as S from './Signup.styles';
-import Logo from '../assets/images/Logo.png';
+import { Header, BackIcon, EgLogo } from './Settings.styles.js';
+import egLogo from '../assets/images/OreumEgLogo.jpg';
 import { useNavigate } from 'react-router-dom';
 
 export default function Signup() {
@@ -42,38 +43,51 @@ export default function Signup() {
     setTimeLeft(180); // 3분 설정
     setIsTimerActive(true);
     setShowEmailSuccess(true);
-    alert("인증번호가 전송되었습니다.");
+    alert('인증번호가 전송되었습니다.');
   };
 
-  const isFormValid = email.includes('@') && code.length > 0 && password.length > 0 && nickname.length > 0;
+  const handleCodeConfirm = () => {
+    alert('어~ 백엔드 연동해야돼~');
+  };
+
+  const isFormValid =
+    email.includes('@') &&
+    code.length > 0 &&
+    password.length > 0 &&
+    nickname.length > 0;
 
   const compeletesignup = () => {
     if (isFormValid) {
+      alert('회원가입이 완료되었습니다 ⛰️');
       navigate('/');
     }
   };
 
   return (
     <S.Container>
-      <S.Header>
-        <S.BackButton onClick={() => navigate(-1)}>←</S.BackButton>
-        <S.Image src={Logo} />
-      </S.Header>
+      <Header>
+        <BackIcon onClick={() => navigate(-1)}>←</BackIcon>
+        <EgLogo src={egLogo} />
+      </Header>
 
       <S.ContentWrapper>
         <S.InputGroup>
           <S.LabelContainer>
             <S.Text>대학 웹메일 주소</S.Text>
-            <S.SmallButton type="button" onClick={handleSendCode}>인증번호 전송</S.SmallButton>
+            <S.SmallButton type="button" onClick={handleSendCode}>
+              인증번호 전송
+            </S.SmallButton>
           </S.LabelContainer>
           <S.Input
             type="email"
-            placeholder='@inu.co.kr'
+            placeholder="example@inu.co.kr"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
           />
           <S.MessageContainer>
-            <S.ErrorMessage $show={showEmailSuccess}>인증번호가 전송되었습니다.</S.ErrorMessage>
+            <S.ErrorMessage $show={showEmailSuccess}>
+              인증번호가 전송되었습니다.
+            </S.ErrorMessage>
             {isTimerActive && <S.TimerText>{formatTime(timeLeft)}</S.TimerText>}
           </S.MessageContainer>
         </S.InputGroup>
@@ -81,14 +95,19 @@ export default function Signup() {
         <S.InputGroup>
           <S.LabelContainer>
             <S.Text>인증번호</S.Text>
+            <S.SmallButton type="button" onClick={handleCodeConfirm}>
+              인증번호 확인
+            </S.SmallButton>
           </S.LabelContainer>
           <S.Input
-            placeholder='숫자 N자리'
+            placeholder="숫자 4자리"
             value={code}
             onChange={(e) => setCode(e.target.value)}
           />
           <S.MessageContainer>
-            <S.ErrorMessage $show={isCodeError}>인증번호가 올바르지 않습니다.</S.ErrorMessage>
+            <S.ErrorMessage $show={isCodeError}>
+              인증번호가 올바르지 않습니다.
+            </S.ErrorMessage>
           </S.MessageContainer>
         </S.InputGroup>
 
@@ -98,12 +117,14 @@ export default function Signup() {
           </S.LabelContainer>
           <S.Input
             type="password"
-            placeholder='영문 N자리'
+            placeholder="8자리 이상"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
           <S.MessageContainer>
-            <S.ErrorMessage $show={isPasswordError}>비밀번호 형식이 올바르지 않습니다.</S.ErrorMessage>
+            <S.ErrorMessage $show={isPasswordError}>
+              비밀번호 형식이 올바르지 않습니다.
+            </S.ErrorMessage>
           </S.MessageContainer>
         </S.InputGroup>
 
@@ -112,18 +133,21 @@ export default function Signup() {
             <S.Text>닉네임</S.Text>
           </S.LabelContainer>
           <S.Input
-            placeholder='어쩌고 N자리'
+            placeholder="2~30자"
             value={nickname}
             onChange={(e) => setNickname(e.target.value)}
           />
           <S.MessageContainer>
-            <S.ErrorMessage $show={isNicknameError}>닉네임 형식이 올바르지 않습니다.</S.ErrorMessage>
+            <S.ErrorMessage $show={isNicknameError}>
+              닉네임 형식이 올바르지 않습니다.
+            </S.ErrorMessage>
           </S.MessageContainer>
         </S.InputGroup>
 
-        <S.LoginButton onClick={compeletesignup} disabled={!isFormValid}>회원가입</S.LoginButton>
+        <S.LoginButton disabled={!isFormValid} onClick={compeletesignup}>
+          회원가입
+        </S.LoginButton>
       </S.ContentWrapper>
-
     </S.Container>
   );
 }
