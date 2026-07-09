@@ -21,23 +21,20 @@ export default function OnboardingGrade() {
   const handleNext = () => {
     if (selectedGrade) {
       console.log('저장된 학적 값:', selectedGrade);
-      navigate('/onboarding/next-step');
+      navigate('/onboardingselectdept');
     }
   };
 
   return (
     <S.Container>
-      {/* 1. 상단 헤더 영역 */}
       <S.Header>
         <ProgressBar currentStep={1} totalSteps={3} emojiSrc={Emoji} />
       </S.Header>
 
-      {/* 2. 질문 텍스트 */}
       <S.MiddleOne>
         <S.Title>현재 학적을 선택해주세요.</S.Title>
       </S.MiddleOne>
 
-      {/* 3. 학적 선택 버튼들 */}
       <S.MiddleTwo>
         {gradeOptions.map((grade) => (
           <S.SelectButton
@@ -51,7 +48,6 @@ export default function OnboardingGrade() {
         ))}
       </S.MiddleTwo>
 
-      {/* 4. 배경 이미지와 그 위에 떠있는 푸터 버튼 영역 */}
       <S.FooterBgSection>
         <S.BgImage src={OnboardingBackground} alt="배경 일러스트" />
         <S.NextButton
