@@ -20,11 +20,11 @@ export default function Login() {
   const [errorMessage, setErrorMessage] = useState('');
   const [isLoading, setIsLoading] = useState(false);
 
-  const handleSignUpClick = () => {
+  const handleSignUpClick = () => { // 회원가입 버튼 클릭 시
     navigate('/signup');
   };
 
-  const togglePasswordVisibility = () => {
+  const togglePasswordVisibility = () => { // 비번 보이게 안보이게 여부
     setShowPassword(!showPassword);
   };
 
@@ -106,7 +106,8 @@ export default function Login() {
       <S.ErrorMessage>{errorMessage}</S.ErrorMessage>
 
       <LoginButton
-        type="submit"
+        type="button"
+        onClick={handleLoginSubmit}
         style={{ marginBottom: '16px' }}
         disabled={isLoading}
         onClick={handleLoginSubmit}

@@ -2,13 +2,13 @@ import React, { useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import * as S from './AddReview.styles';
 import BottomNav from '../components/common/BottomNav';
+import GrayFlag from '../assets/images/GrayFlag.png';
 
 export default function AddReview() {
   const navigate = useNavigate();
 
   const ratingRef = useRef(null);
 
-  // 상태 관리
   const [rating, setRating] = useState(4.0); // 클릭해서 확정된 별점
   const [hoverRating, setHoverRating] = useState(null); // 🚩 마우스가 올라가 있는 임시 별점
   const [climbPeriod, setClimbPeriod] = useState('');
@@ -19,7 +19,6 @@ export default function AddReview() {
   const semesterOptions = ['1학년', '2학년', '3학년', '4학년', 'ALL'];
   const tipPlaceholder = `TIP\n• 만족도\n• 활동 관련\n• 조언`;
 
-  // 공통적인 마우스 위치(0.5단위 별점) 계산 함수
   const calculateRating = (e) => {
     if (!ratingRef.current) return 0;
     const { left, width } = ratingRef.current.getBoundingClientRect();
@@ -79,7 +78,8 @@ export default function AddReview() {
       {/* 상단 고정 코스 정보 & 별점 조절 */}
       <S.CourseRatingCard>
         <div className="course-info">
-          <span>🚩</span> 무역영어 자격증
+          <S.CourseFlag src={GrayFlag} />
+          무역영어 자격증
         </div>
 
         {/* 🚩 MouseMove, MouseLeave 이벤트를 추가로 연결해 줍니다 */}
@@ -90,7 +90,6 @@ export default function AddReview() {
           onMouseLeave={handleStarMouseLeave}
         >
           ★★★★★
-          {/* displayRating에 맞춰 실시간으로 채워진 별 영역이 늘어났다 줄어들었다 합니다 */}
           <div className="stars-filled" style={{ width: `${(displayRating / 5) * 100}%` }}>
             ★★★★★
           </div>
@@ -99,7 +98,6 @@ export default function AddReview() {
 
       <S.Divider />
 
-      {/* 등반 시기 */}
       <S.FormSection>
         <h3>등반 시기 <span>*</span></h3>
         <S.InputBox
@@ -110,7 +108,6 @@ export default function AddReview() {
         />
       </S.FormSection>
 
-      {/* 소요 기간 */}
       <S.FormSection>
         <h3>소요 기간 <span>*</span></h3>
         <S.InputBox
@@ -121,7 +118,6 @@ export default function AddReview() {
         />
       </S.FormSection>
 
-      {/* 추천 시기 */}
       <S.FormSection>
         <h3>추천 시기 <span>*</span></h3>
         <S.TagGroup>
@@ -137,7 +133,6 @@ export default function AddReview() {
         </S.TagGroup>
       </S.FormSection>
 
-      {/* TIP 한 마디 */}
       <S.FormSection>
         <h3>TIP 한 마디</h3>
         <S.TextAreaBox
