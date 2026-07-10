@@ -127,7 +127,7 @@ export default function Signup() {
 
       if (data.isSuccess) {
         alert('회원가입이 완료되었습니다 ⛰️');
-        navigate('/');
+        navigate('/login');
       } else {
         setMessages((prev) => ({ ...prev, code: data.message }));
         setUiState((prev) => ({ ...prev, code: true }));

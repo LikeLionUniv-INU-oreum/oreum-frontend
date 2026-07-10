@@ -62,6 +62,10 @@ export const ErrorMessage = styled.div`
   text-align: left;
   margin-top: -5px;
   margin-bottom: 92px;
+  min-height: 20px;
+
+  opacity: ${(props) => (props.children ? 1 : 0)};
+  transition: opacity 0.2s ease-in-out;
 `;
 
 export const LoginButton = styled.button`
