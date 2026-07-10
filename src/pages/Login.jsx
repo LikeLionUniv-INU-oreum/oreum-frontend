@@ -48,7 +48,13 @@ export default function Login() {
 
         const userNickname = data.result?.nickname || '회원';
         alert(`${userNickname}님 환영합니다 ⛰️`);
-        navigate('/home');
+
+        // 최초/기존 이용자 분기 처리
+        if (!data.result.onboardingCompleted) {
+          navigate('/onboardingstart');
+        } else {
+          navigate('/home');
+        }
       } else {
         setErrorMessage(data.message);
       }

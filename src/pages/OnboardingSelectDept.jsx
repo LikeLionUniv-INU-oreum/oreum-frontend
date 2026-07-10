@@ -1,19 +1,24 @@
 import { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import * as S from './OnboardingSelectDept.styles';
 import ProgressBar from '../components/common/ProgressBar';
 import Emoji from '../assets/images/Emoji.png';
 import OnboardingBackground from '../assets/images/OnboardingBackground.png';
-import { searchMajors, searchJobs } from '../api/user';
+import { onboarding, searchMajors, searchJobs } from '../api/user';
 
 export default function OnboardingSelectDept() {
   const navigate = useNavigate();
+  const location = useLocation();
+  const academicStatus = location.state?.academicStatus || 'SOPHOMORE'; // 학년 선택값
+
   const [deptInput, setDeptInput] = useState('');
   const [jobInput, setJobInput] = useState('');
   const [showDeptDropdown, setShowDeptDropdown] = useState(false);
   const [showJobDropdown, setShowJobDropdown] = useState(false);
   const [deptList, setDeptList] = useState([]); // 학과 검색 결과
   const [jobList, setJobList] = useState([]); // 직무 검색 결과
+  const [selectedDept, setSelectedDept] = useState(null); // 학과 선택 결과
+  const [selectedJob, setSelectedJob] = useState(null); // 직무 선택 결과
 
   // 학과 검색 디바운싱
   useEffect(() => {
@@ -21,6 +26,8 @@ export default function OnboardingSelectDept() {
       setDeptList([]);
       return;
     }
+
+    if (selectedDept && selectedDept.majorName === deptInput) return;
 
     const timer = setTimeout(async () => {
       try {
@@ -35,7 +42,7 @@ export default function OnboardingSelectDept() {
     }, 300);
 
     return () => clearTimeout(timer);
-  }, [deptInput]);
+  }, [deptInput, selectedDept]);
 
   // 직무 검색 디바운싱
   useEffect(() => {
@@ -43,6 +50,8 @@ export default function OnboardingSelectDept() {
       setJobList([]);
       return;
     }
+
+    if (selectedJob && selectedJob.jobName === jobInput) return;
 
     const timer = setTimeout(async () => {
       try {
@@ -57,7 +66,7 @@ export default function OnboardingSelectDept() {
     }, 300);
 
     return () => clearTimeout(timer);
-  }, [jobInput]);
+  }, [jobInput, selectedJob]);
 
   // 돋보기 클릭 시: 텍스트가 있고 리스트가 있으면 강제 오픈
   const handleDeptSearch = () => {
@@ -68,12 +77,27 @@ export default function OnboardingSelectDept() {
     if (jobInput.trim()) setShowJobDropdown(true);
   };
 
-  const isFormValid = deptInput.trim() !== '' && jobInput.trim() !== '';
+  const isFormValid = selectedDept !== null && selectedJob !== null;
 
-  const handleNext = () => {
+  const handleNext = async () => {
     if (isFormValid) {
-      console.log('저장된 값:', { department: deptInput, job: jobInput });
-      navigate('/onboardingcomplete');
+      try {
+        const major = selectedDept.majorId;
+        const job = selectedJob.jobId;
+        const data = await onboarding(academicStatus, major, job);
+
+        if (data.isSuccess) {
+          navigate('/onboardingcomplete');
+        } else {
+          alert(data.message);
+        }
+      } catch (error) {
+        console.error('온보딩 완료 처리 실패:', error);
+
+        const errorMsg =
+          error.response?.data?.message || '서버와 통신할 수 없습니다.';
+        alert(errorMsg);
+      }
     }
   };
 
@@ -103,6 +127,7 @@ export default function OnboardingSelectDept() {
               value={deptInput}
               onChange={(e) => {
                 setDeptInput(e.target.value);
+                setSelectedDept(null);
                 if (!e.target.value) setShowDeptDropdown(false);
               }}
             />
@@ -119,11 +144,12 @@ export default function OnboardingSelectDept() {
                   key={item.majorId || item.majorName}
                   onClick={() => {
                     setDeptInput(item.majorName);
+                    setSelectedDept(item);
                     setShowDeptDropdown(false);
                   }}
                 >
                   <S.ItemName>{item.majorName}</S.ItemName>
-                  <S.ItemGroup>[{item.colleageName || '단과대'}]</S.ItemGroup>
+                  <S.ItemGroup>[{item.collegeName || '단과대'}]</S.ItemGroup>
                 </S.DropdownItem>
               ))}
             </S.Dropdown>
@@ -145,12 +171,11 @@ export default function OnboardingSelectDept() {
               value={jobInput}
               onChange={(e) => {
                 setJobInput(e.target.value);
+                setSelectedJob(null);
                 if (!e.target.value) setShowJobDropdown(false);
               }}
             />
-            <S.SearchButton type="button" onClick={handleJobSearch}>
-              🔍
-            </S.SearchButton>
+            <S.SearchButton type="button">🔍</S.SearchButton>
           </S.SearchBox>
 
           {/* 관심 직무 드롭다운 */}
@@ -161,6 +186,7 @@ export default function OnboardingSelectDept() {
                   key={item.jobId || item.jobName}
                   onClick={() => {
                     setJobInput(item.jobName);
+                    setSelectedJob(item);
                     setShowJobDropdown(false);
                   }}
                 >
