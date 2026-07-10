@@ -35,7 +35,7 @@ export const searchJobs = async (keyword) => {
 };
 
 // 홈 화면 조회
-export const homeProfile = async () => {
+export const getUserProfile = async () => {
   const response = await api.get('/home');
 
   return response.data;

@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import egLogo from '../assets/images/OreumEgLogo.jpg';
 import settings from '../assets/icons/Settings.svg';
@@ -6,9 +7,36 @@ import homeMountain from '../assets/images/HomeMountain.jpg';
 import BottomNav from '../components/common/BottomNav.jsx';
 import completeFlag from '../assets/icons/CompleteFlag.svg';
 import refresh from '../assets/icons/Refresh.svg';
+import { getUserProfile } from '../api/user.js';
 
 export default function Home() {
   const navigate = useNavigate();
+  const [profile, setProfile] = useState(null);
+
+  /** 프로필 조회 api 함수 */
+  const fetchProfile = async () => {
+    try {
+      const data = await getUserProfile();
+      if (data.isSuccess) {
+        setProfile(data.result);
+      }
+    } catch (error) {
+      console.error('프로필 로딩 실패:', error);
+    }
+  };
+
+  useEffect(() => {
+    fetchProfile();
+  }, []);
+
+  // 새로고침 함수
+  const handleRefreshClick = () => {
+    fetchProfile();
+  };
+
+  if (!profile) {
+    return <Container>로딩 중...</Container>;
+  }
 
   return (
     <Container>
@@ -19,7 +47,7 @@ export default function Home() {
         </Header>
 
         <GreetingText>
-          김유니님, 오늘도
+          {profile.nickname}님, 오늘도
           <br />
           <span style={{ color: '#3B7D5A' }}>오름을 향해 한 걸음!</span>
         </GreetingText>
@@ -28,38 +56,37 @@ export default function Home() {
           <HomeInfo>
             <InfoText>
               <div>현재 고도</div>
-              <span>2,550M</span>
+              <span>{profile.currentHeight}M</span>
             </InfoText>
             <InfoText style={{ textAlign: 'right' }}>
-              <div>[해외영업] 산맥</div>
-              <span>상위 16%</span>
+              <div>[{profile.jobName}] 산맥</div>
+              <span>상위 {profile.jobTopPercent}%</span>
             </InfoText>
           </HomeInfo>
           <HomeMountain src={homeMountain} />
         </MountainBox>
 
         <GreetingText style={{ fontWeight: '700', fontSize: '20px' }}>
-          ⛰️ [해외영업] 산맥의 학우들이
+          ⛰️ [{profile.jobName}] 산맥의 학우들이
           <br />
           최근에 완료한 코스
         </GreetingText>
 
         <CourseBox>
-          <RefreshBtn src={refresh} />
-          <div className="list-item">
-            <img src={completeFlag} />
-            <span>토익 850점 이상</span>
-          </div>
+          <RefreshBtn src={refresh} onClick={handleRefreshClick} />
 
-          <div className="list-item">
-            <img src={completeFlag} />
-            <span>무역영어 자격증</span>
-          </div>
-
-          <div className="list-item">
-            <img src={completeFlag} />
-            <span>OO 연합 물류 학회 수료</span>
-          </div>
+          {profile.recentCompletedCourses?.length > 0 ? (
+            profile.recentCompletedCourses.map((course, index) => (
+              <div className="list-item" key={index}>
+                <img src={completeFlag} />
+                <span>{course}</span>
+              </div>
+            ))
+          ) : (
+            <div className="list-item">
+              <span>최근 완료한 코스가 없습니다.</span>
+            </div>
+          )}
         </CourseBox>
       </MainContent>
 
