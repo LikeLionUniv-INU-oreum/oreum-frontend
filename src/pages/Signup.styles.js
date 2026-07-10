@@ -89,6 +89,10 @@ export const ErrorMessage = styled.div`
   color: #ef4444;
   font-size: 12px;
   font-weight: 500;
+  min-height: 14px;
+
+  opacity: ${(props) => (props.children ? 1 : 0)};
+  transition: opacity 0.2s ease-in-out;
 `;
 
 export const TimerText = styled.div`

@@ -18,10 +18,20 @@ export default function OnboardingGrade() {
     '졸업생',
   ];
 
+  const academicStatusMap = {
+    '대학교 1학년': 'FRESHMAN',
+    '대학교 2학년': 'SOPHOMORE',
+    '대학교 3학년': 'JUNIOR',
+    '대학교 4학년': 'SENIOR',
+    '초과학기': 'EXTRA_SEMESTER',
+    '졸업생': 'GRADUATE',
+  };
+
   const handleNext = () => {
     if (selectedGrade) {
-      console.log('저장된 학적 값:', selectedGrade);
-      navigate('/onboardingselectdept');
+      navigate('/onboardingselectdept', {
+        state: { academicStatus: academicStatusMap[selectedGrade] },
+      });
     }
   };
 
