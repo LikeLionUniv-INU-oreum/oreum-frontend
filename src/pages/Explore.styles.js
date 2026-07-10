@@ -3,54 +3,53 @@ import OnboardingBackground from '../assets/images/OnboardingBackground.png';
 
 export const PageContainer = styled.div`
   width: 100%;
-  //max-width: 420px; /* 모바일 프레임 규격 스타일링 */
-  min-height: 100dvh;
+  height: 100dvh;
   margin: 0 auto;
   background-image: url(${OnboardingBackground});
   background-size: 100% auto;
   background-repeat: no-repeat;
   background-position: center -30px;
-  background-color: #f5f5f5;
   display: flex;
   flex-direction: column;
   position: relative;
-  font-family: 'Noto Sans KR', sans-serif;
-  padding-bottom: 80px; /* 하단 바 영역 확보 */
 `;
 
 export const ContentWrapper = styled.div`
   padding: 20px;
+  flex: 1;
+  overflow-y: auto;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 `;
 
 export const HeaderSection = styled.div`
   margin-top: 1dvh;
-  margin-bottom: 25px;
+  margin-bottom: 10px;
   padding: 15px;
 `;
 
 export const Title = styled.h1`
-  font-size: 24px;
-  font-weight: bold;
-  color: #2b7a54; /* 짙은 초록색 메인 테마 */
+  font-size: 26px;
+  font-weight: 900;
+  color: #3b7d5a;
   margin: 0 0 8px 0;
 `;
 
 export const SubTitle = styled.p`
   font-size: 14px;
-  color: #444;
-  line-height: 1.4;
+  font-weight: 500;
+  line-height: 1.2;
   margin: 0;
-  border-bottom: 2px solid #b0b5b2; 
-  padding-bottom: 6px;
+  border-bottom: 2px solid #acacac;
+  padding-bottom: 14px;
 `;
 
 export const FilterSection = styled.div`
-  //background: rgba(255, 255, 255, 0.85);
-  //border-radius: 20px;
-  padding: 15px;
-  //box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
   margin-bottom: 20px;
-  
 `;
 
 export const FilterGroup = styled.div`
@@ -67,12 +66,13 @@ export const FilterLabel = styled.span`
 
 export const ButtonGroup = styled.div`
   display: flex;
-  gap: 8px;
+  justify-content: space-between;
   flex-wrap: wrap;
 `;
 
 export const FilterButton = styled.button`
-  padding: 6px 14px;
+  width: 60px;
+  height: 30px;
   border-radius: 20px;
   border: none;
   font-size: 13px;
@@ -103,7 +103,7 @@ export const ListHeader = styled.div`
 
 export const ListTitle = styled.h2`
   font-size: 16px;
-  font-weight: bold;
+  font-weight: 800;
   color: #111;
   margin: 0;
 `;
@@ -114,7 +114,7 @@ export const SortButtonGroup = styled.div`
 `;
 
 export const SortButton = styled.button`
-  padding: 4px 10px;
+  padding: 6px 10px;
   border-radius: 12px;
   border: none;
   font-size: 11px;
@@ -129,7 +129,7 @@ export const CourseCard = styled.div`
   border-radius: 16px;
   border: 1px solid #111;
   padding: 15px;
-  margin-bottom: 12px;
+  margin-bottom: 6px;
   cursor: pointer;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.03);
   transition: transform 0.1s;
@@ -210,6 +210,5 @@ export const BottomNavWrapper = styled.div`
   left: 50%;
   transform: translateX(-50%);
   width: 100%;
-  //max-width: 420px; /* 전체 페이지 max-width와 똑같이 맞춰서 깨짐을 방지합니다 */
-  z-index: 100; /* 카드나 다른 요소 뒤로 숨지 않도록 위로 올립니다 */
+  z-index: 100;
 `;

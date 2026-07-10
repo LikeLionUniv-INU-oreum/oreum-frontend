@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import * as S from './OnboardingSelectDept.styles';
 import ProgressBar from '../components/common/ProgressBar';
@@ -61,7 +61,7 @@ export default function OnboardingSelectDept() {
 
         {/* 소속 학과 섹션 */}
         <S.InputWrapper>
-          <S.Label>소속 학과(부) <S.Required>*</S.Required></S.Label>
+          <S.Label>소속 학과(부)<S.Required>*</S.Required></S.Label>
           <S.SubLabel>주전공 한 가지를 선택해주세요.</S.SubLabel>
           <S.SearchBox>
             <S.Input
@@ -99,7 +99,7 @@ export default function OnboardingSelectDept() {
 
         {/* 관심 직무 섹션 */}
         <S.InputWrapper>
-          <S.Label>관심 직무 <S.Required>*</S.Required></S.Label>
+          <S.Label>관심 직무<S.Required>*</S.Required></S.Label>
           <S.SubLabel>같은 직무를 선택한 학우들끼리 진행 상황을 비교해볼 수 있어요.</S.SubLabel>
           <S.SearchBox>
             <S.Input

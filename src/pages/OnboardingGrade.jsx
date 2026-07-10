@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import * as S from './OnboardingGrade.styles';
 import ProgressBar from '../components/common/ProgressBar';
@@ -15,7 +15,7 @@ export default function OnboardingGrade() {
     '대학교 3학년',
     '대학교 4학년',
     '초과학기',
-    '졸업생'
+    '졸업생',
   ];
 
   const handleNext = () => {
@@ -50,14 +50,14 @@ export default function OnboardingGrade() {
 
       <S.FooterBgSection>
         <S.BgImage src={OnboardingBackground} alt="배경 일러스트" />
-        <S.NextButton
-          type="button"
-          disabled={!selectedGrade}
-          onClick={handleNext}
-        >
-          다음 단계
-        </S.NextButton>
       </S.FooterBgSection>
+      <S.NextButton
+        type="button"
+        disabled={!selectedGrade}
+        onClick={handleNext}
+      >
+        다음 단계
+      </S.NextButton>
     </S.Container>
   );
 }

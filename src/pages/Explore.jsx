@@ -1,7 +1,8 @@
-import React, { useState, useEffect } from 'react';
-import BottomNav from '../components/common/BottomNav'; // 하단바 경로에 맞게 수정
-import CourseCard from '../components/common/CourseCard'; // 카드 컴포넌트 불러오기
+import { useState, useEffect } from 'react';
+import BottomNav from '../components/common/BottomNav';
+import CourseCard from '../components/common/CourseCard';
 import * as S from './Explore.styles';
+import { useNavigate } from 'react-router-dom';
 
 // 임시 데이터 (백엔드 연동 전 화면 확인용)
 const INITIAL_COURSES = [
@@ -38,22 +39,17 @@ const INITIAL_COURSES = [
 ];
 
 export default function Explore() {
-
-  // 1. 추천 시기 필터 상태 (다중 선택, 초기값 1학년)
-  const [selectedPeriods, setSelectedPeriods] = useState(['1학년']);
-
-  // 2. 카테고리 필터 상태 (다중 선택, 초기값 교내)
-  const [selectedCategories, setSelectedCategories] = useState(['교내']);
-
-  // 3. 정렬 상태 (인기순 / 등록순 단일 선택, 기본값 인기순)
-  const [sortBy, setSortBy] = useState('popular');
-
-  // 4. 카드 리스트 데이터 상태
-  const [courses, setCourses] = useState(INITIAL_COURSES);
+  const [selectedPeriods, setSelectedPeriods] = useState(['1학년']); // 1. 추천 시기 필터 상태 (다중 선택, 초기값 1학년)
+  const [selectedCategories, setSelectedCategories] = useState(['교내']); // 2. 카테고리 필터 상태 (다중 선택, 초기값 교내)
+  const [sortBy, setSortBy] = useState('popular'); // 3. 정렬 상태 (인기순 / 등록순 단일 선택, 기본값 인기순)
+  const [courses, setCourses] = useState(INITIAL_COURSES); // 4. 카드 리스트 데이터 상태
+  const navigate = useNavigate();
 
   // 정렬 기준(sortBy)이나 필터가 바뀔 때 실행될 훅 (나중에 백엔드 API 연동할 핵심 구역)
   useEffect(() => {
-    console.log(`서버 요청 파라미터 -> 정렬: ${sortBy}, 시기: ${selectedPeriods}, 카테고리: ${selectedCategories}`);
+    console.log(
+      `서버 요청 파라미터 -> 정렬: ${sortBy}, 시기: ${selectedPeriods}, 카테고리: ${selectedCategories}`,
+    );
     // 여기서 나중에 axios.get(`/api/courses?sort=${sortBy}...`).then(res => setCourses(res.data)) 처리하시면 됩니다!
   }, [sortBy, selectedPeriods, selectedCategories]);
 
@@ -93,7 +89,7 @@ export default function Explore() {
   const handleCardClick = (course) => {
     // 클릭한 카드 데이터를 state 객체에 담아서 넘겨줍니다.
     navigate('/review', { state: { course: course } });
-  }
+  };
 
   return (
     <S.PageContainer>
@@ -101,7 +97,11 @@ export default function Explore() {
         {/* 상단 타이틀 섹션 */}
         <S.HeaderSection>
           <S.Title>코스 탐색</S.Title>
-          <S.SubTitle>같은 직무를 희망하는 학우들은<br />언제 무엇을 준비하고 있을까요?</S.SubTitle>
+          <S.SubTitle>
+            같은 직무를 희망하는 학우들은
+            <br />
+            언제 무엇을 준비하고 있을까요?
+          </S.SubTitle>
         </S.HeaderSection>
 
         {/* 필터 섹션 (추천시기 & 카테고리 ALL 토글 완벽 포함) */}
@@ -141,8 +141,18 @@ export default function Explore() {
           <S.ListHeader>
             <S.ListTitle>[해외영업] 등반 코스</S.ListTitle>
             <S.SortButtonGroup>
-              <S.SortButton active={sortBy === 'popular'} onClick={() => setSortBy('popular')}>인기순</S.SortButton>
-              <S.SortButton active={sortBy === 'latest'} onClick={() => setSortBy('latest')}>등록순</S.SortButton>
+              <S.SortButton
+                active={sortBy === 'popular'}
+                onClick={() => setSortBy('popular')}
+              >
+                인기순
+              </S.SortButton>
+              <S.SortButton
+                active={sortBy === 'latest'}
+                onClick={() => setSortBy('latest')}
+              >
+                등록순
+              </S.SortButton>
             </S.SortButtonGroup>
           </S.ListHeader>
 
@@ -157,10 +167,7 @@ export default function Explore() {
         </S.ListContainer>
       </S.ContentWrapper>
 
-      {/* 고정된 하단바 */}
-      <S.BottomNavWrapper>
-        <BottomNav />
-      </S.BottomNavWrapper>
+      <BottomNav />
     </S.PageContainer>
   );
 }

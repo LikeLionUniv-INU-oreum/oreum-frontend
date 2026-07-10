@@ -1,4 +1,3 @@
-import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import * as S from './OnboardingComplete.styles';
 import ProgressBar from '../components/common/ProgressBar';
@@ -23,7 +22,8 @@ export default function OnboardingComplete() {
 
         <S.CardContent>
           <S.Title>
-            오름을 시작하기 위한 준비가<br />
+            오름을 시작하기 위한 준비가
+            <br />
             모두 완료되었어요!
           </S.Title>
 

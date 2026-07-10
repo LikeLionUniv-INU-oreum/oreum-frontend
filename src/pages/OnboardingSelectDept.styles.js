@@ -62,6 +62,7 @@ export const SubLabel = styled.p`
   color: #666666;
   margin: 0.5dvh 0 1dvh 0;
   line-height: 1.3;
+  word-break: keep-all;
 `;
 
 export const SearchBox = styled.div`
@@ -69,6 +70,7 @@ export const SearchBox = styled.div`
   display: flex;
   align-items: center;
   width: 100%;
+  margin-bottom: 1vh;
 `;
 
 export const Input = styled.input`
@@ -80,7 +82,7 @@ export const Input = styled.input`
   font-size: 15px;
   outline: none;
   box-sizing: border-box;
-  
+
   &:focus {
     border: 1px solid #3b7d5a;
   }
@@ -109,7 +111,7 @@ export const Dropdown = styled.div`
   border-radius: 0 0 10px 10px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
   z-index: 100;
-  
+
   /* 리스트 항목당 대략 44px 높이 기준 계산 */
   max-height: ${({ $maxRows }) => $maxRows * 44}px;
   overflow-y: auto;
@@ -169,18 +171,20 @@ export const BgImage = styled.img`
 
 export const NextButton = styled.button`
   position: absolute;
-  bottom: 12dvh; /* OnboardingGrade 버튼과 정확히 동일한 공중부양 위치 */
+  bottom: 6vh;
+  left: 50%;
+  transform: translateX(-50%);
   width: 80%;
   height: 54px;
-  
+
   color: #ffffff;
   background-color: ${({ disabled }) => (disabled ? '#a3a3a3' : '#3b7d5a')};
-  
+
   border: none;
-  border-radius: 10px;
+  border-radius: 12px;
   font-weight: bold;
-  font-size: 16px;
-  
+  font-size: 18px;
+
   cursor: ${({ disabled }) => (disabled ? 'not-allowed' : 'pointer')};
   transition: background-color 0.2s ease;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
