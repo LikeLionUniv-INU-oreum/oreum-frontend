@@ -5,20 +5,18 @@ export const Container = styled.div`
   flex-direction: column;
   background-color: #ffffff;
   padding: 20px 24px;
-  height: 100vh;
+  height: 100dvh;
   box-sizing: border-box;
   width: 100%;
-  max-width: 430px;
   margin: 0 auto;
   position: relative;
-  overflow-y: auto; /* 🚩 첫 번째 사진에서 두 번째 사진으로 스크롤 가능하도록 설정 */
+  overflow-y: auto;
 
-  /* 스크롤바 숨기기 (선택사항, 깔끔한 UI를 위해) */
   &::-webkit-scrollbar {
     width: 4px;
   }
   &::-webkit-scrollbar-thumb {
-    background-color: #5a8469;
+    background-color: #3B7D5A;
     border-radius: 4px;
   }
 `;
@@ -38,39 +36,36 @@ export const PageTitleSection = styled.div`
   margin-bottom: 16px;
   h2 {
     font-size: 24px;
-    font-weight: bold;
-    color: #2b5c3d;
-    line-height: 1.4;
-    margin: 0 0 8px 0;
+    font-weight: 900;
+    color: #3B7D5A;
+    margin: 0 0 6px 0;
   }
   p {
     font-size: 13px;
     color: #555;
-    line-height: 1.5;
     margin: 0;
+    line-height: 1.2;
   }
 `;
 
-/* 상단 구분 가로선 */
 export const Divider = styled.hr`
   border: none;
-  border-top: 1px solid #ddd;
+  border-top: 2px solid #ACACAC;
   margin: 0 0 20px 0;
   width: 100%;
 `;
 
-/* 코스 라벨 뱃지 형태 */
 export const CourseBadgeCard = styled.div`
   display: flex;
   align-items: center;
   gap: 8px;
   background-color: #f0f6f2;
-  padding: 12px 16px;
+  padding: 5px 5px;
   border-radius: 4px;
   font-size: 15px;
-  font-weight: bold;
+  font-weight: 300;
   color: #333;
-  margin-bottom: 28px;
+  margin-bottom: 18px;
   width: 100%;
   box-sizing: border-box;
 
@@ -79,7 +74,6 @@ export const CourseBadgeCard = styled.div`
   }
 `;
 
-/* STAR 입력 섹션 공통 스타일 */
 export const FormSection = styled.div`
   display: flex;
   flex-direction: column;
@@ -89,20 +83,19 @@ export const FormSection = styled.div`
   h3 {
     font-size: 22px;
     font-weight: 900;
-    color: #4a7a5c; /* 시안 특유의 진녹색 제목 타이틀 */
+    color: #3d7b5a;
     margin: 0 0 6px 0;
   }
 
   .desc {
     font-size: 13px;
     color: #333;
-    line-height: 1.5;
-    margin: 0 0 12px 0;
+    line-height: 1.2;
+    margin: 0 0 6px 2px;
     word-break: keep-all;
   }
 `;
 
-/* 멀티라인 입력 박스 */
 export const TextAreaBox = styled.textarea`
   width: 100%;
   height: 140px;
@@ -117,11 +110,10 @@ export const TextAreaBox = styled.textarea`
   line-height: 1.6;
 
   &::placeholder {
-    color: #a3c1ad; /* 예시 예시 예시 문구 색상 */
+    color: #3D7B5A;
   }
 `;
 
-/* 코스 등반 완료 버튼 */
 export const SubmitButton = styled.button`
   width: 100%;
   background-color: ${props => props.disabled ? '#b0b0b0' : '#4a7a5c'};
@@ -133,7 +125,7 @@ export const SubmitButton = styled.button`
   font-weight: bold;
   cursor: ${props => props.disabled ? 'not-allowed' : 'pointer'};
   margin-top: 12px;
-  margin-bottom: 100px; /* 하단 네비바 공간 확보 */
+  margin-bottom: 75px;
   transition: background-color 0.3s ease;
   flex-shrink: 0;
 `;
@@ -144,6 +136,12 @@ export const BottomNavWrapper = styled.div`
   left: 50%;
   transform: translateX(-50%);
   width: 100%;
-  max-width: 430px;
   z-index: 100;
+`;
+
+export const CourseFlag = styled.img`
+  width: 24px;
+  height: 24px;
+  object-fit: contain;
+  flex-shrink: 0;
 `;

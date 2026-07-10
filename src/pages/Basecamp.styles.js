@@ -1,177 +1,100 @@
 import styled from 'styled-components';
 
-// 카테고리별 테마 색상 지정 (자격증, 대외활동, 교내, 인턴)
 const categoryThemes = {
-  자격증: { tagBg: '#c3dec3', tagColor: '#2b5c3d', cardBg: '#f0f6f2' },
-  대외활동: { tagBg: '#fff3bf', tagColor: '#e67e22', cardBg: '#fffbeb' },
-  교내: { tagBg: '#d0ebff', tagColor: '#1c7ed6', cardBg: '#f1f9ff' },
-  인턴: { tagBg: '#eebefa', tagColor: '#ae3ec9', cardBg: '#fdf4ff' },
+  자격증: { tagBg: '#57E094', tagColor: 'black', cardBg: '#EAF8E7' },
+  대외활동: { tagBg: '#FFF795', tagColor: 'black', cardBg: '#fffbc7' },
+  교내: { tagBg: '#d0ebff', tagColor: 'black', cardBg: '#f1f9ff' },
+  인턴: { tagBg: '#eebefa', tagColor: 'black', cardBg: '#fdf4ff' },
 };
 
 export const Container = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  background-color: #f4f6f4;
   padding: 20px 16px;
-  min-height: 100vh;
+  height: 100vdh;
   box-sizing: border-box;
   width: 100%;
-  max-width: 430px;
   margin: 0 auto;
   position: relative;
 `;
 
-export const MainCard = styled.div`
-  background: white;
-  width: 100%;
-  border-radius: 28px;
-  padding: 24px 20px;
-  box-sizing: border-box;
-  display: flex;
-  flex-direction: column;
-  position: relative;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.05);
-  margin-bottom: 24px;
-`;
-
-export const CardHeader = styled.div`
+export const TopHeaderSection = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
-  margin-bottom: 16px;
+  width: 100%;
+  margin-bottom: 20px;
 `;
 
-export const TitleSection = styled.div`
-  .main-title {
+/* 💡 타이틀 텍스트 스타일 */
+export const TitleArea = styled.div`
+  h2 {
     font-size: 24px;
-    font-weight: bold;
-    color: #2b5c3d;
-    margin: 0 0 4px 0;
+    color: #3b7d5a;
+    margin:  5px 0 0 0;
+    font-weight: 800;
   }
-  .sub-title {
+  p {
     font-size: 16px;
-    font-weight: bold;
     color: #333;
     margin: 0;
+    font-weight: bold;
+    span {
+      color: #333;
+    }
   }
 `;
 
+/* 💡 아코디언 드롭다운 컨테이너 및 컴포넌트 */
 export const DropdownContainer = styled.div`
   position: relative;
-  z-index: 10;
 `;
 
 export const DropdownButton = styled.button`
-  background: #f4f6f4;
-  border: 1px solid #ddd;
-  border-radius: 12px;
-  padding: 6px 12px;
-  font-size: 12px;
+  background: none;
+  border: none;
   color: #3b7d5a;
+  font-size: 14px;
   font-weight: bold;
   cursor: pointer;
   display: flex;
   align-items: center;
   gap: 4px;
+  span {
+    font-size: 10px;
+  }
 `;
 
 export const DropdownMenu = styled.div`
   position: absolute;
-  top: 110%;
+  top: 25px;
   right: 0;
   background: white;
-  border: 1px solid #ddd;
-  border-radius: 12px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  z-index: 10;
+  width: 110px;
   overflow: hidden;
-  width: 100px;
-`;
 
-export const DropdownItem = styled.div`
-  padding: 8px 12px;
-  font-size: 12px;
-  color: #555;
-  cursor: pointer;
-  &:hover {
-    background-color: #f4f6f4;
+  div {
+    padding: 10px;
+    font-size: 13px;
+    color: #555;
+    cursor: pointer;
+    text-align: center;
+    &:hover {
+      background: #f5f5f5;
+    }
   }
 `;
 
-export const InfoGrid = styled.div`
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: 16px;
-  .label { font-size: 12px; color: #999; margin-bottom: 4px; }
-  .value { font-size: 20px; font-weight: bold; color: #111; }
-  .right { text-align: right; }
-`;
-
-export const MountainWrapper = styled.div`
-  position: relative;
-  width: 100%;
-  aspect-ratio: 360 / 260;
-  background-image: url(${props => props.bgImage});
-  background-size: 100% 100%;
-  background-repeat: no-repeat;
-  background-position: center;
-`;
-
-export const AltitudeScale = styled.div`
-  position: absolute;
-  left: 10px;
-  top: 30px;
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-  span {
-    width: 12px;
-    height: 1.5px;
-    background-color: #333;
-    &:nth-child(5n) { width: 18px; }
-  }
-`;
-
-export const ActivePointer = styled.div`
-  position: absolute;
-  left: 32px;
-  top: ${props => props.top || '50%'};
-  color: #c94a4a;
-  font-size: 12px;
-  transform: translateY(-50%);
-`;
-
-export const StageButton = styled.div`
-  position: absolute;
-  width: 20px;
-  height: 20px;
-  border-radius: 50%;
-  bottom: ${props => props.bottom};
-  left: ${props => props.left};
-  transform: translate(-50%, 50%);
-  background-color: ${props => props.isActive ? '#FFD43B' : '#BBBBBB'};
-  border: 2px solid white;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.15);
-  transition: all 0.3s ease;
-`;
-
-export const FlagIcon = styled.div`
-  position: absolute;
-  width: 25px;
-  height: 25px;
-  bottom: 86%;
-  left: 48%;
-  transform: translate(-50%, -100%);
-  background-color: transparent;
-  
-  /* 100% 달성 상태(isActive)에 따라 노랑/회색 토글 */
-  filter: ${props => props.isActive
-    ? 'none'
-    : 'drop-shadow(0px 0px 0px rgba(80, 80, 80, 1)) grayscale(100%) brightness(55%) contrast(80%)'};
-  mix-blend-mode: ${props => props.isActive ? 'normal' : 'luminosity'};
-  
-  z-index: 5;
-  pointer-events: none;
+export const Divider = styled.div`
+  width: 102%;
+  height: 1px;
+  background-color: #acacac;
+  margin: 20px 0 20px 0;
 `;
 
 /* 내 코스 섹션 영역 */
@@ -180,16 +103,16 @@ export const CourseSection = styled.div`
   flex: 1;
   display: flex;
   flex-direction: column;
-  margin-bottom: 80px;
+  margin-bottom: 48px;
 `;
 
 export const SectionHeader = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 16px;
-  h3 { font-size: 20px; color: #2b5c3d; margin: 0; }
-  p { font-size: 12px; color: #777; margin: 4px 0 0 0; }
+  margin-bottom: 10px;
+  h3 { font-size: 20px; color: #3b7d5a; margin: 0; font-weight: 900; }
+  p { font-size: 12px; color: black; margin: 0; }
 `;
 
 export const AddBtn = styled.button`
@@ -199,7 +122,7 @@ export const AddBtn = styled.button`
   border-radius: 20px;
   padding: 6px 14px;
   font-size: 12px;
-  font-weight: bold;
+  font-weight: 500;
   cursor: pointer;
 `;
 
@@ -209,7 +132,6 @@ export const CategoryGroup = styled.div`
 `;
 
 export const CategoryTag = styled.span`
-  /* props로 전달받은 카테고리 테마 색상 적용 */
   background-color: ${props => categoryThemes[props.category]?.tagBg || '#e0e0e0'};
   color: ${props => categoryThemes[props.category]?.tagColor || '#666'};
   font-size: 11px;
@@ -221,19 +143,15 @@ export const CategoryTag = styled.span`
 `;
 
 export const TaskCard = styled.div`
-  /* ⚠️ 완료 여부(isCompleted)와 상관없이 항상 카테고리 고유의 배경색을 유지합니다. */
-  background: ${props => categoryThemes[props.category]?.cardBg || '#f9f9f9'};
-  border-radius: 4px; /* 시안과 같은 플랫한 사각 라운드 형태 */
-  padding: 14px 16px;
+  background: ${props => categoryThemes[props.category]?.cardBg || '#EAF8E7'};
+  border-radius: 4px;
+  padding: 10px 12px 10px 2px;
   display: flex;
   justify-content: space-between;
   align-items: center;
   margin-bottom: 8px;
   border: 1px solid transparent;
-  
-  /* 완료되었을 때 카드 전체에 살짝 투명도를 주어 처리된 느낌을 줍니다 (원하지 않으면 이 줄은 지우셔도 됩니다) */
-  opacity: ${props => props.isCompleted ? 0.65 : 1};
-  
+
   .task-left {
     display: flex;
     align-items: center;
@@ -242,8 +160,6 @@ export const TaskCard = styled.div`
     font-weight: 500;
     color: #333;
     
-    /* ⚠️ 완료 시 글자에 줄이 쫙 그어지도록 설정 */
-    text-decoration: ${props => props.isCompleted ? 'line-through' : 'none'};
   }
   
   .task-right {
@@ -271,6 +187,101 @@ export const BottomNavWrapper = styled.div`
   left: 50%;
   transform: translateX(-50%);
   width: 100%;
-  max-width: 430px;
   z-index: 100;
+`;
+
+export const MountainBox = styled.div`
+  width: 100%;
+  border-radius: 20px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+  overflow: hidden;
+  flex-shrink: 0;
+  cursor: pointer;
+`;
+
+export const HomeInfo = styled.div`
+  display: flex;
+  justify-content: space-between;
+  padding: 20px 20px 0 20px;
+`;
+
+export const InfoText = styled.div`
+  display: flex;
+  flex-direction: column;
+
+  div {
+    font-size: 13px;
+    color: #707070;
+  }
+
+  span {
+    font-size: 20px;
+    font-weight: 900;
+  }
+`;
+
+export const HomeMountain = styled.img`
+  width: 100%;
+  height: auto;
+`;
+
+export const ActionIcon = styled.img`
+  width: 22px;
+  height: 22px;
+  object-fit: contain;
+  cursor: pointer;
+  transition: transform 0.1s ease;
+
+  &:hover {
+    transform: scale(1.1);
+  }
+`;
+
+export const StatusFlag = styled.img`
+  width: 24px;
+  height: 24px;
+  object-fit: contain;
+  flex-shrink: 0;
+`;
+
+export const MountainContent = styled.div`
+  position: relative;
+  width: 100%;
+  display: flex;
+  align-items: flex-end;
+  padding-bottom: 20px;
+`;
+
+export const GaugeContainer = styled.div`
+  position: absolute;
+  left: 16px;
+  bottom: 50px; 
+  height: 65%;
+  display: flex;
+  flex-direction: column-reverse;
+  justify-content: space-between;
+  width: 35px;
+  z-index: 2;
+`;
+
+export const GaugeLine = styled.div`
+  width: 14px;
+  height: 2px;
+  background-color: #000;
+`;
+
+export const Indicator = styled.div`
+  position: absolute;
+  left: 20px;
+  
+  bottom: ${props => 100 - props.topPercent}%; 
+  transform: translateY(50%);
+  
+  width: 0;
+  height: 0;
+  border-top: 6px solid transparent;
+  border-bottom: 6px solid transparent;
+  border-right: 10px solid #c93b3b;
+  
+  transition: bottom 0.5s ease-in-out;
 `;

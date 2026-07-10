@@ -3,9 +3,11 @@ import { useNavigate } from 'react-router-dom';
 import * as S from './Basecamp.styles';
 import BottomNav from '../components/common/BottomNav';
 import HomeMountain from '../assets/images/HomeMountain.jpg';
-import BlackFlag from '../assets/images/BlackFlag.png';
+import GrayFlag from '../assets/images/GrayFlag.png';
+import GreenFlag from '../assets/images/GreenFlag.png';
+import Goaddreview from '../assets/images/Goaddreview.png';
+import Goeditcourse from '../assets/images/Goeditcourse.png';
 
-// 1. 산 위의 버튼 배치 데이터
 const STAGE_DATA = [
   { id: 1, threshold: 20, bottom: '23.5%', left: '39%' },
   { id: 2, threshold: 40, bottom: '38.8%', left: '56%' },
@@ -13,10 +15,8 @@ const STAGE_DATA = [
   { id: 4, threshold: 80, bottom: '64.5%', left: '54.5%' },
 ];
 
-// 고정할 카테고리 리스트 순서 정의
 const CATEGORIES = ['자격증', '대외활동', '교내', '인턴'];
 
-// 2. 내 코스 카테고리 데이터 (교내, 인턴이 비어있는 상태)
 const COURSE_DATA = {
   자격증: [
     { id: 1, title: '무역영어 자격증', isCompleted: false },
@@ -36,78 +36,62 @@ export default function MainPage() {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [selectedPeriod, setSelectedPeriod] = useState('2026년 상반기');
 
-  // 진행률 상태 (100일 때만 정상의 깃발이 원래 노란색으로 빛납니다.)
-  const [progress, setProgress] = useState(100);
+  const toggleDropdown = () => setIsDropdownOpen(!isDropdownOpen);
+  const handlePeriodSelect = (period) => {
+    setSelectedPeriod(period);
+    setIsDropdownOpen(false);
+  };
+
+  const topPercent = 16;
 
   return (
     <S.Container>
 
-      {/* 상단 메인 카드 섹션 */}
-      <S.MainCard>
-        <S.CardHeader>
-          <S.TitleSection>
-            <h2 className="main-title">베이스캠프</h2>
-            <p className="sub-title">[해외영업] 산맥 등반 중!</p>
-          </S.TitleSection>
+      <S.TopHeaderSection>
+        <S.TitleArea>
+          <h2>베이스캠프</h2>
+          <p><span>[해외영업]</span> 산맥 등반 중!</p>
+        </S.TitleArea>
 
-          {/* 아코디언 드롭다운 버튼 */}
-          <S.DropdownContainer>
-            <S.DropdownButton onClick={() => setIsDropdownOpen(!isDropdownOpen)}>
-              {selectedPeriod} {isDropdownOpen ? '▲' : '▼'}
-            </S.DropdownButton>
-            {isDropdownOpen && (
-              <S.DropdownMenu>
-                {['2026년 상반기', '2025년 하반기', '2025년 상반기'].map((period) => (
-                  <S.DropdownItem
-                    key={period}
-                    onClick={() => {
-                      setSelectedPeriod(period);
-                      setIsDropdownOpen(false);
-                    }}
-                  >
-                    {period}
-                  </S.DropdownItem>
-                ))}
-              </S.DropdownMenu>
-            )}
-          </S.DropdownContainer>
-        </S.CardHeader>
+        <S.DropdownContainer>
+          <S.DropdownButton onClick={toggleDropdown}>
+            {selectedPeriod} <span>{isDropdownOpen ? '▲' : '▼'}</span>
+          </S.DropdownButton>
+          {isDropdownOpen && (
+            <S.DropdownMenu>
+              <div onClick={() => handlePeriodSelect('2026년 상반기')}>2026년 상반기</div>
+              <div onClick={() => handlePeriodSelect('2025년 하반기')}>2025년 하반기</div>
+              <div onClick={() => handlePeriodSelect('2025년 상반기')}>2025년 상반기</div>
+            </S.DropdownMenu>
+          )}
+        </S.DropdownContainer>
+      </S.TopHeaderSection>
 
-        {/* 고도 및 상위 백분율 정보 */}
-        <S.InfoGrid>
-          <div>
-            <div className="label">현재 고도</div>
-            <div className="value">1,250M</div>
-          </div>
-          <div className="right">
-            <div className="label">[해외영업] 산맥</div>
-            <div className="value">상위 16%</div>
-          </div>
-        </S.InfoGrid>
+      <S.MountainBox onClick={() => navigate('/basecamp')}>
+        <S.HomeInfo>
+          <S.InfoText>
+            <div>현재 고도</div>
+            <span>2,550M</span>
+          </S.InfoText>
+          <S.InfoText style={{ textAlign: 'right' }}>
+            <div>[해외영업] 산맥</div>
+            <span>상위 16%</span>
+          </S.InfoText>
+        </S.HomeInfo>
 
-        {/* 등산 진행도 일러스트 영역 */}
-        <S.MountainWrapper bgImage={HomeMountain}>
-          <S.AltitudeScale>
-            {[...Array(12)].map((_, i) => <span key={i} />)}
-          </S.AltitudeScale>
-          <S.ActivePointer top="40%">◀</S.ActivePointer>
+        <S.MountainContent>
+          <S.GaugeContainer>
+            {Array.from({ length: 20 }).map((_, index) => (
+              <S.GaugeLine key={index} />
+            ))}
+            <S.Indicator topPercent={topPercent} />
+          </S.GaugeContainer>
 
-          {/* 스테이지 버튼들 */}
-          {STAGE_DATA.map((stage) => (
-            <S.StageButton
-              key={stage.id}
-              bottom={stage.bottom}
-              left={stage.left}
-              isActive={progress >= stage.threshold}
-            />
-          ))}
+          <S.HomeMountain src={HomeMountain} />
+        </S.MountainContent>
+      </S.MountainBox>
 
-          {/* progress === 100일 때만 회색 필터가 풀리며 노란색으로 변하는 깃발 */}
-          <S.FlagIcon isActive={progress === 100}>
-            <img src={BlackFlag} alt="flag" style={{ width: '100%', height: '100%' }} />
-          </S.FlagIcon>
-        </S.MountainWrapper>
-      </S.MainCard>
+      <S.Divider />
 
       {/* 내 코스 리스트 섹션 */}
       <S.CourseSection>
@@ -138,15 +122,32 @@ export default function MainPage() {
                     category={category}
                   >
                     <div className="task-left">
-                      {/* 시안처럼 활성화 상태일 땐 녹색 계열, 완료시엔 연회색 처리 */}
-                      <span style={{ color: task.isCompleted ? '#bbb' : '#3b7d5a', fontSize: '16px' }}>
-                        {task.isCompleted ? '🪦' : '🚩'}
+                      <S.StatusFlag
+                        src={task.isCompleted ? GrayFlag : GreenFlag}
+                        alt="상태 깃발"
+                      />
+                      <span
+                        style={{
+                          textDecoration: task.isCompleted ? 'line-through' : 'none',
+                          color: '#333'
+                        }}
+                      >
+                        {task.title}
                       </span>
-                      <span>{task.title}</span>
                     </div>
                     <div className="task-right">
-                      <span>📄</span>
-                      <span>🏅</span>
+                      <S.ActionIcon
+                        src={Goeditcourse}
+                        onClick={(e) => {
+                          navigate('/editcourse');
+                        }}
+                      />
+                      <S.ActionIcon
+                        src={Goaddreview}
+                        onClick={(e) => {
+                          navigate('/addreview');
+                        }}
+                      />
                     </div>
                   </S.TaskCard>
                 ))
@@ -156,7 +157,6 @@ export default function MainPage() {
         })}
       </S.CourseSection>
 
-      {/* 하단 고정 탭 바 */}
       <S.BottomNavWrapper>
         <BottomNav />
       </S.BottomNavWrapper>

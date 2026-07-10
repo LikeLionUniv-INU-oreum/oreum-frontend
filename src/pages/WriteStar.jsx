@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import * as S from './WriteStar.styles';
 import BottomNav from '../components/common/BottomNav';
+import GrayFlag from '../assets/images/GrayFlag.png';
 
 export default function WriteStar() {
   const navigate = useNavigate();
@@ -49,7 +50,8 @@ export default function WriteStar() {
 
       {/* 진행 중인 대상 코스 정보 표시 */}
       <S.CourseBadgeCard>
-        <span>🚩</span> 무역영어 자격증
+        <S.CourseFlag src={GrayFlag} />
+        무역영어 자격증
       </S.CourseBadgeCard>
 
       {/* [S] - Situation (상황) */}

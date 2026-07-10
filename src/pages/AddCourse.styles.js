@@ -2,10 +2,10 @@ import styled from 'styled-components';
 
 // 카테고리별 고유 테마 색상 정의 (시안 기준)
 const categoryThemes = {
-  교내: { border: '#d0ebff', activeBg: '#d0ebff', color: '#1c7ed6' },
-  대외활동: { border: '#fff3bf', activeBg: '#fff3bf', color: '#e67e22' },
-  자격증: { border: '#b4e3b4', activeBg: '#8ce99a', color: '#2b5c3d' },
-  인턴: { border: '#e5dbff', activeBg: '#e5dbff', color: '#ae3ec9' },
+  교내: { border: '#C6B5F5', activeBg: '#C6B5F5', color: '#1c7ed6' },
+  대외활동: { border: '#F3E530', activeBg: '#F3E530', color: '#e67e22' },
+  자격증: { border: '#57E094', activeBg: '#57E094', color: '#2b5c3d' },
+  인턴: { border: '#D7C997', activeBg: '#D7C997', color: '#ae3ec9' },
 };
 
 export const Container = styled.div`
@@ -19,6 +19,7 @@ export const Container = styled.div`
   max-width: 430px;
   margin: 0 auto;
   position: relative;
+  gap: 20px;
 `;
 
 export const BackButton = styled.button`
@@ -39,7 +40,7 @@ export const FormSection = styled.div`
 
   h3 {
     font-size: 20px;
-    font-weight: bold;
+    font-weight: 900;
     color: #2b5c3d;
     margin: 0 0 16px 0;
   }
