@@ -17,9 +17,7 @@ export default function Home() {
   const fetchProfile = async () => {
     try {
       const data = await getUserProfile();
-      if (data.isSuccess) {
-        setProfile(data.result);
-      }
+      if (data.isSuccess) setProfile(data.result);
     } catch (error) {
       console.error('프로필 로딩 실패:', error);
     }
@@ -52,11 +50,11 @@ export default function Home() {
           <HomeInfo>
             <InfoText>
               <div>현재 고도</div>
-              <span>{profile?.currentHeight || 0}M</span>
+              <span>{profile?.currentHeight ?? 9999}M</span>
             </InfoText>
             <InfoText style={{ textAlign: 'right' }}>
               <div>[{profile?.jobName || ' '}] 산맥</div>
-              <span>상위 {profile?.jobTopPercent || 0}%</span>
+              <span>상위 {profile?.jobTopPercent ?? 99}%</span>
             </InfoText>
           </HomeInfo>
           <HomeMountain src={homeMountain} />
@@ -77,8 +75,8 @@ export default function Home() {
               </div>
             ))
           ) : (
-            <div className="list-item">
-              <div>😥 최근 완료한 코스가 없어요.</div>
+            <div className="list-item" style={{ color: '#999' }}>
+              아직 완료된 코스가 없어요 😥
             </div>
           )}
         </CourseBox>

@@ -78,7 +78,7 @@ export const FilterButton = styled.button`
   font-size: 13px;
   font-weight: 500;
   cursor: pointer;
-  background-color: ${(props) => (props.active ? '#3b7d5a' : '#b0b5b2')};
+  background-color: ${(props) => (props.$active ? '#3b7d5a' : '#b0b5b2')};
   color: white;
   transition: background-color 0.2s;
 
@@ -120,7 +120,7 @@ export const SortButton = styled.button`
   font-size: 11px;
   font-weight: bold;
   cursor: pointer;
-  background-color: ${(props) => (props.active ? '#3e7e5a' : '#b0b5b2')};
+  background-color: ${(props) => (props.$active ? '#3e7e5a' : '#b0b5b2')};
   color: white;
 `;
 
@@ -211,4 +211,16 @@ export const BottomNavWrapper = styled.div`
   transform: translateX(-50%);
   width: 100%;
   z-index: 100;
+`;
+
+export const MoreButton = styled.button`
+  width: 100%;
+  padding: 14px;
+  margin-top: 16px;
+  border-radius: 8px;
+  background-color: #eaf4ee;
+  border: none;
+  color: #555;
+  font-weight: bold;
+  cursor: pointer;
 `;

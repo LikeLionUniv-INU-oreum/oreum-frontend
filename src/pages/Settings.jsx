@@ -34,8 +34,7 @@ export default function Settings() {
 
         <h1>{userInfo?.nickname || '닉네임'}</h1>
         <div>
-          {userInfo?.universityName || '오름대학교'} | {userInfo?.majorName || '오름학과'}{' '}
-          {userInfo?.grade || '1학년'}
+          {userInfo?.universityName || '대학교'} | {userInfo?.majorName || '학과'} {userInfo?.grade || '학년'}
         </div>
         <div>{userInfo?.universityEmail || 'example@inu.ac.kr'}</div>
 
