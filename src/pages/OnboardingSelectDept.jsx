@@ -86,7 +86,7 @@ export default function OnboardingSelectDept() {
           navigate('/onboardingcomplete');
 
           // 학적 정보 저장
-          localStorage.setItem('currentJobId', job);
+          localStorage.setItem('currentJobId', data.result.jobId);
           localStorage.setItem('currentJobName', data.result.jobName);
         } else {
           alert(data.message);

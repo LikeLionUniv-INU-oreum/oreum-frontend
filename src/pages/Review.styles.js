@@ -105,7 +105,6 @@ export const InfoItem = styled.div`
 
   .label {
     display: inline-block;
-    width: 75px;
     font-weight: bold;
   }
 `;
@@ -113,7 +112,7 @@ export const InfoItem = styled.div`
 /* 두 번째 섹션: TIP 한마디 구역 */
 export const TipTitle = styled.div`
   width: 100%;
-  font-size: 16px;
+  font-size: 18px;
   font-weight: bold;
   color: #466b53;
   margin-top: 25px;
