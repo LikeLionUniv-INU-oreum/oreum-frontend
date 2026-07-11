@@ -210,7 +210,6 @@ export const RankText = styled.p`
   font-size: 12px;
   color: #555;
   text-align: center;
-  word-break: keep-all;
 `;
 
 export const StatHeader = styled.div`

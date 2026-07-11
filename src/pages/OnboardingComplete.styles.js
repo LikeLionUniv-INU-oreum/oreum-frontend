@@ -23,7 +23,7 @@ export const CardSection = styled.div`
   position: relative; /* 내부 콘텐츠를 absolute로 얹기 위한 기준점 */
   width: 100%;
 
-  margin-top: 10dvh; /* 💡 핵심: 헤더와 사진 카드 사이의 확실한 여백 */
+  margin-top: 10dvh;
 
   border-radius: 24px; /* 시안처럼 테두리를 부드럽게 깎음 */
   overflow: hidden; /* 이미지가 라운드 테두리 밖으로 빠져나가는 것 방지 */
@@ -55,7 +55,7 @@ export const CardContent = styled.div`
 /* 텍스트 위치 가이드: 일러스트 아래 빈 공간에 걸치도록 비율 조정 */
 export const Title = styled.h1`
   position: absolute;
-  top: 50%; /* 💡 이미지 전체 기준 글씨 위치 오프셋 조정 (시안 맞춤) */
+  top: 50%; 
   transform: translateY(-50%);
 
   width: 100%;
@@ -65,7 +65,6 @@ export const Title = styled.h1`
   line-height: 1.45;
   text-align: center;
   margin: 0;
-  word-break: keep-all;
 `;
 
 export const StartButton = styled.button`

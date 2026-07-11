@@ -40,3 +40,29 @@ export const getUserProfile = async () => {
 
   return response.data;
 };
+
+// 설정창 유저 정보 조회
+export const getUserInfo = async () => {
+  const response = await api.get('/users/me');
+
+  return response.data;
+};
+
+// 베이스캠프 분기별 정보 조회
+export const getBasecampInfo = async (year, termType) => {
+  const response = await api.get('/terms/dashboard', {
+    params: {
+      year,
+      termType,
+    },
+  });
+
+  return response.data;
+};
+
+// 조회 가능 분기 목록
+export const getTerms = async () => {
+  const response = await api.get('/terms');
+
+  return response.data;
+};

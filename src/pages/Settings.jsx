@@ -2,10 +2,27 @@ import * as S from './Settings.styles.js';
 import BottomNav from '../components/common/BottomNav.jsx';
 import egLogo from '../assets/images/OreumEgLogo.jpg';
 import rightArrow from '../assets/icons/RightArrow.svg';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { getUserInfo } from '../api/user.js';
 
 export default function Settings() {
   const navigate = useNavigate();
+  const [userInfo, setUserInfo] = useState(null);
+
+  /** 설정창 유저 정보 조회 api */
+  const fetchUserInfo = async () => {
+    try {
+      const data = await getUserInfo();
+      if (data.isSuccess) setUserInfo(data.result);
+    } catch (error) {
+      console.error('유저 정보 로딩 실패:', error);
+    }
+  };
+
+  useEffect(() => {
+    fetchUserInfo();
+  }, []);
 
   return (
     <S.Container>
@@ -15,9 +32,12 @@ export default function Settings() {
           <S.EgLogo src={egLogo} />
         </S.Header>
 
-        <h1>김유니</h1>
-        <div>인천대학교 무역학부 / 2학년</div>
-        <div>1234@inu.ac.kr</div>
+        <h1>{userInfo?.nickname || '닉네임'}</h1>
+        <div>
+          {userInfo?.universityName || '오름대학교'} | {userInfo?.majorName || '오름학과'}{' '}
+          {userInfo?.grade || '1학년'}
+        </div>
+        <div>{userInfo?.universityEmail || 'example@inu.ac.kr'}</div>
 
         <S.Divider />
 

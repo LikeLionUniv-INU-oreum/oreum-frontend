@@ -11,44 +11,72 @@ export const Container = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 20px 16px;
-  height: 100vdh;
-  box-sizing: border-box;
   width: 100%;
+  height: 100dvh;
   margin: 0 auto;
   position: relative;
+  overflow-x: hidden;
+`;
+
+export const ContentWrapper = styled.div`
+  box-sizing: border-box;
+  padding: 20px 30px;
+  flex: 1;
+  overflow-x: hidden;
+  overflow-y: auto;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 `;
 
 export const TopHeaderSection = styled.div`
   display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
+  flex-direction: column;
   width: 100%;
-  margin-bottom: 20px;
 `;
 
-/* 💡 타이틀 텍스트 스타일 */
+export const HeaderTopRow = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+
+  h2 {
+    font-size: 24px;
+    color: #3b7d5a;
+    font-weight: 900;
+    margin: 10px 0 0 0;
+  }
+`;
+
+export const TitleDescription = styled.p`
+  font-size: 16px;
+  margin: 0;
+  font-weight: bold;
+  line-height: 1.4;
+`;
+
 export const TitleArea = styled.div`
   h2 {
     font-size: 24px;
     color: #3b7d5a;
-    margin:  5px 0 0 0;
-    font-weight: 800;
+    margin: 0;
+    font-weight: 900;
   }
+
   p {
     font-size: 16px;
-    color: #333;
     margin: 0;
     font-weight: bold;
-    span {
-      color: #333;
-    }
   }
 `;
 
-/* 💡 아코디언 드롭다운 컨테이너 및 컴포넌트 */
 export const DropdownContainer = styled.div`
   position: relative;
+  flex-shrink: 0;
 `;
 
 export const DropdownButton = styled.button`
@@ -57,10 +85,11 @@ export const DropdownButton = styled.button`
   color: #3b7d5a;
   font-size: 14px;
   font-weight: bold;
-  cursor: pointer;
   display: flex;
   align-items: center;
   gap: 4px;
+  cursor: pointer;
+
   span {
     font-size: 10px;
   }
@@ -77,11 +106,11 @@ export const DropdownMenu = styled.div`
   z-index: 10;
   width: 110px;
   overflow: hidden;
+  background-color: #f3f3f3;
 
   div {
     padding: 10px;
     font-size: 13px;
-    color: #555;
     cursor: pointer;
     text-align: center;
     &:hover {
@@ -91,10 +120,10 @@ export const DropdownMenu = styled.div`
 `;
 
 export const Divider = styled.div`
-  width: 102%;
+  width: 100%;
   height: 1px;
   background-color: #acacac;
-  margin: 20px 0 20px 0;
+  margin: 22px 0;
 `;
 
 /* 내 코스 섹션 영역 */
@@ -111,8 +140,17 @@ export const SectionHeader = styled.div`
   justify-content: space-between;
   align-items: center;
   margin-bottom: 10px;
-  h3 { font-size: 20px; color: #3b7d5a; margin: 0; font-weight: 900; }
-  p { font-size: 12px; color: black; margin: 0; }
+  h3 {
+    font-size: 20px;
+    color: #3b7d5a;
+    margin: 0;
+    font-weight: 900;
+  }
+  p {
+    font-size: 12px;
+    color: black;
+    margin: 0;
+  }
 `;
 
 export const AddBtn = styled.button`
@@ -132,9 +170,9 @@ export const CategoryGroup = styled.div`
 `;
 
 export const CategoryTag = styled.span`
-  background-color: ${props => categoryThemes[props.category]?.tagBg || '#e0e0e0'};
-  color: ${props => categoryThemes[props.category]?.tagColor || '#666'};
-  font-size: 11px;
+  background-color: ${(props) => categoryThemes[props.category]?.tagBg || '#e0e0e0'};
+  color: ${(props) => categoryThemes[props.category]?.tagColor || '#666'};
+  font-size: 12px;
   font-weight: bold;
   padding: 4px 12px;
   border-radius: 20px;
@@ -143,9 +181,9 @@ export const CategoryTag = styled.span`
 `;
 
 export const TaskCard = styled.div`
-  background: ${props => categoryThemes[props.category]?.cardBg || '#EAF8E7'};
+  background: ${(props) => categoryThemes[props.category]?.cardBg || '#EAF8E7'};
   border-radius: 4px;
-  padding: 10px 12px 10px 2px;
+  padding: 10px 12px;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -155,16 +193,15 @@ export const TaskCard = styled.div`
   .task-left {
     display: flex;
     align-items: center;
-    gap: 12px;
+    gap: 6px;
     font-size: 15px;
     font-weight: 500;
     color: #333;
-    
   }
-  
+
   .task-right {
     display: flex;
-    gap: 14px;
+    gap: 6px;
     font-size: 16px;
     cursor: pointer;
   }
@@ -196,6 +233,7 @@ export const MountainBox = styled.div`
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
   overflow: hidden;
   flex-shrink: 0;
+  margin-top: 24px;
   cursor: pointer;
 `;
 
@@ -249,13 +287,12 @@ export const MountainContent = styled.div`
   width: 100%;
   display: flex;
   align-items: flex-end;
-  padding-bottom: 20px;
 `;
 
 export const GaugeContainer = styled.div`
   position: absolute;
   left: 16px;
-  bottom: 50px; 
+  bottom: 28px;
   height: 65%;
   display: flex;
   flex-direction: column-reverse;
@@ -273,15 +310,15 @@ export const GaugeLine = styled.div`
 export const Indicator = styled.div`
   position: absolute;
   left: 20px;
-  
-  bottom: ${props => 100 - props.topPercent}%; 
+
+  bottom: ${(props) => 100 - props.topPercent}%;
   transform: translateY(50%);
-  
+
   width: 0;
   height: 0;
   border-top: 6px solid transparent;
   border-bottom: 6px solid transparent;
   border-right: 10px solid #c93b3b;
-  
+
   transition: bottom 0.5s ease-in-out;
 `;

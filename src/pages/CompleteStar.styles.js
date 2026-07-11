@@ -63,7 +63,6 @@ export const Title = styled.h1`
   line-height: 1.45;
   text-align: center;
   margin: 0;
-  word-break: keep-all;
 `;
 
 export const Subtitle = styled.p`
@@ -77,5 +76,4 @@ export const Subtitle = styled.p`
   line-height: 1.5;
   text-align: center;
   margin: 0;
-  word-break: keep-all;
 `;
