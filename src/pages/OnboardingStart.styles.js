@@ -34,7 +34,6 @@ export const Subtitle = styled.p`
   font-weight: 900;
   color: #3b7d5a;
   line-height: 1.4;
-  word-break: keep-all;
 `;
 
 export const ImageSection = styled.div`

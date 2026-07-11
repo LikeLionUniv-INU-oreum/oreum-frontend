@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import * as S from './Basecamp.styles';
 import BottomNav from '../components/common/BottomNav';
@@ -7,70 +7,115 @@ import GrayFlag from '../assets/images/GrayFlag.png';
 import GreenFlag from '../assets/images/GreenFlag.png';
 import Goaddreview from '../assets/images/Goaddreview.png';
 import Goeditcourse from '../assets/images/Goeditcourse.png';
+import { getBasecampInfo, getTerms } from '../api/user';
 
 const CATEGORIES = ['자격증', '대외활동', '교내', '인턴'];
 
-const COURSE_DATA = {
-  자격증: [
-    { id: 1, title: '무역영어 자격증', isCompleted: false },
-    { id: 2, title: '토익 850점 이상', isCompleted: true },
-  ],
-  대외활동: [
-    { id: 3, title: '무역영어 자격증', isCompleted: false },
-    { id: 4, title: '토익 850점 이상', isCompleted: false },
-  ],
-  교내: [],
-  인턴: [],
-};
-
 export default function MainPage() {
   const navigate = useNavigate();
-
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-  const [selectedPeriod, setSelectedPeriod] = useState('2026년 상반기');
+  const [basecampData, setBasecampData] = useState(null);
+
+  const [termList, setTermList] = useState([]); // 서버에서 받아온 전체 분기 목록
+  const [selectedTerm, setSelectedTerm] = useState(null); // 현재 선택된 분기 객체
 
   const toggleDropdown = () => setIsDropdownOpen(!isDropdownOpen);
-  const handlePeriodSelect = (period) => {
-    setSelectedPeriod(period);
+
+  /** 조회 가능 분기 목록 api */
+  useEffect(() => {
+    const fetchTerms = async () => {
+      try {
+        const data = await getTerms();
+
+        if (data.isSuccess) {
+          if (data.result.terms.length > 0) {
+            setTermList(data.result.terms);
+            setSelectedTerm(data.result.terms[0]);
+          } else {
+            // 최초 유저의 경우
+            const today = new Date();
+            const currentYear = today.getFullYear();
+            const isFirstHalf = today.getMonth() + 1 <= 6;
+
+            const fallbackTerm = {
+              year: currentYear,
+              termType: isFirstHalf ? 'FIRST_HALF' : 'SECOND_HALF',
+              displayName: `${currentYear}년 ${isFirstHalf ? '상반기' : '하반기'}`,
+            };
+
+            setTermList([fallbackTerm]);
+            setSelectedTerm(fallbackTerm);
+          }
+        }
+      } catch (error) {
+        console.error('분기 목록 로딩 실패:', error);
+      }
+    };
+
+    fetchTerms();
+  }, []);
+
+  /** 베이스캠프 분기별 조회 api */
+  useEffect(() => {
+    const fetchBasecamp = async () => {
+      if (!selectedTerm) return;
+
+      try {
+        const data = await getBasecampInfo(selectedTerm.year, selectedTerm.termType);
+
+        if (data.isSuccess) setBasecampData(data.result);
+      } catch (error) {
+        console.error('베이스캠프 데이터 로딩 실패:', error);
+      }
+    };
+
+    fetchBasecamp();
+  }, [selectedTerm]);
+
+  // 드롭다운 항목 클릭 이벤트
+  const handlePeriodSelect = (term) => {
+    setSelectedTerm(term);
     setIsDropdownOpen(false);
   };
-
-  const topPercent = 16;
 
   return (
     <S.Container>
       <S.ContentWrapper>
         <S.TopHeaderSection>
-          <S.TitleArea>
-            <h2 style={{ marginTop: '14px' }}>베이스캠프</h2>
-            <p>
-              <span>[해외영업]</span> 산맥 등반 중!
-            </p>
-          </S.TitleArea>
+          <S.HeaderTopRow>
+            <h2>베이스캠프</h2>
 
-          <S.DropdownContainer>
-            <S.DropdownButton onClick={toggleDropdown}>
-              {selectedPeriod} <span>{isDropdownOpen ? '▲' : '▼'}</span>
-            </S.DropdownButton>
-            {isDropdownOpen && (
-              <S.DropdownMenu>
-                <div onClick={() => handlePeriodSelect('2026년 상반기')}>2026년 상반기</div>
-                <div onClick={() => handlePeriodSelect('2025년 하반기')}>2025년 하반기</div>
-                <div onClick={() => handlePeriodSelect('2025년 상반기')}>2025년 상반기</div>
-              </S.DropdownMenu>
-            )}
-          </S.DropdownContainer>
+            <S.DropdownContainer>
+              <S.DropdownButton onClick={toggleDropdown}>
+                {selectedTerm?.displayName || '분기 선택'} <span>{isDropdownOpen ? '▲' : '▼'}</span>
+              </S.DropdownButton>
+
+              {isDropdownOpen && (
+                <S.DropdownMenu>
+                  {termList.map((term, index) => (
+                    <div key={index} onClick={() => handlePeriodSelect(term)}>
+                      {term.displayName}
+                    </div>
+                  ))}
+                </S.DropdownMenu>
+              )}
+            </S.DropdownContainer>
+          </S.HeaderTopRow>
+
+          <S.TitleDescription>
+            <span>[{basecampData?.jobName || ' '}]</span> 산맥 등반 중!
+          </S.TitleDescription>
         </S.TopHeaderSection>
 
-        <S.MountainBox onClick={() => navigate('/basecamp')}>
+        <S.MountainBox>
           <S.HomeInfo>
             <S.InfoText>
               <div>현재 고도</div>
-              <span>2,550M</span>
+              <span>{basecampData?.currentHeight || 0}M</span>
             </S.InfoText>
             <S.InfoText style={{ textAlign: 'right' }}>
-              <div>[해외영업] 산맥</div>
-              <span>상위 16%</span>
+              <div>[{basecampData?.jobName || ' '}] 산맥</div>
+              <span>상위 {basecampData?.jobPositionPercent || 0}%</span>
             </S.InfoText>
           </S.HomeInfo>
 
@@ -79,7 +124,7 @@ export default function MainPage() {
               {Array.from({ length: 20 }).map((_, index) => (
                 <S.GaugeLine key={index} />
               ))}
-              <S.Indicator topPercent={topPercent} />
+              <S.Indicator topPercent={basecampData?.jobPositionPercent || 0} />
             </S.GaugeContainer>
 
             <S.HomeMountain src={HomeMountain} />
@@ -98,47 +143,52 @@ export default function MainPage() {
             <S.AddBtn onClick={() => navigate('/addcourse')}>+ 새 할 일 추가</S.AddBtn>
           </S.SectionHeader>
 
-          {/* 고정된 4가지 카테고리 순서대로 상시 반복 렌더링 */}
-          {CATEGORIES.map((category) => {
-            const tasks = COURSE_DATA[category] || [];
+          {CATEGORIES.map((categoryName) => {
+            const matchedCategoryData = basecampData?.categories?.find((data) => data.categoryName === categoryName);
+
+            // 백 데이터가 있으면 쓰고, 없으면 빈 배열로 처리
+            const todos = matchedCategoryData?.todos || [];
 
             return (
-              <S.CategoryGroup key={category}>
-                <S.CategoryTag category={category}>{category}</S.CategoryTag>
+              <S.CategoryGroup key={categoryName}>
+                <S.CategoryTag category={categoryName}>{categoryName}</S.CategoryTag>
 
-                {/* 할 일이 없을 때 띄워줄 처리 */}
-                {tasks.length === 0 ? (
+                {todos.length === 0 ? (
                   <S.EmptyTaskPlaceholder>등록된 목표가 없어요.</S.EmptyTaskPlaceholder>
                 ) : (
-                  tasks.map((task) => (
-                    <S.TaskCard key={task.id} isCompleted={task.isCompleted} category={category}>
-                      <div className="task-left">
-                        <S.StatusFlag src={task.isCompleted ? GrayFlag : GreenFlag} alt="상태 깃발" />
-                        <span
-                          style={{
-                            textDecoration: task.isCompleted ? 'line-through' : 'none',
-                            color: '#333',
-                          }}
-                        >
-                          {task.title}
-                        </span>
-                      </div>
-                      <div className="task-right">
-                        <S.ActionIcon
-                          src={Goeditcourse}
-                          onClick={() => {
-                            navigate('/editcourse');
-                          }}
-                        />
-                        <S.ActionIcon
-                          src={Goaddreview}
-                          onClick={() => {
-                            navigate('/addreview');
-                          }}
-                        />
-                      </div>
-                    </S.TaskCard>
-                  ))
+                  todos.map((todo) => {
+                    const isCompleted = todo.todoStatus === 'COMPLETED';
+
+                    return (
+                      <S.TaskCard key={todo.todoId} isCompleted={isCompleted} category={categoryName}>
+                        <div className="task-left">
+                          <S.StatusFlag src={isCompleted ? GrayFlag : GreenFlag} alt="상태 깃발" />
+                          <span
+                            style={{
+                              textDecoration: isCompleted ? 'line-through' : 'none',
+                              color: '#333',
+                            }}
+                          >
+                            {todo.courseName}
+                          </span>
+                        </div>
+                        <div className="task-right">
+                          <S.ActionIcon
+                            src={Goeditcourse}
+                            onClick={() => {
+                              navigate('/editcourse', { state: { todoId: todo.todoId } });
+                            }}
+                          />
+                          <S.ActionIcon
+                            src={Goaddreview}
+                            onClick={() => {
+                              navigate('/addreview', { state: { todoId: todo.todoId } });
+                            }}
+                          />
+                        </div>
+                      </S.TaskCard>
+                    );
+                  })
                 )}
               </S.CategoryGroup>
             );

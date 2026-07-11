@@ -62,7 +62,6 @@ export const SubLabel = styled.p`
   color: #666666;
   margin: 0.5dvh 0 1dvh 0;
   line-height: 1.3;
-  word-break: keep-all;
 `;
 
 export const SearchBox = styled.div`
@@ -101,7 +100,6 @@ export const SearchButton = styled.button`
   justify-content: center;
 `;
 
-/* 💡 핵심: maxRows에 맞춰 높이가 조절되며 내부 스크롤이 적용되는 회색 드롭다운 */
 export const Dropdown = styled.div`
   position: absolute;
   top: 96px; /* Label + SubLabel + Input 높이를 고려한 고정 낙하 위치 */
@@ -116,7 +114,6 @@ export const Dropdown = styled.div`
   max-height: ${({ $maxRows }) => $maxRows * 44}px;
   overflow-y: auto;
 
-  /* 스크롤바 디자인 */
   &::-webkit-scrollbar {
     width: 6px;
   }

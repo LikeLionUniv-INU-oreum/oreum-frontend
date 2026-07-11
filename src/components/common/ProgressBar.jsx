@@ -35,10 +35,7 @@ const EmojiBox = styled.div`
   position: absolute;
   bottom: 12px; /* 바와 이모지 사이의 세로 간격 */
   left: ${(props) => props.$percent}%;
-
-  /* 💡 핵심: 0%일 때는 왼쪽 정렬(0)을 하고, 그 외 단계에서는 기존처럼 -12px만큼 당겨줍니다 */
   transform: ${(props) => (props.$isFirstStep ? 'translateX(0)' : 'translateX(-80%)')};
-
   transition: left 0.4s ease-in-out;
 
   img {
