@@ -37,13 +37,9 @@ export const MiddleTwo = styled.div`
   display: flex;
   flex-direction: column;
   width: 80%;
-
-  /* 💡 핵심: 남은 공간을 이 영역이 꽉 채우도록 해서 버튼들이 위로 쏠리지 않게 합니다 */
   flex: 1;
-  /* 화면 높이에 따라 간격이 유연하게 벌어지도록 분배합니다 */
   justify-content: flex-start;
   gap: 1.5dvh;
-
   margin-bottom: 2dvh; /* 하단 배경 일러스트 시작점과의 간격 확보 */
 `;
 

@@ -15,7 +15,6 @@ export default function Settings() {
     try {
       const data = await getUserInfo();
       if (data.isSuccess) setUserInfo(data.result);
-      console.log(data.result);
     } catch (error) {
       console.error('유저 정보 로딩 실패:', error);
     }
@@ -25,10 +24,6 @@ export default function Settings() {
     fetchUserInfo();
   }, []);
 
-  if (!userInfo) {
-    return <div>로딩 중...</div>;
-  }
-
   return (
     <S.Container>
       <S.MainContent>
@@ -37,11 +32,12 @@ export default function Settings() {
           <S.EgLogo src={egLogo} />
         </S.Header>
 
-        <h1>{userInfo.nickname}</h1>
+        <h1>{userInfo?.nickname || '닉네임'}</h1>
         <div>
-          {userInfo.universityName} / {userInfo.majorName} {userInfo.academicStatusName}
+          {userInfo?.universityName || '오름대학교'} | {userInfo?.majorName || '오름학과'}{' '}
+          {userInfo?.grade || '1학년'}
         </div>
-        <div>{userInfo.universityEmail}</div>
+        <div>{userInfo?.universityEmail || 'example@inu.ac.kr'}</div>
 
         <S.Divider />
 

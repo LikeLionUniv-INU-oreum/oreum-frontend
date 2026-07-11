@@ -2,9 +2,8 @@ import styled from 'styled-components';
 
 export const Container = styled.div`
   width: 100%;
-  max-width: 430px; /* 모바일 뷰 기준 */
   min-height: 100vh;
-  background-color: #3b7d5a; /* 상단 초록색 배경 */
+  background-color: #3b7d5a; 
   display: flex;
   flex-direction: column;
   position: relative;
@@ -124,7 +123,7 @@ export const TipTitle = styled.div`
 
 export const TipCard = styled.div`
   width: 100%;
-  background-color: #eff7f2; /* 팁 카드의 옅은 연두색 배경 */
+  background-color: #eff7f2; 
   border-radius: 20px;
   padding: 20px;
   display: flex;
@@ -151,7 +150,6 @@ export const TipSection = styled.div`
     color: #222222;
     line-height: 1.45;
     font-weight: 600;
-    word-break: keep-all; /* 한글 줄바꿈 예쁘게 처리 */
   }
 `;
 
@@ -161,6 +159,5 @@ export const BottomNavWrapper = styled.div`
   left: 50%;
   transform: translateX(-50%);
   width: 100%;
-  //max-width: 420px; /* 전체 페이지 max-width와 똑같이 맞춰서 깨짐을 방지합니다 */
-  z-index: 100; /* 카드나 다른 요소 뒤로 숨지 않도록 위로 올립니다 */
+  z-index: 100;
 `;

@@ -16,7 +16,7 @@ export const Container = styled.div`
     width: 4px;
   }
   &::-webkit-scrollbar-thumb {
-    background-color: #3B7D5A;
+    background-color: #3b7d5a;
     border-radius: 4px;
   }
 `;
@@ -37,7 +37,7 @@ export const PageTitleSection = styled.div`
   h2 {
     font-size: 24px;
     font-weight: 900;
-    color: #3B7D5A;
+    color: #3b7d5a;
     margin: 0 0 6px 0;
   }
   p {
@@ -50,7 +50,7 @@ export const PageTitleSection = styled.div`
 
 export const Divider = styled.hr`
   border: none;
-  border-top: 2px solid #ACACAC;
+  border-top: 2px solid #acacac;
   margin: 0 0 20px 0;
   width: 100%;
 `;
@@ -92,7 +92,6 @@ export const FormSection = styled.div`
     color: #333;
     line-height: 1.2;
     margin: 0 0 6px 2px;
-    word-break: keep-all;
   }
 `;
 
@@ -110,20 +109,20 @@ export const TextAreaBox = styled.textarea`
   line-height: 1.6;
 
   &::placeholder {
-    color: #3D7B5A;
+    color: #3d7b5a;
   }
 `;
 
 export const SubmitButton = styled.button`
   width: 100%;
-  background-color: ${props => props.disabled ? '#b0b0b0' : '#4a7a5c'};
+  background-color: ${(props) => (props.disabled ? '#b0b0b0' : '#4a7a5c')};
   color: white;
   border: none;
   border-radius: 12px;
   padding: 16px 0;
   font-size: 18px;
   font-weight: bold;
-  cursor: ${props => props.disabled ? 'not-allowed' : 'pointer'};
+  cursor: ${(props) => (props.disabled ? 'not-allowed' : 'pointer')};
   margin-top: 12px;
   margin-bottom: 75px;
   transition: background-color 0.3s ease;

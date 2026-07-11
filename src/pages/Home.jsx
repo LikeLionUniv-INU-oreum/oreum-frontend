@@ -133,7 +133,6 @@ const Settings = styled.img`
 const GreetingText = styled.div`
   font-size: 24px;
   font-weight: 900;
-  word-break: keep-all;
 `;
 
 const MountainBox = styled.div`

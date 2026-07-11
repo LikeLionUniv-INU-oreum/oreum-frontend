@@ -34,10 +34,29 @@ export const ContentWrapper = styled.div`
 
 export const TopHeaderSection = styled.div`
   display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
+  flex-direction: column;
   width: 100%;
-  margin-bottom: 20px;
+`;
+
+export const HeaderTopRow = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+
+  h2 {
+    font-size: 24px;
+    color: #3b7d5a;
+    font-weight: 900;
+    margin: 10px 0 0 0;
+  }
+`;
+
+export const TitleDescription = styled.p`
+  font-size: 16px;
+  margin: 0;
+  font-weight: bold;
+  line-height: 1.4;
 `;
 
 export const TitleArea = styled.div`
@@ -57,6 +76,7 @@ export const TitleArea = styled.div`
 
 export const DropdownContainer = styled.div`
   position: relative;
+  flex-shrink: 0;
 `;
 
 export const DropdownButton = styled.button`
@@ -65,10 +85,10 @@ export const DropdownButton = styled.button`
   color: #3b7d5a;
   font-size: 14px;
   font-weight: bold;
-  cursor: pointer;
   display: flex;
   align-items: center;
   gap: 4px;
+  cursor: pointer;
 
   span {
     font-size: 10px;
@@ -103,7 +123,7 @@ export const Divider = styled.div`
   width: 100%;
   height: 1px;
   background-color: #acacac;
-  margin: 20px 0 20px 0;
+  margin: 22px 0;
 `;
 
 /* 내 코스 섹션 영역 */
@@ -213,6 +233,7 @@ export const MountainBox = styled.div`
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
   overflow: hidden;
   flex-shrink: 0;
+  margin-top: 24px;
   cursor: pointer;
 `;
 
@@ -266,13 +287,12 @@ export const MountainContent = styled.div`
   width: 100%;
   display: flex;
   align-items: flex-end;
-  padding-bottom: 20px;
 `;
 
 export const GaugeContainer = styled.div`
   position: absolute;
   left: 16px;
-  bottom: 50px;
+  bottom: 28px;
   height: 65%;
   display: flex;
   flex-direction: column-reverse;
