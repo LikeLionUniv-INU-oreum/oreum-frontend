@@ -14,41 +14,23 @@ export default function BottomNav() {
   return (
     <NavContainer>
       <NavItem onClick={() => navigate('/home')}>
-        <Icon
-          src={homeIcon}
-          className={checkIsActive('/home') ? 'active' : ''}
-        />
+        <Icon src={homeIcon} className={checkIsActive('/home') ? 'active' : ''} />
         <NavText className={checkIsActive('/home') ? 'active' : ''}>홈</NavText>
       </NavItem>
 
       <NavItem onClick={() => navigate('/basecamp')}>
-        <Icon
-          src={campIcon}
-          className={checkIsActive('/basecamp') ? 'active' : ''}
-        />
-        <NavText className={checkIsActive('/basecamp') ? 'active' : ''}>
-          베이스캠프
-        </NavText>
+        <Icon src={campIcon} className={checkIsActive('/basecamp') ? 'active' : ''} />
+        <NavText className={checkIsActive('/basecamp') ? 'active' : ''}>베이스캠프</NavText>
       </NavItem>
 
       <NavItem onClick={() => navigate('/explore')}>
-        <Icon
-          src={searchIcon}
-          className={checkIsActive('/explore') ? 'active' : ''}
-        />
-        <NavText className={checkIsActive('/explore') ? 'active' : ''}>
-          탐색
-        </NavText>
+        <Icon src={searchIcon} className={checkIsActive('/explore') ? 'active' : ''} />
+        <NavText className={checkIsActive('/explore') ? 'active' : ''}>탐색</NavText>
       </NavItem>
 
       <NavItem onClick={() => navigate('/mypage')}>
-        <Icon
-          src={mypageIcon}
-          className={checkIsActive('/mypage') ? 'active' : ''}
-        />
-        <NavText className={checkIsActive('/mypage') ? 'active' : ''}>
-          마이페이지
-        </NavText>
+        <Icon src={mypageIcon} className={checkIsActive('/mypage') ? 'active' : ''} />
+        <NavText className={checkIsActive('/mypage') ? 'active' : ''}>마이페이지</NavText>
       </NavItem>
     </NavContainer>
   );
@@ -56,7 +38,7 @@ export default function BottomNav() {
 
 const NavContainer = styled.div`
   width: 100%;
-  height: 68px;
+  height: 60px;
   background-color: #ffffff;
   border-top: 1px solid #eeeeee;
   display: flex;
@@ -74,7 +56,7 @@ const NavItem = styled.div`
 `;
 
 const Icon = styled.img`
-  width: 36px;
+  width: 34px;
   height: auto;
 
   filter: grayscale(100%) opacity(40%);
@@ -86,7 +68,7 @@ const Icon = styled.img`
 `;
 
 const NavText = styled.span`
-  font-size: 14px;
+  font-size: 13px;
   color: #888888;
   font-weight: 500;
 

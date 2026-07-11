@@ -1,9 +1,26 @@
 import styled from 'styled-components';
+import { motion, AnimatePresence } from 'framer-motion';
+import { useLocation } from 'react-router-dom';
 
 const AppLayout = ({ children }) => {
+  const location = useLocation();
+
   return (
     <Background>
-      <MobileContainer>{children}</MobileContainer>
+      <MobileContainer>
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={location.pathname}
+            initial={{ opacity: 0, x: 20 }}
+            animate={{ opacity: 1, x: 0 }}
+            exit={{ opacity: 0, x: -20 }}
+            transition={{ duration: 0.15, ease: 'easeOut' }}
+            style={{ width: '100%', height: '100%' }}
+          >
+            {children}
+          </motion.div>
+        </AnimatePresence>
+      </MobileContainer>
     </Background>
   );
 };

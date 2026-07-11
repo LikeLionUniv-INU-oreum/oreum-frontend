@@ -1,4 +1,4 @@
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { BrowserRouter, Route, Routes, useLocation } from 'react-router-dom';
 import AppLayout from './styles/AppLayout';
 import Intro from './pages/Intro';
 import Login from './pages/Login.jsx';
@@ -19,33 +19,39 @@ import AddReview from './pages/AddReview.jsx';
 import WriteStar from './pages/WriteStar.jsx';
 import CompleteStar from './pages/CompleteStar.jsx';
 
-function App() {
+function RouterConfig() {
+  const location = useLocation();
+
   return (
-    <BrowserRouter>
-      <AppLayout>
-        <Routes>
-          <Route path="/" element={<Intro />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/signup" element={<Signup />} />
-          <Route path="/onboardingstart" element={<OnboardingStart />} />
-          <Route path="/onboardinggrade" element={<OnboardingGrade />} />
-          <Route path="/onboardingcomplete" element={<OnboardingComplete />} />
-          <Route path="/onboardingselectdept" element={<OnboardingSelectDept />} />
-          <Route path="/home" element={<Home />} />
-          <Route path="/settings" element={<Settings />} />
-          <Route path="/explore" element={<Explore />} />
-          <Route path="/review" element={<Review />} />
-          <Route path="/mypage" element={<Mypage />} />
-          <Route path="/basecamp" element={<Basecamp />} />
-          <Route path="/addcourse" element={<AddCourse />} />
-          <Route path="/editcourse" element={<EditCourse />} />
-          <Route path="/addreview" element={<AddReview />} />
-          <Route path="/writestar" element={<WriteStar />} />
-          <Route path="/completestar" element={<CompleteStar />} />
-        </Routes>
-      </AppLayout>
-    </BrowserRouter>
+    <AppLayout>
+      <Routes location={location} key={location.pathname}>
+        <Route path="/" element={<Intro />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/signup" element={<Signup />} />
+        <Route path="/onboardingstart" element={<OnboardingStart />} />
+        <Route path="/onboardinggrade" element={<OnboardingGrade />} />
+        <Route path="/onboardingcomplete" element={<OnboardingComplete />} />
+        <Route path="/onboardingselectdept" element={<OnboardingSelectDept />} />
+        <Route path="/home" element={<Home />} />
+        <Route path="/settings" element={<Settings />} />
+        <Route path="/explore" element={<Explore />} />
+        <Route path="/review" element={<Review />} />
+        <Route path="/mypage" element={<Mypage />} />
+        <Route path="/basecamp" element={<Basecamp />} />
+        <Route path="/addcourse" element={<AddCourse />} />
+        <Route path="/editcourse" element={<EditCourse />} />
+        <Route path="/addreview" element={<AddReview />} />
+        <Route path="/writestar" element={<WriteStar />} />
+        <Route path="/completestar" element={<CompleteStar />} />
+      </Routes>
+    </AppLayout>
   );
 }
 
-export default App;
+export default function App() {
+  return (
+    <BrowserRouter>
+      <RouterConfig />
+    </BrowserRouter>
+  );
+}

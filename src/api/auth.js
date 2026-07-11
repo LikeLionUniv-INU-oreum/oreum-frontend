@@ -3,7 +3,7 @@ import api from './axios';
 
 // 로그인
 export const login = async (email, password) => {
-  const response = await api.post('auth/login', {
+  const response = await api.post('/auth/login', {
     universityEmail: email,
     password: password,
   });
@@ -31,11 +31,11 @@ export const verifyEmailCode = async (email, code) => {
 };
 
 // 회원가입
-export const signup = async (email, password, nickname) => {
+export const signup = async (universityEmail, password, nickname) => {
   const response = await api.post('/auth/signup', {
-    universityEmail: email,
-    password: password,
-    nickname: nickname,
+    universityEmail,
+    password,
+    nickname,
   });
 
   return response.data;

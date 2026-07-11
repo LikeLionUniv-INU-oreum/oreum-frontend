@@ -34,10 +34,6 @@ export default function Home() {
     fetchProfile();
   };
 
-  if (!profile) {
-    return <Container>로딩 중...</Container>;
-  }
-
   return (
     <Container>
       <MainContent>
@@ -47,7 +43,7 @@ export default function Home() {
         </Header>
 
         <GreetingText>
-          {profile.nickname}님, 오늘도
+          {profile?.nickname || ' '}님, 오늘도
           <br />
           <span style={{ color: '#3B7D5A' }}>오름을 향해 한 걸음!</span>
         </GreetingText>
@@ -56,27 +52,25 @@ export default function Home() {
           <HomeInfo>
             <InfoText>
               <div>현재 고도</div>
-              <span>{profile.currentHeight}M</span>
+              <span>{profile?.currentHeight || 0}M</span>
             </InfoText>
             <InfoText style={{ textAlign: 'right' }}>
-              <div>[{profile.jobName}] 산맥</div>
-              <span>상위 {profile.jobTopPercent}%</span>
+              <div>[{profile?.jobName || ' '}] 산맥</div>
+              <span>상위 {profile?.jobTopPercent || 0}%</span>
             </InfoText>
           </HomeInfo>
           <HomeMountain src={homeMountain} />
         </MountainBox>
 
         <GreetingText style={{ fontWeight: '700', fontSize: '20px' }}>
-          ⛰️ [{profile.jobName}] 산맥의 학우들이
-          <br />
-          최근에 완료한 코스
+          ⛰️ [{profile?.jobName || ' '}] 산맥의 학우들이 최근에 완료한 코스
         </GreetingText>
 
         <CourseBox>
           <RefreshBtn src={refresh} onClick={handleRefreshClick} />
 
-          {profile.recentCompletedCourses?.length > 0 ? (
-            profile.recentCompletedCourses.map((course, index) => (
+          {profile?.recentCompletedCourses?.length > 0 ? (
+            profile?.recentCompletedCourses.map((course, index) => (
               <div className="list-item" key={index}>
                 <img src={completeFlag} />
                 <span>{course}</span>
@@ -84,7 +78,7 @@ export default function Home() {
             ))
           ) : (
             <div className="list-item">
-              <span>최근 완료한 코스가 없습니다.</span>
+              <div>😥 최근 완료한 코스가 없어요.</div>
             </div>
           )}
         </CourseBox>
@@ -139,6 +133,7 @@ const Settings = styled.img`
 const GreetingText = styled.div`
   font-size: 24px;
   font-weight: 900;
+  word-break: keep-all;
 `;
 
 const MountainBox = styled.div`
@@ -209,7 +204,7 @@ const RefreshBtn = styled.img`
   position: absolute;
   top: 24px;
   right: 24px;
-  width: 16px;
+  width: 14px;
   height: auto;
   cursor: pointer;
 `;
