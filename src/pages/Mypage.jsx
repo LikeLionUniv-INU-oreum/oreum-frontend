@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import * as S from './Mypage.styles';
 import BottomNav from '../components/common/BottomNav';
 import BlackFlag from '../assets/images/BlackFlag.png';
@@ -9,10 +9,21 @@ import Mypage2 from '../assets/images/Mypage2.png';
 import Mypage3 from '../assets/images/Mypage3.png';
 import Mypage4 from '../assets/images/Mypage4.png';
 import Mypage5 from '../assets/images/Mypage5.png';
+import { getMypage } from '../api/mypage';
+
+const ACADEMIC_STATUS_MAP = {
+  FRESHMAN: '1학년',
+  SOPHOMORE: '2학년',
+  JUNIOR: '3학년',
+  SENIOR: '4학년',
+  EXTRA_SEMESTER: '초과학기',
+  GRADUATE: '졸업생',
+};
 
 export default function Mypage() {
   const [openCategory, setOpenCategory] = useState(null); // 각 카테고리별 아코디언 상태
   const [isCourseOpen, setIsCourseOpen] = useState(false); // 완등을 기다리는 코스 아코디언 상태
+  const [mypageInfo, setMypageInfo] = useState(null);
 
   // 통계 항목 클릭 핸들러
   const handleCategoryClick = (category) => {
@@ -29,11 +40,7 @@ export default function Mypage() {
       avg: '1.8개',
       percent: 80,
       avgPercent: 60,
-      details: [
-        '데이터 분석 프로젝트 완성',
-        '데이터 분석 프로젝트 완성',
-        '데이터 분석 프로젝트 완성',
-      ],
+      details: ['데이터 분석 프로젝트 완성', '데이터 분석 프로젝트 완성', '데이터 분석 프로젝트 완성'],
     },
     {
       id: 'contest',
@@ -78,6 +85,20 @@ export default function Mypage() {
     'ADsP 자격증 취득',
   ];
 
+  /** 마이페이지 전체 조회 api */
+  useEffect(() => {
+    const fetchMypage = async () => {
+      try {
+        const data = await getMypage();
+        if (data.isSuccess) setMypageInfo(data.result);
+      } catch (error) {
+        console.error('마이페이지 정보 로딩 실패:', error);
+      }
+    };
+
+    fetchMypage();
+  }, []);
+
   return (
     <S.Container bgImage={MypageBackground}>
       <S.ContentArea>
@@ -86,14 +107,14 @@ export default function Mypage() {
           <S.ProfileHeader>
             <S.AvatarWrapper>
               <S.Avatar src={Profile} />
-              <S.AddButton onClick={() => alert('준비 중입니다 ⛰️')}>
-                +
-              </S.AddButton>
+              <S.AddButton onClick={() => alert('준비 중입니다 ⛰️')}>+</S.AddButton>
             </S.AvatarWrapper>
             <S.ProfileInfo>
-              <S.UserName>김유니</S.UserName>
-              <S.UserMajor>무역학부 / 2학년</S.UserMajor>
-              <S.UserStats>지금까지 2550M 등반 성공!</S.UserStats>
+              <S.UserName>{mypageInfo?.nickname || '닉네임'}</S.UserName>
+              <S.UserMajor>
+                {mypageInfo?.majorName || '학과'} / {ACADEMIC_STATUS_MAP[mypageInfo?.academicStatus] || '학년'}
+              </S.UserMajor>
+              <S.UserStats>지금까지 9999m 등반 성공!</S.UserStats>
             </S.ProfileInfo>
           </S.ProfileHeader>
 
@@ -101,14 +122,14 @@ export default function Mypage() {
             <S.BadgeItem>
               <S.BadgeTitle>수집한 깃발</S.BadgeTitle>
               <S.BadgeCount>
-                <span className="icon">🚩</span> 9개
+                <span className="icon">🚩</span> 999개
               </S.BadgeCount>
             </S.BadgeItem>
             <S.VerticalDivider />
             <S.BadgeItem>
               <S.BadgeTitle>등반 완료한 산맥</S.BadgeTitle>
               <S.BadgeCount>
-                <span className="icon">🏔️</span> 3곳
+                <span className="icon">🏔️</span> 999곳
               </S.BadgeCount>
             </S.BadgeItem>
           </S.BadgeSection>
@@ -116,7 +137,9 @@ export default function Mypage() {
 
         {/* 메인 통계 영역 */}
         <S.MainContentCard>
-          <S.MainTitle>[해외영업 희망] 2학년</S.MainTitle>
+          <S.MainTitle>
+            [{mypageInfo?.jobName || '직무명'} 희망] {ACADEMIC_STATUS_MAP[mypageInfo?.academicStatus] || '학년'}
+          </S.MainTitle>
 
           <S.RankBanner>
             <S.RankLeftSection>
@@ -151,11 +174,7 @@ export default function Mypage() {
 
                     <S.GraphContainer>
                       <S.ProgressBar color="#3B7D5A" width={item.percent} />
-                      <S.ProgressBar
-                        color="#999999"
-                        width={item.avgPercent}
-                        label={`${item.avg}`}
-                      />
+                      <S.ProgressBar color="#999999" width={item.avgPercent} label={`${item.avg}`} />
                     </S.GraphContainer>
 
                     <S.CountBox>
