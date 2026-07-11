@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 import * as S from './AddCourse.styles';
 import BottomNav from '../components/common/BottomNav';
 
@@ -16,17 +17,54 @@ export default function AddCourse() {
 
   const isFormValid = selectedCategory !== null && courseName.trim().length > 0;
 
-  const handleSubmit = () => {
+  const categoryMap = {
+    '교내': 3,
+    '대외활동': 2,
+    '자격증': 1,
+    '인턴': 4
+  };
+
+  const handleSubmit = async () => {
     if (!isFormValid) return;
 
-    // 추후 백엔드 데이터 전송 처리를 위한 가이드
+    // 로컬 스토리지 등에서 액세스 토큰 취득 (프로젝트 환경에 맞게 수정 가능)
+    const accessToken = localStorage.getItem('accessToken');
+
+    // API 명세서 규격에 맞게 Request Body 데이터 가공
     const requestData = {
-      category: selectedCategory,
-      title: courseName,
-      plan: weeklyPlan
+      year: 2026, // Basecamp의 selectedPeriod 연도와 매칭 필요 (우선 2026 고정)
+      termType: "FIRST_HALF", // 2026년 상반기 기준 매핑
+      categoryId: categoryMap[selectedCategory], // 한글 카테고리를 숫자 ID로 치환
+      courseName: courseName,
+      weeklyPlan: weeklyPlan
     };
-    console.log('백엔드로 전송할 데이터:', requestData);
-    navigate('/basecamp');
+
+    try {
+      // POST /api/todos 요청 전송
+      const response = await axios.post('/api/todos', requestData, {
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${accessToken}`
+        }
+      });
+
+      // 백엔드 성공 응답 처리 (isSuccess가 true인 경우)
+      if (response.data.isSuccess) {
+        console.log('코스 등록 성공:', response.data.result);
+        navigate('/basecamp');
+      } else {
+        // 백엔드에서 에러 메시지를 보낸 경우 (예: COMMON_400 등)
+        alert(response.data.message);
+      }
+    } catch (error) {
+      // 네트워크 에러 또는 400/500 에러 처리
+      console.error('코스 등록 중 에러 발생:', error);
+      if (error.response && error.response.data) {
+        alert(error.response.data.message || '요청 중 오류가 발생했습니다.');
+      } else {
+        alert('서버와 연결할 수 없습니다.');
+      }
+    }
   };
 
   return (
