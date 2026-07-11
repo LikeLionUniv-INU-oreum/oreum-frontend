@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import { styled, keyframes } from 'styled-components';
 
 const categoryThemes = {
   자격증: { tagBg: '#57E094', tagColor: 'black', cardBg: '#EAF8E7' },
@@ -307,18 +307,26 @@ export const GaugeLine = styled.div`
   background-color: #000;
 `;
 
+const slideUp = (targetBottom) => keyframes`
+  from {
+    bottom: 0%; 
+  }
+  to {
+    bottom: ${targetBottom}%;
+  }
+`;
+
 export const Indicator = styled.div`
   position: absolute;
   left: 20px;
+  transform: translateY(50%);
 
   bottom: ${(props) => 100 - props.topPercent}%;
-  transform: translateY(50%);
+  animation: ${(props) => slideUp(100 - props.topPercent)} 1.3s ease-out forwards;
 
   width: 0;
   height: 0;
   border-top: 6px solid transparent;
   border-bottom: 6px solid transparent;
   border-right: 10px solid #c93b3b;
-
-  transition: bottom 0.5s ease-in-out;
 `;

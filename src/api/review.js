@@ -25,15 +25,15 @@ export const getReviewLists = async ({
 };
 
 // 리뷰 상세보기
-export const getReviewDetail = async () => {
-  const response = await api.get('/course-reviews/{courseReviewId}');
+export const getReviewDetail = async (courseReviewId) => {
+  const response = await api.get(`/course-reviews/${courseReviewId}`);
 
   return response.data;
 };
 
 // 리뷰 좋아요
 export const likeReview = async () => {
-  const response = await api.post('/course-reviews/{courseReviewId}/like');
+  const response = await api.post(`/course-reviews/${courseReviewId}/like`);
 
   return response.data;
 };

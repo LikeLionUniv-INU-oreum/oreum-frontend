@@ -7,6 +7,8 @@ import { sendEmailCode, verifyEmailCode, signup } from '../api/auth.js';
 
 export default function Signup() {
   const navigate = useNavigate();
+  const [isSending, setIsSending] = useState(false); // 인증번호 전송 로딩
+  const [isConfirming, setIsConfirming] = useState(false); // 인증번호 확인 로딩
 
   // 사용자가 입력하는 데이터
   const [formData, setFormData] = useState({
@@ -69,6 +71,8 @@ export default function Signup() {
 
   /** 이메일 인증번호 전송 API */
   const handleSendCode = async () => {
+    setIsSending(true);
+
     if (!formData.email.includes('@')) {
       setMessages((prev) => ({
         ...prev,
@@ -80,24 +84,28 @@ export default function Signup() {
 
     try {
       const data = await sendEmailCode(formData.email);
+
       if (data.isSuccess) {
         setTimer({ timeLeft: 180, isActive: true });
         setMessages((prev) => ({ ...prev, email: data.message }));
         setUiState((prev) => ({ ...prev, email: true }));
       } else {
         setMessages((prev) => ({ ...prev, email: data.message }));
-        setUiState((prev) => ({ ...prev, email: true }));
+        setUiState((prev) => ({ ...prev, email: false }));
       }
     } catch (error) {
-      const errorMsg =
-        error.response?.data?.message || '서버와의 통신에 실패했습니다.';
+      const errorMsg = error.response?.data?.message || '서버와의 통신에 실패했습니다.';
       setMessages((prev) => ({ ...prev, email: errorMsg }));
-      setUiState((prev) => ({ ...prev, email: true }));
+      setUiState((prev) => ({ ...prev, email: false }));
+    } finally {
+      setIsSending(false);
     }
   };
 
   /** 이메일 인증번호 확인 API */
   const handleCodeConfirm = async () => {
+    setIsConfirming(true);
+
     try {
       const data = await verifyEmailCode(formData.email, formData.code);
 
@@ -106,24 +114,21 @@ export default function Signup() {
         setUiState((prev) => ({ ...prev, code: true }));
       } else {
         setMessages((prev) => ({ ...prev, code: data.message }));
-        setUiState((prev) => ({ ...prev, code: true }));
+        setUiState((prev) => ({ ...prev, code: false }));
       }
     } catch (error) {
-      const errorMsg =
-        error.response?.data?.message || '서버와의 통신에 실패했습니다.';
+      const errorMsg = error.response?.data?.message || '서버와의 통신에 실패했습니다.';
       setMessages((prev) => ({ ...prev, code: errorMsg }));
-      setUiState((prev) => ({ ...prev, code: true }));
+      setUiState((prev) => ({ ...prev, code: false }));
+    } finally {
+      setIsConfirming(false);
     }
   };
 
   /** 회원가입 API */
   const completeSignup = async () => {
     try {
-      const data = await signup(
-        formData.email,
-        formData.password,
-        formData.nickname,
-      );
+      const data = await signup(formData.email, formData.password, formData.nickname);
 
       if (data.isSuccess) {
         alert('회원가입이 완료되었습니다 ⛰️');
@@ -133,8 +138,7 @@ export default function Signup() {
         setUiState((prev) => ({ ...prev, code: true }));
       }
     } catch (error) {
-      const errorMsg =
-        error.response?.data?.message || '서버와의 통신에 실패했습니다.';
+      const errorMsg = error.response?.data?.message || '서버와의 통신에 실패했습니다.';
       setMessages((prev) => ({ ...prev, code: errorMsg }));
       setUiState((prev) => ({ ...prev, code: true }));
     }
@@ -158,8 +162,8 @@ export default function Signup() {
         <S.InputGroup>
           <S.LabelContainer>
             <S.Text>대학 웹메일 주소</S.Text>
-            <S.SmallButton type="button" onClick={handleSendCode}>
-              인증번호 전송
+            <S.SmallButton type="button" onClick={handleSendCode} disabled={isSending}>
+              {isSending ? '전송 중...' : '인증번호 전송'}
             </S.SmallButton>
           </S.LabelContainer>
           <S.Input
@@ -170,12 +174,8 @@ export default function Signup() {
             onChange={handleChange}
           />
           <S.MessageContainer>
-            <S.ErrorMessage $show={uiState.email}>
-              {messages.email}
-            </S.ErrorMessage>
-            {timer.isActive && (
-              <S.TimerText>{formatTime(timer.timeLeft)}</S.TimerText>
-            )}
+            <S.ErrorMessage $show={uiState.email}>{messages.email}</S.ErrorMessage>
+            {timer.isActive && <S.TimerText>{formatTime(timer.timeLeft)}</S.TimerText>}
           </S.MessageContainer>
         </S.InputGroup>
 
@@ -183,20 +183,13 @@ export default function Signup() {
         <S.InputGroup>
           <S.LabelContainer>
             <S.Text>인증번호</S.Text>
-            <S.SmallButton type="button" onClick={handleCodeConfirm}>
-              인증번호 확인
+            <S.SmallButton type="button" onClick={handleCodeConfirm} disabled={isConfirming}>
+              {isConfirming ? '확인 중...' : '인증번호 확인'}
             </S.SmallButton>
           </S.LabelContainer>
-          <S.Input
-            name="code"
-            placeholder="숫자 4자리"
-            value={formData.code}
-            onChange={handleChange}
-          />
+          <S.Input name="code" placeholder="숫자 4자리" value={formData.code} onChange={handleChange} />
           <S.MessageContainer>
-            <S.ErrorMessage $show={uiState.code}>
-              {messages.code}
-            </S.ErrorMessage>
+            <S.ErrorMessage $show={uiState.code}>{messages.code}</S.ErrorMessage>
           </S.MessageContainer>
         </S.InputGroup>
 
@@ -213,9 +206,7 @@ export default function Signup() {
             onChange={handleChange}
           />
           <S.MessageContainer>
-            <S.ErrorMessage $show={uiState.password}>
-              {messages.password}
-            </S.ErrorMessage>
+            <S.ErrorMessage $show={uiState.password}>{messages.password}</S.ErrorMessage>
           </S.MessageContainer>
         </S.InputGroup>
 
@@ -224,16 +215,9 @@ export default function Signup() {
           <S.LabelContainer>
             <S.Text>닉네임</S.Text>
           </S.LabelContainer>
-          <S.Input
-            name="nickname"
-            placeholder="2~15자"
-            value={formData.nickname}
-            onChange={handleChange}
-          />
+          <S.Input name="nickname" placeholder="2~15자" value={formData.nickname} onChange={handleChange} />
           <S.MessageContainer>
-            <S.ErrorMessage $show={uiState.nickname}>
-              {messages.nickname}
-            </S.ErrorMessage>
+            <S.ErrorMessage $show={uiState.nickname}>{messages.nickname}</S.ErrorMessage>
           </S.MessageContainer>
         </S.InputGroup>
 
