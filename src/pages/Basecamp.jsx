@@ -139,7 +139,7 @@ export default function MainPage() {
                       <S.ActionIcon
                         src={Goeditcourse}
                         onClick={(e) => {
-                          navigate('/editcourse');
+                          navigate('/editcourse', { state: { todoId: task.id } });
                         }}
                       />
                       <S.ActionIcon

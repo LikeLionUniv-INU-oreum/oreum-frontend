@@ -1,8 +1,14 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
+import axios from 'axios';
 import * as S from './EditCourse.styles';
 import BottomNav from '../components/common/BottomNav';
 
 export default function EditCourse() {
+  const location = useLocation();
+
+  const todoId = location.state?.todoId;
+
   const [selectedCategory, setSelectedCategory] = useState(null); // 선택된 카테고리 저장
   const [courseName, setCourseName] = useState(''); // 코스명 입력값
   const [weeklyPlan, setWeeklyPlan] = useState(''); // 주차별 세부 계획 입력값
@@ -12,6 +18,49 @@ export default function EditCourse() {
   const tipPlaceholder = `• 1주차: 공부법 정리, 교재 구매\n• 2-5주차: 주 5일 이론 진도 나가기\n• 6-7주차: 시간 재고 실습하기\n• 8주차: 모의시험 치기`;
 
   const isFormValid = selectedCategory !== null && courseName.trim().length > 0;
+
+  useEffect(() => {
+    const fetchTodoDetail = async () => {
+      if (!todoId) {
+        alert('올바르지 않은 접근입니다. 할 일 ID가 없습니다.');
+        window.history.back();
+        return;
+      }
+
+      const accessToken = localStorage.getItem('accessToken');
+
+      try {
+        // GET /api/todos/{todoId} 요청 전송
+        const response = await axios.get(`https://api.oreumm.site/api/todos/${todoId}`, {
+          headers: {
+            'Authorization': `Bearer ${accessToken}`
+          }
+        });
+
+        // 백엔드 성공 응답 처리 (isSuccess가 true인 경우)
+        if (response.data.isSuccess) {
+          const data = response.data.result;
+          // 서버에서 받아온 한글 카테고리 명칭, 코스명, 계획을 입력 필드 상태에 설정
+          setSelectedCategory(data.categoryName);
+          setCourseName(data.courseName);
+          setWeeklyPlan(data.weeklyPlan || '');
+        } else {
+          // 명세서에 정의된 각 에러 코드에 대응하는 예외 처리 (401, 403, 404, 409 등)
+          alert(response.data.message);
+        }
+      } catch (error) {
+        // 네트워크 에러 및 HTTP 에러 상태코드 예외 처리
+        console.error('코스 상세 조회 중 에러 발생:', error);
+        if (error.response && error.response.data) {
+          alert(error.response.data.message || '데이터를 가져오는 중 오류가 발생했습니다.');
+        } else {
+          alert('서버와 연결할 수 없습니다.');
+        }
+      }
+    };
+
+    fetchTodoDetail();
+  }, [todoId]);
 
   const handleSubmit = () => {
     if (!isFormValid) return;
