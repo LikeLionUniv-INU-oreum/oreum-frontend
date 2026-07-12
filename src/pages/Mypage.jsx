@@ -84,6 +84,20 @@ export default function Mypage() {
   // 대기 중인 코스 가공
   const formattedWaitingCourses = mypageInfo?.waitingCourses || [];
 
+  /** 마이페이지 전체 조회 api */
+  useEffect(() => {
+    const fetchMypage = async () => {
+      try {
+        const data = await getMypage();
+        if (data.isSuccess) setMypageInfo(data.result);
+      } catch (error) {
+        console.error('마이페이지 정보 로딩 실패:', error);
+      }
+    };
+
+    fetchMypage();
+  }, []);
+
   return (
     <S.Container bgImage={MypageBackground}>
       <S.ContentArea>
