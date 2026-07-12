@@ -11,13 +11,13 @@ export const Container = styled.div`
   overflow: hidden;
 `;
 
-export const Header = styled.div`
+/*export const Header = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
   width: 80%;
   padding-top: 2dvh;
-`;
+`;*/
 
 export const CardSection = styled.div`
   position: relative;
