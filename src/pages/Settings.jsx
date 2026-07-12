@@ -216,7 +216,7 @@ export default function Settings() {
                   <br />
                   <b>DESIGN</b>
                   <br />
-                  임상현 | 정지인
+                  André Jung | 임상현
                   <br />
                   <br />
                   <b>FRONTEND</b>

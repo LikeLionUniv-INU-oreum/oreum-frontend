@@ -81,6 +81,7 @@ export const Input = styled.input`
   font-size: 15px;
   outline: none;
   box-sizing: border-box;
+  z-index: 999;
 
   &:focus {
     border: 1px solid #3b7d5a;

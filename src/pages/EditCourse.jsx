@@ -68,14 +68,12 @@ export default function EditCourse() {
         } else {
           // 명세서에 정의된 각 에러 코드에 대응하는 예외 처리 (401, 403, 404, 409 등)
           alert(response.data.message);
-          navigate('/basecamp');
         }
       } catch (error) {
         // 네트워크 에러 및 HTTP 에러 상태코드 예외 처리
         console.error('코스 상세 조회 중 에러 발생:', error);
         if (error.response && error.response.data) {
           alert(error.response.data.message || '데이터를 가져오는 중 오류가 발생했습니다.');
-          navigate('/basecamp');
         } else {
           alert('서버와 연결할 수 없습니다.');
         }
