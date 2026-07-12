@@ -28,10 +28,10 @@ const CATEGORY_IMAGES = {
 };
 
 const DEFAULT_STATS = [
-  { categoryId: 1, categoryName: '교내', myCount: 1, jobAverageCount: 9, completedCourses: [] },
-  { categoryId: 2, categoryName: '대외활동', myCount: 1, jobAverageCount: 9, completedCourses: [] },
-  { categoryId: 3, categoryName: '인턴', myCount: 1, jobAverageCount: 9, completedCourses: [] },
-  { categoryId: 4, categoryName: '자격증', myCount: 1, jobAverageCount: 9, completedCourses: [] },
+  { categoryId: 1, categoryName: '교내', myCount: 1, jobAverageCount: 5, completedCourses: [] },
+  { categoryId: 2, categoryName: '대외활동', myCount: 1, jobAverageCount: 5, completedCourses: [] },
+  { categoryId: 3, categoryName: '인턴', myCount: 1, jobAverageCount: 5, completedCourses: [] },
+  { categoryId: 4, categoryName: '자격증', myCount: 1, jobAverageCount: 5, completedCourses: [] },
 ];
 
 const MAX_COUNT = 5; // 그래프 기준값
