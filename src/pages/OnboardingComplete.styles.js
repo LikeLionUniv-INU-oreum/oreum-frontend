@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
 
 export const Container = styled.div`
   display: flex;
@@ -32,11 +32,18 @@ export const CardSection = styled.div`
   align-items: flex-end;
 `;
 
+const popIn = keyframes`
+  0% { transform: scale(0.8); opacity: 0; }
+  100% { transform: scale(1); opacity: 1; }
+`;
+
 export const CardImage = styled.img`
   width: 100%;
   height: 100%;
   object-fit: cover;
   object-position: center;
+
+  animation: ${popIn} 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
 `;
 
 /* 이미지 내부 오버레이 레이어 */
@@ -55,7 +62,7 @@ export const CardContent = styled.div`
 /* 텍스트 위치 가이드: 일러스트 아래 빈 공간에 걸치도록 비율 조정 */
 export const Title = styled.h1`
   position: absolute;
-  top: 50%; 
+  top: 50%;
   transform: translateY(-50%);
 
   width: 100%;
