@@ -2,10 +2,10 @@ import styled from 'styled-components';
 
 // 카테고리별 고유 테마 색상 정의 (시안 기준)
 const categoryThemes = {
-  교내: { border: '#C6B5F5', activeBg: '#C6B5F5', color: '#1c7ed6' },
+  교내: { border: '#d0ebff', activeBg: '#d0ebff', color: '#1c7ed6' },
   대외활동: { border: '#F3E530', activeBg: '#F3E530', color: '#e67e22' },
   자격증: { border: '#57E094', activeBg: '#57E094', color: '#2b5c3d' },
-  인턴: { border: '#D7C997', activeBg: '#D7C997', color: '#ae3ec9' },
+  인턴: { border: '#eebefa', activeBg: '#eebefa', color: '#ae3ec9' },
 };
 
 export const Container = styled.div`
