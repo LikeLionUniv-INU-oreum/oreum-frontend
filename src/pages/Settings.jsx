@@ -58,7 +58,9 @@ export default function Settings() {
 
       // 로그아웃
       else if (modalState.type === 'logout') {
-        localStorage.removeItem('token');
+        localStorage.removeItem('accessToken');
+        localStorage.removeItem('currentJobId');
+        localStorage.removeItem('currentJobName');
         navigate('/login');
         alert('로그아웃 되었습니다.');
         return;
