@@ -109,7 +109,7 @@ export default function Mypage() {
               <S.AddButton onClick={() => alert('준비 중입니다 ⛰️')}>+</S.AddButton>
             </S.AvatarWrapper>
             <S.ProfileInfo>
-              <S.UserName>{mypageInfo?.user.nickname || '닉네임'}</S.UserName>
+              <S.UserName>{mypageInfo?.user.nickname || ' '}</S.UserName>
               <S.UserMajor>
                 {mypageInfo?.user.majorName || '학과'} /{' '}
                 {ACADEMIC_STATUS_MAP[mypageInfo?.user.academicStatus] || '학년'}

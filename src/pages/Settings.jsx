@@ -32,7 +32,7 @@ export default function Settings() {
           <S.EgLogo src={egLogo} />
         </S.Header>
 
-        <h1>{userInfo?.nickname || '닉네임'}</h1>
+        <h1>{userInfo?.nickname || ' '}</h1>
         <div>
           {userInfo?.universityName || '대학교'} | {userInfo?.majorName || '학과'} {userInfo?.grade || '학년'}
         </div>
