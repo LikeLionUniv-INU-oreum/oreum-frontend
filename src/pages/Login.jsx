@@ -92,7 +92,6 @@ export default function Login() {
           disabled={isLoading}
         />
         <S.IconButton type="button" onClick={togglePasswordVisibility}>
-          {/* showPassword 상태에 따라 다른 아이콘 표기 */}
           {showPassword ? '🙉' : '🙈'}
         </S.IconButton>
       </S.InputWrapper>
