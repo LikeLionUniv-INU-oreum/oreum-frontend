@@ -32,7 +32,7 @@ export const getReviewDetail = async (courseReviewId) => {
 };
 
 // 리뷰 좋아요
-export const likeReview = async () => {
+export const likeReview = async (courseReviewId) => {
   const response = await api.post(`/course-reviews/${courseReviewId}/like`);
 
   return response.data;

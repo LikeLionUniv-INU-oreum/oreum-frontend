@@ -36,11 +36,11 @@ export default function Review() {
   /** 리뷰 상세보기 api */
   useEffect(() => {
     const fetchReviewDetail = async () => {
-      // if (!targetReviewId) {
-      //   alert('잘못된 접근입니다.');
-      //   navigate(-1);
-      //   return;
-      // }
+      if (!targetReviewId) {
+        alert('잘못된 접근입니다.');
+        navigate(-1);
+        return;
+      }
 
       try {
         const data = await getReviewDetail(targetReviewId);
@@ -63,11 +63,13 @@ export default function Review() {
 
         {/* 하단 리뷰 상세 구역 */}
         <S.ContentWrapper>
-          <S.Title>[{reviewData?.courseName || '코스명'}]</S.Title>
+          <S.Title>[{reviewData?.courseName || ' '}]</S.Title>
 
           {/* 첫 번째 섹션: 기본 정보 */}
           <S.InfoCard>
-            <S.AuthorName>{reviewData?.writerNickname || '닉네임'}</S.AuthorName>
+            <S.AuthorName>
+              {reviewData?.writerNickname || ' '}님의 {reviewData?.categoryName || ' '} 리뷰
+            </S.AuthorName>
             <S.RatingStars>{renderStars(reviewData?.rating || 1)}</S.RatingStars>
 
             <S.InfoList>
@@ -88,11 +90,13 @@ export default function Review() {
           <S.TipTitle>💬 TIP 한 마디</S.TipTitle>
           <S.TipCard>
             <S.TipSection>
-              <p style={{ margin: 0, lineHeight: '1.4' }}>
-                {reviewData?.tip || '이 메시지는 api 연동 실패 시 나오는 무시무시한 내용이야...'}
-              </p>
+              <p style={{ margin: 0, lineHeight: '1.4' }}>{reviewData?.tip || '로딩 중...'}</p>
             </S.TipSection>
           </S.TipCard>
+
+          <div style={{ marginTop: '40px', textAlign: 'center', color: '#999', fontSize: '14px' }}>
+            코스를 완료하고 직접 리뷰를 남겨보세요 ⛰️
+          </div>
         </S.ContentWrapper>
 
         <S.BottomNavWrapper>

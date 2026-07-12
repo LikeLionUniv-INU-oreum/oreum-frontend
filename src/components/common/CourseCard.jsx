@@ -1,25 +1,39 @@
-import React, { useState } from 'react';
-import * as S from "../../pages/Explore.styles"; // 기존 스타일 같이 쓰기
+import { useState } from 'react';
+import * as S from '../../pages/Explore.styles';
+import { likeReview } from '../../api/review';
 
 const CourseCard = ({ course, onCardClick }) => {
-  // 1인 1회 좋아요 상태를 카드 자체에서 관리 (나중에 백엔드 PATCH/POST API 연동 연계)
   const [isLiked, setIsLiked] = useState(course.isLiked || false);
   const [likeCount, setLikeCount] = useState(course.likes || 0);
+  const [isLoading, setIsLoading] = useState(false);
 
-  const handleLikeClick = (e) => {
-    e.stopPropagation(); // 카드 클릭 이벤트 전파 방지
+  /** 리뷰 좋아요 api */
+  const handleLikeClick = async (e) => {
+    e.stopPropagation();
 
-    // 임시 토글 로직 (나중에 axios.post('/api/like', { id: course.id }) 형태 추가될 곳)
-    if (isLiked) {
-      setLikeCount(prev => prev - 1);
-    } else {
-      setLikeCount(prev => prev + 1);
+    if (isLoading) return;
+    setIsLoading(true);
+
+    try {
+      const data = await likeReview(course.id);
+
+      if (data.isSuccess) {
+        setIsLiked(data.result.liked);
+        setLikeCount(data.result.likeCount);
+      }
+    } catch (error) {
+      console.error('좋아요 처리에 실패했습니다:', error);
+      alert('오류가 발생했습니다.');
+    } finally {
+      setIsLoading(false);
     }
-    setIsLiked(!isLiked);
   };
 
   const renderStars = (rating) => {
-    return '★'.repeat(rating) + '☆'.repeat(5 - rating);
+    const filledCount = Math.round(rating);
+    const emptyCount = 5 - filledCount;
+
+    return '★'.repeat(filledCount) + '☆'.repeat(emptyCount);
   };
 
   return (
@@ -27,7 +41,6 @@ const CourseCard = ({ course, onCardClick }) => {
       <S.CardHeader>
         <S.CardTitleGroup>
           <S.CardTitle>{course.title}</S.CardTitle>
-          <S.Stars>{renderStars(course.rating)}</S.Stars>
         </S.CardTitleGroup>
 
         <S.LikeButton liked={isLiked} onClick={handleLikeClick}>
@@ -37,9 +50,17 @@ const CourseCard = ({ course, onCardClick }) => {
       </S.CardHeader>
 
       <S.CardBody>
-        <S.InfoRow><S.InfoLabel>등반 시기 :</S.InfoLabel> {course.period}</S.InfoRow>
-        <S.InfoRow><S.InfoLabel>소요 기간 :</S.InfoLabel> {course.duration}</S.InfoRow>
-        <S.InfoRow><S.InfoLabel>추천 시기 :</S.InfoLabel> {course.recommended}</S.InfoRow>
+        <S.InfoRow>
+          <S.InfoLabel>등반 시기 |</S.InfoLabel> {course.period}
+        </S.InfoRow>
+        <S.InfoRow>
+          <S.InfoLabel>소요 기간 |</S.InfoLabel> {course.duration}
+        </S.InfoRow>
+        <S.InfoRow>
+          <S.InfoLabel>추천 시기 |</S.InfoLabel> {course.recommended}
+        </S.InfoRow>
+
+        <S.Stars>{renderStars(course.rating)}</S.Stars>
       </S.CardBody>
     </S.CourseCard>
   );
