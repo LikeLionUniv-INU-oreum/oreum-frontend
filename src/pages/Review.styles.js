@@ -1,61 +1,63 @@
 import styled from 'styled-components';
 
 export const Container = styled.div`
-  width: 100%;
-  min-height: 100vh;
-  background-color: #3b7d5a; 
+  background-color: #3b7d5a;
   display: flex;
   flex-direction: column;
-  position: relative;
-  font-family: sans-serif;
-  margin: 0 auto;
+  width: 100%;
+  height: 100dvh;
+  overflow: hidden;
+`;
+
+export const MainContent = styled.div`
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  overflow-y: auto;
 `;
 
 export const Header = styled.div`
-  padding: 20px;
   display: flex;
+  justify-content: center;
   align-items: center;
+  width: 100%;
+  position: relative;
 `;
 
-export const BackButton = styled.button`
-  background: none;
-  border: none;
+export const BackIcon = styled.div`
+  position: absolute;
+  left: 0;
+  margin-left: 20px;
+  font-size: 24px;
   color: #ffffff;
-  font-size: 20px;
-  font-weight: bold;
   cursor: pointer;
-  display: flex;
-  align-items: center;
-  gap: 5px;
 `;
 
 export const ContentWrapper = styled.div`
-  flex: 1;
+  flex-grow: 1;
+  overflow-y: auto;
+
   background-color: #ffffff;
   border-top-left-radius: 30px;
   border-top-right-radius: 30px;
-  padding: 30px 20px;
+
+  padding: 0px 20px 100px 20px;
+
   position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
-`;
 
-export const CloseButton = styled.button`
-  position: absolute;
-  top: 25px;
-  right: 25px;
-  background: none;
-  border: none;
-  color: #a0a0a0;
-  font-size: 20px;
-  font-weight: bold;
-  cursor: pointer;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 `;
 
 export const Title = styled.h2`
   color: #466b53;
-  font-size: 26px;
+  font-size: 24px;
   font-weight: 800;
   margin-bottom: 20px;
   text-align: center;
@@ -70,7 +72,7 @@ export const InfoCard = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.05);
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.15);
   box-sizing: border-box;
 `;
 
@@ -82,7 +84,7 @@ export const AuthorName = styled.div`
 `;
 
 export const RatingStars = styled.div`
-  color: #61876e; /* 이미지의 초록색 별 색상 */
+  color: #61876e;
   font-size: 22px;
   margin-bottom: 15px;
   letter-spacing: 2px;
@@ -103,7 +105,6 @@ export const InfoItem = styled.div`
 
   .label {
     display: inline-block;
-    width: 75px;
     font-weight: bold;
   }
 `;
@@ -111,7 +112,7 @@ export const InfoItem = styled.div`
 /* 두 번째 섹션: TIP 한마디 구역 */
 export const TipTitle = styled.div`
   width: 100%;
-  font-size: 16px;
+  font-size: 18px;
   font-weight: bold;
   color: #466b53;
   margin-top: 25px;
@@ -123,13 +124,13 @@ export const TipTitle = styled.div`
 
 export const TipCard = styled.div`
   width: 100%;
-  background-color: #eff7f2; 
+  background-color: #eff7f2;
   border-radius: 20px;
   padding: 20px;
   display: flex;
   flex-direction: column;
   gap: 20px;
-  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.03);
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.15);
   box-sizing: border-box;
 `;
 

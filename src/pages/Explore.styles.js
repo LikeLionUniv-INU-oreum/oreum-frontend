@@ -78,7 +78,7 @@ export const FilterButton = styled.button`
   font-size: 13px;
   font-weight: 500;
   cursor: pointer;
-  background-color: ${(props) => (props.active ? '#3b7d5a' : '#b0b5b2')};
+  background-color: ${(props) => (props.$active ? '#3b7d5a' : '#b0b5b2')};
   color: white;
   transition: background-color 0.2s;
 
@@ -120,7 +120,7 @@ export const SortButton = styled.button`
   font-size: 11px;
   font-weight: bold;
   cursor: pointer;
-  background-color: ${(props) => (props.active ? '#3e7e5a' : '#b0b5b2')};
+  background-color: ${(props) => (props.$active ? '#3e7e5a' : '#b0b5b2')};
   color: white;
 `;
 
@@ -145,26 +145,35 @@ export const CourseCard = styled.div`
 export const CardHeader = styled.div`
   display: flex;
   justify-content: space-between;
-  align-items: flex-start;
+  align-items: center;
   margin-bottom: 10px;
+  gap: 12px;
 `;
 
 export const CardTitleGroup = styled.div`
   display: flex;
   align-items: center;
   gap: 8px;
+  flex: 1;
+  min-width: 0;
 `;
 
 export const CardTitle = styled.h3`
-  font-size: 17px;
+  font-size: 16px;
   font-weight: bold;
   margin: 0;
   color: #000;
+
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 `;
 
 export const Stars = styled.span`
   color: #4a755e;
   font-size: 14px;
+  letter-spacing: 1px;
+  text-align: right;
 `;
 
 export const LikeButton = styled.button`
@@ -200,8 +209,7 @@ export const InfoRow = styled.div`
 
 export const InfoLabel = styled.span`
   font-weight: bold;
-  display: inline-block;
-  width: 65px;
+  width: 50px;
 `;
 
 export const BottomNavWrapper = styled.div`
@@ -211,4 +219,16 @@ export const BottomNavWrapper = styled.div`
   transform: translateX(-50%);
   width: 100%;
   z-index: 100;
+`;
+
+export const MoreButton = styled.button`
+  width: 100%;
+  padding: 14px;
+  margin-top: 16px;
+  border-radius: 8px;
+  background-color: #eaf4ee;
+  border: none;
+  color: #555;
+  font-weight: bold;
+  cursor: pointer;
 `;

@@ -110,12 +110,12 @@ export default function MainPage() {
         <S.MountainBox>
           <S.HomeInfo>
             <S.InfoText>
-              <div>현재 고도</div>
-              <span>{basecampData?.currentHeight || 0}M</span>
+              <div>분기별 고도</div>
+              <span>{basecampData?.currentHeight ?? 9999}M</span>
             </S.InfoText>
             <S.InfoText style={{ textAlign: 'right' }}>
               <div>[{basecampData?.jobName || ' '}] 산맥</div>
-              <span>상위 {basecampData?.jobPositionPercent || 0}%</span>
+              <span>상위 {basecampData?.jobPositionPercent ?? 99}%</span>
             </S.InfoText>
           </S.HomeInfo>
 
@@ -124,7 +124,7 @@ export default function MainPage() {
               {Array.from({ length: 20 }).map((_, index) => (
                 <S.GaugeLine key={index} />
               ))}
-              <S.Indicator topPercent={basecampData?.jobPositionPercent || 0} />
+              <S.Indicator topPercent={basecampData?.jobPositionPercent ?? 99} />
             </S.GaugeContainer>
 
             <S.HomeMountain src={HomeMountain} />

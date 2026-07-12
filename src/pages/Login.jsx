@@ -1,12 +1,6 @@
 import { useState } from 'react';
 import * as S from './Login.styles';
-import {
-  BrandSection,
-  Subtitle,
-  LogoImg,
-  Slogan,
-  LoginButton,
-} from './Intro.styles.js';
+import { BrandSection, Subtitle, LogoImg, Slogan, LoginButton } from './Intro.styles.js';
 import krLogo from '../assets/images/OreumKrLogo.jpg';
 import { useNavigate } from 'react-router-dom';
 import { login } from '../api/auth.js';
@@ -20,11 +14,13 @@ export default function Login() {
   const [errorMessage, setErrorMessage] = useState('');
   const [isLoading, setIsLoading] = useState(false);
 
-  const handleSignUpClick = () => { // 회원가입 버튼 클릭 시
+  const handleSignUpClick = () => {
+    // 회원가입 버튼 클릭 시
     navigate('/signup');
   };
 
-  const togglePasswordVisibility = () => { // 비번 보이게 안보이게 여부
+  const togglePasswordVisibility = () => {
+    // 비번 보이게 안보이게 여부
     setShowPassword(!showPassword);
   };
 
@@ -46,7 +42,7 @@ export default function Login() {
         const token = data.result?.accessToken;
         if (token) localStorage.setItem('accessToken', token);
 
-        const userNickname = data.result?.nickname || '회원';
+        const userNickname = data.result?.nickname || '게스트';
         alert(`${userNickname}님 환영합니다 ⛰️`);
 
         // 최초/기존 이용자 분기 처리
@@ -59,9 +55,7 @@ export default function Login() {
         setErrorMessage(data.message);
       }
     } catch (error) {
-      const errorMsg =
-        error.response?.data?.message ||
-        '서버와 통신할 수 없습니다. 다시 시도해주세요.';
+      const errorMsg = error.response?.data?.message || '서버와 통신할 수 없습니다. 다시 시도해주세요.';
       setErrorMessage(errorMsg);
     } finally {
       setIsLoading(false);
@@ -98,7 +92,6 @@ export default function Login() {
           disabled={isLoading}
         />
         <S.IconButton type="button" onClick={togglePasswordVisibility}>
-          {/* showPassword 상태에 따라 다른 아이콘 표기 */}
           {showPassword ? '🙉' : '🙈'}
         </S.IconButton>
       </S.InputWrapper>
@@ -116,8 +109,7 @@ export default function Login() {
       </LoginButton>
 
       <S.SignUpText>
-        등록된 계정이 없으신가요?{' '}
-        <span onClick={handleSignUpClick}>회원가입</span>
+        등록된 계정이 없으신가요? <span onClick={handleSignUpClick}>회원가입</span>
       </S.SignUpText>
     </S.Container>
   );

@@ -9,23 +9,38 @@ export default function BottomNav() {
   const navigate = useNavigate();
   const location = useLocation();
 
-  const checkIsActive = (path) => location.pathname === path; // 경로 확인 함수
+  // 경로 확인 함수
+  const checkIsActive = (paths) => {
+    if (Array.isArray(paths)) return paths.includes(location.pathname);
+    return location.pathname === paths;
+  };
 
   return (
     <NavContainer>
       <NavItem onClick={() => navigate('/home')}>
-        <Icon src={homeIcon} className={checkIsActive('/home') ? 'active' : ''} />
-        <NavText className={checkIsActive('/home') ? 'active' : ''}>홈</NavText>
+        <Icon src={homeIcon} className={checkIsActive(['/home', '/settings']) ? 'active' : ''} />
+        <NavText className={checkIsActive(['/home', '/settings']) ? 'active' : ''}>홈</NavText>
       </NavItem>
 
       <NavItem onClick={() => navigate('/basecamp')}>
-        <Icon src={campIcon} className={checkIsActive('/basecamp') ? 'active' : ''} />
-        <NavText className={checkIsActive('/basecamp') ? 'active' : ''}>베이스캠프</NavText>
+        <Icon
+          src={campIcon}
+          className={
+            checkIsActive(['/basecamp', '/addcourse', '/editcourse', '/addreview', '/writestar']) ? 'active' : ''
+          }
+        />
+        <NavText
+          className={
+            checkIsActive(['/basecamp', '/addcourse', '/editcourse', '/addreview', '/writestar']) ? 'active' : ''
+          }
+        >
+          베이스캠프
+        </NavText>
       </NavItem>
 
       <NavItem onClick={() => navigate('/explore')}>
-        <Icon src={searchIcon} className={checkIsActive('/explore') ? 'active' : ''} />
-        <NavText className={checkIsActive('/explore') ? 'active' : ''}>탐색</NavText>
+        <Icon src={searchIcon} className={checkIsActive(['/explore', '/review']) ? 'active' : ''} />
+        <NavText className={checkIsActive(['/explore', '/review']) ? 'active' : ''}>탐색</NavText>
       </NavItem>
 
       <NavItem onClick={() => navigate('/mypage')}>

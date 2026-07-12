@@ -1,94 +1,110 @@
 import { useState, useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 import BottomNav from '../components/common/BottomNav';
 import CourseCard from '../components/common/CourseCard';
 import * as S from './Explore.styles';
 import { useNavigate } from 'react-router-dom';
+import { getReviewLists } from '../api/review';
 
-// 임시 데이터 (백엔드 연동 전 화면 확인용)
-const INITIAL_COURSES = [
-  {
-    id: 1,
-    title: '[OPIC]',
-    rating: 3,
-    period: '2학년 2학기',
-    duration: '4개월',
-    recommended: '1학년, 2학년',
-    likes: 183,
-    isLiked: false,
-  },
-  {
-    id: 2,
-    title: '[컴활 1급]',
-    rating: 4,
-    period: '1학년 2학기',
-    duration: '3개월',
-    recommended: '1학년',
-    likes: 120,
-    isLiked: false,
-  },
-  {
-    id: 3,
-    title: '[무역영어]',
-    rating: 3,
-    period: '3학년 2학기',
-    duration: '6개월',
-    recommended: 'ALL',
-    likes: 90,
-    isLiked: false,
-  },
-];
+const GRADE_API_MAP = {
+  '1학년': 'FIRST_GRADE',
+  '2학년': 'SECOND_GRADE',
+  '3학년': 'THIRD_GRADE',
+  '4학년': 'FOURTH_GRADE',
+  ALL: 'ALL',
+};
+
+const CATEGORY_API_MAP = {
+  교내: 1,
+  대외: 2,
+  자격증: 3,
+  인턴: 4,
+  ALL: 'ALL',
+};
+
+const REVERSE_GRADE_MAP = {
+  FIRST_GRADE: '1학년',
+  SECOND_GRADE: '2학년',
+  THIRD_GRADE: '3학년',
+  FOURTH_GRADE: '4학년',
+  ALL: '전학년',
+};
 
 export default function Explore() {
-  const [selectedPeriods, setSelectedPeriods] = useState(['1학년']); // 1. 추천 시기 필터 상태 (다중 선택, 초기값 1학년)
-  const [selectedCategories, setSelectedCategories] = useState(['교내']); // 2. 카테고리 필터 상태 (다중 선택, 초기값 교내)
-  const [sortBy, setSortBy] = useState('popular'); // 3. 정렬 상태 (인기순 / 등록순 단일 선택, 기본값 인기순)
-  const [courses, setCourses] = useState(INITIAL_COURSES); // 4. 카드 리스트 데이터 상태
   const navigate = useNavigate();
+  const location = useLocation();
 
-  // 정렬 기준(sortBy)이나 필터가 바뀔 때 실행될 훅 (나중에 백엔드 API 연동할 핵심 구역)
+  // API 최초 호출 시 ALL이 기본값
+  const [selectedPeriod, setSelectedPeriod] = useState('ALL');
+  const [selectedCategory, setSelectedCategory] = useState('ALL');
+  const [sortBy, setSortBy] = useState('popular');
+
+  const [reviews, setReviews] = useState([]);
+  const [page, setPage] = useState(0);
+  const [hasNext, setHasNext] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
+
+  const currentJobId = location.state?.jobId || localStorage.getItem('currentJobId') || 1;
+  const currentJobName = location.state?.jobName || localStorage.getItem('currentJobName') || '직무명';
+
+  const fetchReviewLists = async (pageNumber, isInitial = false) => {
+    if (isLoading || (!hasNext && !isInitial)) return;
+    setIsLoading(true);
+
+    try {
+      const apiGrade = GRADE_API_MAP[selectedPeriod] || 'ALL';
+      const apiCategoryId = CATEGORY_API_MAP[selectedCategory] || 'ALL';
+      const apiSort = sortBy === 'popular' ? 'POPULAR' : 'RECENT';
+
+      const data = await getReviewLists({
+        jobId: currentJobId,
+        grade: apiGrade,
+        categoryId: apiCategoryId,
+        sort: apiSort,
+        page: pageNumber,
+        size: 10,
+      });
+
+      if (data.isSuccess) {
+        const { reviews: newReviews, hasNext: nextFlag } = data.result;
+
+        if (isInitial) {
+          setReviews(newReviews);
+        } else {
+          setReviews((prev) => [...prev, ...newReviews]);
+        }
+
+        setPage(pageNumber);
+        setHasNext(nextFlag);
+      }
+    } catch (error) {
+      console.error('리뷰 목록을 불러오지 못했습니다:', error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   useEffect(() => {
-    console.log(
-      `서버 요청 파라미터 -> 정렬: ${sortBy}, 시기: ${selectedPeriods}, 카테고리: ${selectedCategories}`,
-    );
-    // 여기서 나중에 axios.get(`/api/courses?sort=${sortBy}...`).then(res => setCourses(res.data)) 처리하시면 됩니다!
-  }, [sortBy, selectedPeriods, selectedCategories]);
+    fetchReviewLists(0, true);
+  }, [sortBy, selectedPeriod, selectedCategory]);
 
-  // 추천 시기 버튼 클릭 핸들러 (ALL 누르면 옆에 꺼 다 꺼지는 로직)
+  // 더보기 버튼 클릭 핸들러
+  const handleLoadMore = () => {
+    if (hasNext && !isLoading) {
+      fetchReviewLists(page + 1);
+    }
+  };
+
   const handlePeriodClick = (value) => {
-    if (value === 'ALL') {
-      setSelectedPeriods(['ALL']);
-    } else {
-      let updated = selectedPeriods.filter((p) => p !== 'ALL');
-      if (updated.includes(value)) {
-        updated = updated.filter((p) => p !== value);
-        if (updated.length === 0) updated = ['ALL']; // 아무것도 선택 안 하면 자동으로 ALL 켜짐
-      } else {
-        updated.push(value);
-      }
-      setSelectedPeriods(updated);
-    }
+    setSelectedPeriod(value);
   };
 
-  // 카테고리 버튼 클릭 핸들러 (ALL 누르면 옆에 꺼 다 꺼지는 로직)
   const handleCategoryClick = (value) => {
-    if (value === 'ALL') {
-      setSelectedCategories(['ALL']);
-    } else {
-      let updated = selectedCategories.filter((c) => c !== 'ALL');
-      if (updated.includes(value)) {
-        updated = updated.filter((c) => c !== value);
-        if (updated.length === 0) updated = ['ALL'];
-      } else {
-        updated.push(value);
-      }
-      setSelectedCategories(updated);
-    }
+    setSelectedCategory(value);
   };
 
-  // 카드 클릭 시 이동 핸들러
   const handleCardClick = (course) => {
-    // 클릭한 카드 데이터를 state 객체에 담아서 넘겨줍니다.
-    navigate('/review', { state: { course: course } });
+    navigate('/review', { state: { course } });
   };
 
   return (
@@ -110,11 +126,7 @@ export default function Explore() {
             <S.FilterLabel>추천 시기</S.FilterLabel>
             <S.ButtonGroup>
               {['1학년', '2학년', '3학년', '4학년', 'ALL'].map((item) => (
-                <S.FilterButton
-                  key={item}
-                  active={selectedPeriods.includes(item)}
-                  onClick={() => handlePeriodClick(item)}
-                >
+                <S.FilterButton key={item} $active={selectedPeriod === item} onClick={() => handlePeriodClick(item)}>
                   {item}
                 </S.FilterButton>
               ))}
@@ -126,7 +138,7 @@ export default function Explore() {
               {['교내', '대외', '자격증', '인턴', 'ALL'].map((item) => (
                 <S.FilterButton
                   key={item}
-                  active={selectedCategories.includes(item)}
+                  $active={selectedCategory === item}
                   onClick={() => handleCategoryClick(item)}
                 >
                   {item}
@@ -139,31 +151,46 @@ export default function Explore() {
         {/* 리스트 섹션 */}
         <S.ListContainer>
           <S.ListHeader>
-            <S.ListTitle>[해외영업] 등반 코스</S.ListTitle>
+            <S.ListTitle>[{currentJobName ?? '직무명'}] 등반 코스</S.ListTitle>
             <S.SortButtonGroup>
-              <S.SortButton
-                active={sortBy === 'popular'}
-                onClick={() => setSortBy('popular')}
-              >
+              <S.SortButton $active={sortBy === 'popular'} onClick={() => setSortBy('popular')}>
                 인기순
               </S.SortButton>
-              <S.SortButton
-                active={sortBy === 'latest'}
-                onClick={() => setSortBy('latest')}
-              >
+              <S.SortButton $active={sortBy === 'latest'} onClick={() => setSortBy('latest')}>
                 등록순
               </S.SortButton>
             </S.SortButtonGroup>
           </S.ListHeader>
 
-          {/* 분리된 카드 컴포넌트에 데이터 넘겨서 렌더링 */}
-          {courses.map((course) => (
-            <CourseCard
-              key={course.id}
-              course={course}
-              onCardClick={() => handleCardClick(course)} // id 대신 객체 통째로 전달
-            />
-          ))}
+          {/* 받아온 리뷰 리스트 렌더링 */}
+          {reviews.length === 0 ? (
+            <div style={{ textAlign: 'center', marginTop: '40px', color: '#999' }}>조건에 맞는 코스가 없어요 😥</div>
+          ) : (
+            reviews.map((review) => {
+              const formattedCourse = {
+                id: review.courseReviewId,
+                title: `[${review.courseName}]`,
+                rating: review.rating,
+                period: `${REVERSE_GRADE_MAP[review.ascentGrade]}`,
+                duration: review.duration,
+                recommended: review.recommendedGrades?.map((g) => REVERSE_GRADE_MAP[g]).join(', '),
+                likes: review.likeCount,
+                isLiked: review.liked,
+              };
+
+              return (
+                <CourseCard
+                  key={formattedCourse.id}
+                  course={formattedCourse}
+                  onCardClick={() => handleCardClick(formattedCourse)}
+                />
+              );
+            })
+          )}
+
+          <S.MoreButton onClick={handleLoadMore} disabled={isLoading}>
+            코스 더보기
+          </S.MoreButton>
         </S.ListContainer>
       </S.ContentWrapper>
 

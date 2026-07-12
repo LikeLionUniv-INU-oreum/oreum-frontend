@@ -73,10 +73,6 @@ export default function OnboardingSelectDept() {
     if (deptInput.trim()) setShowDeptDropdown(true);
   };
 
-  const handleJobSearch = () => {
-    if (jobInput.trim()) setShowJobDropdown(true);
-  };
-
   const isFormValid = selectedDept !== null && selectedJob !== null;
 
   const handleNext = async () => {
@@ -88,14 +84,17 @@ export default function OnboardingSelectDept() {
 
         if (data.isSuccess) {
           navigate('/onboardingcomplete');
+
+          // 학적 정보 저장
+          localStorage.setItem('currentJobId', data.result.jobId);
+          localStorage.setItem('currentJobName', data.result.jobName);
         } else {
           alert(data.message);
         }
       } catch (error) {
         console.error('온보딩 완료 처리 실패:', error);
 
-        const errorMsg =
-          error.response?.data?.message || '서버와 통신할 수 없습니다.';
+        const errorMsg = error.response?.data?.message || '서버와 통신할 수 없습니다.';
         alert(errorMsg);
       }
     }
@@ -161,9 +160,7 @@ export default function OnboardingSelectDept() {
           <S.Label>
             관심 직무<S.Required>*</S.Required>
           </S.Label>
-          <S.SubLabel>
-            같은 직무를 선택한 학우들끼리 진행 상황을 비교해볼 수 있어요.
-          </S.SubLabel>
+          <S.SubLabel>같은 직무를 선택한 학우들끼리 진행 상황을 비교해볼 수 있어요.</S.SubLabel>
           <S.SearchBox>
             <S.Input
               type="text"
@@ -201,11 +198,7 @@ export default function OnboardingSelectDept() {
 
       <S.FooterBgSection>
         <S.BgImage src={OnboardingBackground} alt="배경 일러스트" />
-        <S.NextButton
-          type="button"
-          disabled={!isFormValid}
-          onClick={handleNext}
-        >
+        <S.NextButton type="button" disabled={!isFormValid} onClick={handleNext}>
           선택 완료
         </S.NextButton>
       </S.FooterBgSection>

@@ -24,7 +24,7 @@ export default function OnboardingComplete() {
           <S.Title>
             오름을 시작하기 위한 준비가
             <br />
-            모두 완료되었어요!
+            모두 완료되었어요 🎉
           </S.Title>
 
           <S.StartButton type="button" onClick={handleStart}>
