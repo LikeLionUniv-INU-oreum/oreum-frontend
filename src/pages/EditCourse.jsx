@@ -17,16 +17,16 @@ export default function EditCourse() {
   const [originalData, setOriginalData] = useState({
     category: null,
     courseName: '',
-    weeklyPlan: ''
+    weeklyPlan: '',
   });
 
   const categories = ['교내', '대외활동', '자격증', '인턴'];
 
   const categoryMap = {
-    '자격증': 1,
-    '대외활동': 2,
-    '교내': 3,
-    '인턴': 4
+    자격증: 1,
+    대외활동: 2,
+    교내: 3,
+    인턴: 4,
   };
 
   const tipPlaceholder = `• 1주차: 공부법 정리, 교재 구매\n• 2-5주차: 주 5일 이론 진도 나가기\n• 6-7주차: 시간 재고 실습하기\n• 8주차: 모의시험 치기`;
@@ -48,8 +48,8 @@ export default function EditCourse() {
         const response = await axios.get(`/todos/${todoId}`, {
           baseURL: import.meta.env.VITE_API_URL,
           headers: {
-            'Authorization': `Bearer ${accessToken}`
-          }
+            Authorization: `Bearer ${accessToken}`,
+          },
         });
 
         // 백엔드 성공 응답 처리 (isSuccess가 true인 경우)
@@ -63,7 +63,7 @@ export default function EditCourse() {
           setOriginalData({
             category: data.categoryName,
             courseName: data.courseName,
-            weeklyPlan: data.weeklyPlan || ''
+            weeklyPlan: data.weeklyPlan || '',
           });
         } else {
           // 명세서에 정의된 각 에러 코드에 대응하는 예외 처리 (401, 403, 404, 409 등)
@@ -112,8 +112,8 @@ export default function EditCourse() {
         baseURL: import.meta.env.VITE_API_URL, // 프로젝트 설정에 맞게 제외하셔도 됩니다
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${accessToken}`
-        }
+          Authorization: `Bearer ${accessToken}`,
+        },
       });
 
       if (response.data.isSuccess) {
@@ -133,7 +133,7 @@ export default function EditCourse() {
   };
 
   const handleDelete = async () => {
-    const isConfirmed = window.confirm("정말 이 코스를 삭제하시겠습니까?");
+    const isConfirmed = window.confirm('정말 이 코스를 삭제하시겠습니까?');
     if (!isConfirmed) return;
 
     const accessToken = localStorage.getItem('accessToken');
@@ -142,12 +142,12 @@ export default function EditCourse() {
       const response = await axios.delete(`/todos/${todoId}`, {
         baseURL: import.meta.env.VITE_API_URL,
         headers: {
-          'Authorization': `Bearer ${accessToken}`
-        }
+          Authorization: `Bearer ${accessToken}`,
+        },
       });
 
       if (response.data.isSuccess) {
-        alert("코스가 삭제되었습니다.");
+        alert('코스가 삭제되었습니다.');
         navigate('/basecamp');
       } else {
         alert(response.data.message);
@@ -201,16 +201,11 @@ export default function EditCourse() {
         />
       </S.FormSection>
 
-      <S.SubmitButton
-        disabled={!isFormValid}
-        onClick={handleSubmit}
-      >
+      <S.SubmitButton disabled={!isFormValid} onClick={handleSubmit}>
         세부 계획 수정
       </S.SubmitButton>
 
-      <S.DeleteButton onClick={handleDelete}>
-        코스 삭제
-      </S.DeleteButton>
+      <S.DeleteButton onClick={handleDelete}>코스 삭제</S.DeleteButton>
 
       <S.BottomNavWrapper>
         <BottomNav />

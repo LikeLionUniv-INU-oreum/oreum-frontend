@@ -199,7 +199,7 @@ export default function Settings() {
             {/* 크레딧 */}
             {modalState.type === 'credit' && (
               <>
-                <S.ModalTitle>팀 멋사랑산악회 🦁</S.ModalTitle>
+                <S.ModalTitle>⛰️ 팀 멋사랑산악회</S.ModalTitle>
                 <div
                   style={{
                     textAlign: 'center',
@@ -216,7 +216,7 @@ export default function Settings() {
                   <br />
                   <b>DESIGN</b>
                   <br />
-                  임상현 | 정지인
+                  André Jung | 임상현
                   <br />
                   <br />
                   <b>FRONTEND</b>
@@ -228,7 +228,7 @@ export default function Settings() {
                   <br />
                   임재영 | 조수진
                   <br />
-                  <br />© LikeLion INU 14th.
+                  <br />© LikeLion INU. 14th 🦁
                 </div>
               </>
             )}

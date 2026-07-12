@@ -147,7 +147,6 @@ export const VerticalDivider = styled.div`
 export const MainContentCard = styled.div`
   background: white;
   width: 100%;
-  //max-width: 360px;
   border-radius: 24px;
   border: 1.5px solid #000;
   padding: 20px 16px;
@@ -254,6 +253,7 @@ export const StatRow = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
+  width: 100%;
   padding: 12px 0;
   cursor: pointer;
 `;
@@ -261,8 +261,8 @@ export const StatRow = styled.div`
 export const StatNameBox = styled.div`
   display: flex;
   align-items: center;
-  gap: 6px;
-  width: 120px;
+  flex-shrink: 0;
+  width: 70px;
 
   .icon {
     font-size: 16px;
@@ -282,6 +282,9 @@ export const GraphContainer = styled.div`
   gap: 4px;
   margin: 0 10px;
   position: relative;
+  min-width: 0;
+  padding-right: 24px;
+  box-sizing: border-box;
 `;
 
 export const ProgressBar = styled.div`
@@ -294,7 +297,7 @@ export const ProgressBar = styled.div`
   &::after {
     content: '${(props) => props.label || ''}';
     position: absolute;
-    right: -30px;
+    right: -22px;
     top: -3px;
     font-size: 9px;
     color: #666;
@@ -304,7 +307,8 @@ export const ProgressBar = styled.div`
 export const CountBox = styled.div`
   display: flex;
   align-items: center;
-  gap: 6px;
+  flex-shrink: 0;
+
   .count {
     font-size: 13px;
     color: #3b7d5a;
@@ -316,6 +320,7 @@ export const ArrowIcon = styled.span`
   font-size: 12px;
   color: #999;
   display: inline-block;
+  margin-left: 4px;
   transition: transform 0.2s ease;
   transform: ${(props) => (props.isOpen ? 'rotate(90deg)' : 'rotate(0deg)')};
 `;
