@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
 
 export const Container = styled.div`
   display: flex;
@@ -22,9 +22,9 @@ export const Header = styled.div`
 export const CardSection = styled.div`
   position: relative;
   width: 100%;
-  
+
   margin-top: 20dvh;
-  
+
   border-radius: 24px;
   overflow: hidden;
   display: flex;
@@ -32,11 +32,18 @@ export const CardSection = styled.div`
   align-items: flex-end;
 `;
 
+const popIn = keyframes`
+  0% { transform: scale(0.8); opacity: 0; }
+  100% { transform: scale(1); opacity: 1; }
+`;
+
 export const CardImage = styled.img`
   width: 100%;
   height: 100%;
   object-fit: cover;
   object-position: center;
+
+  animation: ${popIn} 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
 `;
 
 export const CardContent = styled.div`
@@ -55,9 +62,9 @@ export const Title = styled.h1`
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
-  
+
   width: 100%;
-  color: #3B7D5A;
+  color: #3b7d5a;
   font-size: 24px;
   font-weight: 800;
   line-height: 1.45;
@@ -68,7 +75,7 @@ export const Title = styled.h1`
 export const Subtitle = styled.p`
   position: absolute;
   top: 60%;
-  transform: translateY(-50%);
+  transform: translateY(-30%);
   width: 100%;
   color: #777777;
   font-size: 15px;
