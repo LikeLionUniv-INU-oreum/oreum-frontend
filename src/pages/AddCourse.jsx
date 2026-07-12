@@ -41,7 +41,8 @@ export default function AddCourse() {
 
     try {
       // POST /api/todos 요청 전송
-      const response = await axios.post('/api/todos', requestData, {
+      const response = await axios.post('/todos', requestData, {
+        baseURL: import.meta.env.VITE_API_URL,
         headers: {
           'Content-Type': 'application/json',
           'Authorization': `Bearer ${accessToken}`

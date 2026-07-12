@@ -182,7 +182,7 @@ export default function MainPage() {
                           <S.ActionIcon
                             src={Goaddreview}
                             onClick={() => {
-                              navigate('/addreview', { state: { todoId: todo.todoId } });
+                              navigate('/addreview', { state: { todoId: todo.todoId, courseName: todo.courseName } });
                             }}
                           />
                         </div>

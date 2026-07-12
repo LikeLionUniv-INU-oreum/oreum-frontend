@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import * as S from './EditCourse.styles';
 import BottomNav from '../components/common/BottomNav';
 
 export default function EditCourse() {
   const location = useLocation();
+  const navigate = useNavigate();
 
   const todoId = location.state?.todoId;
 
@@ -13,7 +14,20 @@ export default function EditCourse() {
   const [courseName, setCourseName] = useState(''); // 코스명 입력값
   const [weeklyPlan, setWeeklyPlan] = useState(''); // 주차별 세부 계획 입력값
 
+  const [originalData, setOriginalData] = useState({
+    category: null,
+    courseName: '',
+    weeklyPlan: ''
+  });
+
   const categories = ['교내', '대외활동', '자격증', '인턴'];
+
+  const categoryMap = {
+    '자격증': 1,
+    '대외활동': 2,
+    '교내': 3,
+    '인턴': 4
+  };
 
   const tipPlaceholder = `• 1주차: 공부법 정리, 교재 구매\n• 2-5주차: 주 5일 이론 진도 나가기\n• 6-7주차: 시간 재고 실습하기\n• 8주차: 모의시험 치기`;
 
@@ -23,7 +37,7 @@ export default function EditCourse() {
     const fetchTodoDetail = async () => {
       if (!todoId) {
         alert('올바르지 않은 접근입니다. 할 일 ID가 없습니다.');
-        window.history.back();
+        navigate(-1);
         return;
       }
 
@@ -31,7 +45,8 @@ export default function EditCourse() {
 
       try {
         // GET /api/todos/{todoId} 요청 전송
-        const response = await axios.get(`https://api.oreumm.site/api/todos/${todoId}`, {
+        const response = await axios.get(`/todos/${todoId}`, {
+          baseURL: import.meta.env.VITE_API_URL,
           headers: {
             'Authorization': `Bearer ${accessToken}`
           }
@@ -44,6 +59,12 @@ export default function EditCourse() {
           setSelectedCategory(data.categoryName);
           setCourseName(data.courseName);
           setWeeklyPlan(data.weeklyPlan || '');
+
+          setOriginalData({
+            category: data.categoryName,
+            courseName: data.courseName,
+            weeklyPlan: data.weeklyPlan || ''
+          });
         } else {
           // 명세서에 정의된 각 에러 코드에 대응하는 예외 처리 (401, 403, 404, 409 등)
           alert(response.data.message);
@@ -60,33 +81,90 @@ export default function EditCourse() {
     };
 
     fetchTodoDetail();
-  }, [todoId]);
+  }, [todoId, navigate]);
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     if (!isFormValid) return;
 
-    // 추후 백엔드 데이터 전송 처리를 위한 가이드
-    const requestData = {
-      category: selectedCategory,
-      title: courseName,
-      plan: weeklyPlan
-    };
-    console.log('백엔드로 전송할 데이터:', requestData);
-    alert('코스 설정이 완료되었습니다!');
+    // 변경된 항목만 담을 객체
+    const requestData = {};
+
+    if (selectedCategory !== originalData.category) {
+      requestData.categoryId = categoryMap[selectedCategory];
+    }
+    if (courseName !== originalData.courseName) {
+      requestData.courseName = courseName;
+    }
+    if (weeklyPlan !== originalData.weeklyPlan) {
+      requestData.weeklyPlan = weeklyPlan;
+    }
+
+    // 수정할 필드가 하나도 없는 경우 전송을 막고 안내
+    if (Object.keys(requestData).length === 0) {
+      alert('수정된 내용이 없습니다.');
+      return;
+    }
+
+    const accessToken = localStorage.getItem('accessToken');
+
+    try {
+      const response = await axios.patch(`/todos/${todoId}`, requestData, {
+        baseURL: import.meta.env.VITE_API_URL, // 프로젝트 설정에 맞게 제외하셔도 됩니다
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${accessToken}`
+        }
+      });
+
+      if (response.data.isSuccess) {
+        alert('코스 설정이 완료되었습니다!');
+        navigate('/basecamp'); // 성공 시 베이스캠프로 렌더링 이동
+      } else {
+        alert(response.data.message);
+      }
+    } catch (error) {
+      console.error('코스 수정 중 에러 발생:', error);
+      if (error.response && error.response.data) {
+        alert(error.response.data.message);
+      } else {
+        alert('수정 중 서버 오류가 발생했습니다.');
+      }
+    }
   };
 
-  const handleDelete = () => {
+  const handleDelete = async () => {
     const isConfirmed = window.confirm("정말 이 코스를 삭제하시겠습니까?");
-    if (isConfirmed) {
-      console.log("백엔드로 삭제 요청 보낼 카테고리/ID:", selectedCategory);
-      alert("코스가 삭제되었습니다.");
-      window.history.back();
+    if (!isConfirmed) return;
+
+    const accessToken = localStorage.getItem('accessToken');
+
+    try {
+      const response = await axios.delete(`/todos/${todoId}`, {
+        baseURL: import.meta.env.VITE_API_URL,
+        headers: {
+          'Authorization': `Bearer ${accessToken}`
+        }
+      });
+
+      if (response.data.isSuccess) {
+        alert("코스가 삭제되었습니다.");
+        navigate('/basecamp');
+      } else {
+        alert(response.data.message);
+      }
+    } catch (error) {
+      console.error('코스 삭제 중 에러 발생:', error);
+      if (error.response && error.response.data) {
+        alert(error.response.data.message);
+      } else {
+        alert('삭제 중 서버 오류가 발생했습니다.');
+      }
     }
   };
 
   return (
     <S.Container>
-      <S.BackButton onClick={() => window.history.back()}>←</S.BackButton>
+      <S.BackButton onClick={() => navigate(-1)}>←</S.BackButton>
 
       <S.FormSection>
         <h3>등반 코스 조회</h3>

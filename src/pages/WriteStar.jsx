@@ -1,46 +1,68 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
+import axios from 'axios';
 import * as S from './WriteStar.styles';
 import BottomNav from '../components/common/BottomNav';
 import GrayFlag from '../assets/images/GrayFlag.png';
 
 export default function WriteStar() {
   const navigate = useNavigate();
+  const location = useLocation();
 
-  // 4대 요소 상태(State) 관리
+  // AddReview에서 넘겨준 state 받기
+  const todoId = location.state?.todoId;
+  const courseName = location.state?.courseName || '코스명 없음';
+  const reviewData = location.state?.reviewData;
+
   const [situation, setSituation] = useState('');
   const [task, setTask] = useState('');
   const [action, setAction] = useState('');
   const [result, setResult] = useState('');
 
-  // 4개 입력칸이 전부 공백 제외 한 글자 이상씩 채워졌는지 실시간 검증
-  const isFormValid =
-    situation.trim().length > 0 &&
-    task.trim().length > 0 &&
-    action.trim().length > 0 &&
-    result.trim().length > 0;
+  const handleSubmit = async () => {
+    // 하나라도 입력되어 있다면 STAR 카드를 작성한 것으로 간주
+    const isStarFilled = situation.trim() || task.trim() || action.trim() || result.trim();
 
-  const handleSubmit = () => {
-    if (!isFormValid) return;
+    const starCard = isStarFilled
+      ? { situation, task, action, result }
+      : null;
 
-    const starPayload = {
-      courseName: "무역영어 자격증",
-      situation,
-      task,
-      action,
-      result
+    // 최종 전송할 Request Body 조합
+    const payload = {
+      ...reviewData,
+      starCard
     };
 
-    console.log("백엔드로 보낼 STAR 매핑 데이터:", starPayload);
-    navigate('/completestar');
+    const accessToken = localStorage.getItem('accessToken');
+
+    try {
+      const response = await axios.post(`/todos/${todoId}/course-review`, payload, {
+        baseURL: import.meta.env.VITE_API_URL,
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${accessToken}`
+        }
+      });
+
+      if (response.data.isSuccess) {
+        // 완료 시 베이스캠프로 이동 (Basecamp에서 해당 todoId 상태 변경됨)
+        navigate('/completestar');
+      } else {
+        alert(response.data.message);
+      }
+    } catch (error) {
+      if (error.response && error.response.data) {
+        alert(error.response.data.message);
+      } else {
+        alert('서버와 연결할 수 없습니다.');
+      }
+    }
   };
 
   return (
     <S.Container>
-      {/* 상단 뒤로가기 화살표 */}
       <S.BackButton onClick={() => window.history.back()}>←</S.BackButton>
 
-      {/* 메인 타이틀 영역 */}
       <S.PageTitleSection>
         <h2>STAR 기법을 사용하여<br />등반 완료 깃발을 획득하세요.</h2>
         <p>STAR 기법이란, 면접이나 자기소개서에서 자신의 경험을 논리적으로 전달하기 위한 답변 작성법이에요.</p>
@@ -51,7 +73,7 @@ export default function WriteStar() {
       {/* 진행 중인 대상 코스 정보 표시 */}
       <S.CourseBadgeCard>
         <S.CourseFlag src={GrayFlag} />
-        무역영어 자격증
+        {courseName}
       </S.CourseBadgeCard>
 
       {/* [S] - Situation (상황) */}
@@ -98,15 +120,12 @@ export default function WriteStar() {
         />
       </S.FormSection>
 
-      {/* 4가지 항목 만족 시 잠금 해제되는 최종 완료 버튼 */}
       <S.SubmitButton
-        disabled={!isFormValid}
         onClick={handleSubmit}
       >
         코스 등반 완료
       </S.SubmitButton>
 
-      {/* 하단 탭바 영역 고정 */}
       <S.BottomNavWrapper>
         <BottomNav />
       </S.BottomNavWrapper>
