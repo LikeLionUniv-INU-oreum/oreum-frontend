@@ -18,7 +18,6 @@ export default function CompleteStar() {
 
   return (
     <S.Container>
-      <S.Header />
 
       <S.CardSection>
         <S.CardImage src={OnboardingCompleteImg} alt="완료 화면 일러스트" />
