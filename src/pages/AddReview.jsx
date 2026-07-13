@@ -24,10 +24,14 @@ export default function AddReview() {
 
   // 드롭다운 옵션 배열 생성
   const climbPeriodOptions = [
-    '1학년 1학기', '1학년 2학기',
-    '2학년 1학기', '2학년 2학기',
-    '3학년 1학기', '3학년 2학기',
-    '4학년 1학기', '4학년 2학기'
+    '1학년 1학기',
+    '1학년 2학기',
+    '2학년 1학기',
+    '2학년 2학기',
+    '3학년 1학기',
+    '3학년 2학기',
+    '4학년 1학기',
+    '4학년 2학기',
   ];
 
   // 1개월부터 36개월까지 배열 자동 생성
@@ -65,9 +69,9 @@ export default function AddReview() {
     if (semester === 'ALL') {
       setSelectedSemesters(selectedSemesters.includes('ALL') ? [] : ['ALL']);
     } else {
-      let updated = [...selectedSemesters].filter(item => item !== 'ALL');
+      let updated = [...selectedSemesters].filter((item) => item !== 'ALL');
       if (updated.includes(semester)) {
-        updated = updated.filter(item => item !== semester);
+        updated = updated.filter((item) => item !== semester);
       } else {
         updated.push(semester);
       }
@@ -87,9 +91,9 @@ export default function AddReview() {
       '1학년': 'FIRST_GRADE',
       '2학년': 'SECOND_GRADE',
       '3학년': 'THIRD_GRADE',
-      '4학년': 'FOURTH_GRADE'
+      '4학년': 'FOURTH_GRADE',
     };
-    return semesters.map(s => gradeMap[s]).filter(Boolean);
+    return semesters.map((s) => gradeMap[s]).filter(Boolean);
   };
 
   // 다음 페이지로 데이터 전달
@@ -101,7 +105,7 @@ export default function AddReview() {
       ascentPeriod: climbPeriod,
       recommendedGrades,
       duration,
-      tip: tipComment
+      tip: tipComment,
     };
 
     navigate('/writestar', { state: { todoId, courseName, reviewData } });
@@ -140,12 +144,13 @@ export default function AddReview() {
       <S.Divider />
 
       <S.FormSection>
-        <h3>등반 시기 <span>*</span></h3>
-        <S.SelectBox
-          value={climbPeriod}
-          onChange={(e) => setClimbPeriod(e.target.value)}
-        >
-          <option value="" disabled hidden>등반 시기를 선택해주세요.</option>
+        <h3>
+          등반 시기 <span>*</span>
+        </h3>
+        <S.SelectBox value={climbPeriod} onChange={(e) => setClimbPeriod(e.target.value)}>
+          <option value="" disabled hidden>
+            등반 시기를 선택해주세요.
+          </option>
           {climbPeriodOptions.map((option) => (
             <option key={option} value={option}>
               {option}
@@ -155,12 +160,13 @@ export default function AddReview() {
       </S.FormSection>
 
       <S.FormSection>
-        <h3>소요 기간 <span>*</span></h3>
-        <S.SelectBox
-          value={duration}
-          onChange={(e) => setDuration(e.target.value)}
-        >
-          <option value="" disabled hidden>소요 기간을 선택해주세요.</option>
+        <h3>
+          소요 기간 <span>*</span>
+        </h3>
+        <S.SelectBox value={duration} onChange={(e) => setDuration(e.target.value)}>
+          <option value="" disabled hidden>
+            소요 기간을 선택해주세요.
+          </option>
           {durationOptions.map((option) => (
             <option key={option} value={option}>
               {option}
@@ -170,7 +176,9 @@ export default function AddReview() {
       </S.FormSection>
 
       <S.FormSection>
-        <h3>추천 시기 <span>*</span></h3>
+        <h3>
+          추천 시기 <span>*</span>
+        </h3>
         <S.TagGroup>
           {semesterOptions.map((option) => (
             <S.TagButton

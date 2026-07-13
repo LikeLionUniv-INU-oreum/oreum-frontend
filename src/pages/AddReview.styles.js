@@ -55,7 +55,9 @@ export const CourseRatingCard = styled.div`
     font-size: 16px;
     font-weight: 500;
     color: #333;
-    span { color: #888; }
+    span {
+      color: #888;
+    }
   }
 `;
 
@@ -67,9 +69,9 @@ export const StarRatingContainer = styled.div`
   cursor: pointer;
   font-size: 24px;
   color: #ddd; /* 빈 별 색상 */
-  
+
   /* 마우스 드래그로 인해 별 글자가 파랗게 선택되는 현상 방지 */
-  user-select: none; 
+  user-select: none;
 
   .stars-filled {
     color: #4a7a5c; /* 채워진 별 색상 */
@@ -81,7 +83,7 @@ export const StarRatingContainer = styled.div`
     white-space: nowrap;
     pointer-events: none; /* 자식 요소가 마우스 이벤트를 방해하지 않도록 차단 */
   }
-`
+`;
 
 /* 구분선 */
 export const Divider = styled.hr`
@@ -100,14 +102,16 @@ export const FormSection = styled.div`
     font-weight: 900;
     color: #2b5c3d;
     margin: 0 0 5px 5px;
-    span { margin-left: 2px; } /* 필수 표시 * */
+    span {
+      margin-left: 2px;
+    } /* 필수 표시 * */
   }
 `;
 
 export const InputBox = styled.input`
   width: 100%;
   height: 54px;
-  border: 2px solid #3B7D5A;
+  border: 2px solid #3b7d5a;
   border-radius: 12px;
   padding: 16px;
   font-size: 15px;
@@ -116,7 +120,7 @@ export const InputBox = styled.input`
   color: #333;
 
   &::placeholder {
-    color: #3B7D5A;
+    color: #3b7d5a;
     font-weight: 300;
   }
 `;
@@ -124,7 +128,7 @@ export const InputBox = styled.input`
 export const SelectBox = styled.select`
   width: 100%;
   height: 52px;
-  border: 2px solid #3B7D5A;
+  border: 2px solid #3b7d5a;
   border-radius: 12px;
   padding: 0 40px 0 16px; /* 우측 화살표 공간 확보 */
   font-size: 15px;
@@ -161,7 +165,7 @@ export const TagGroup = styled.div`
 
 export const TagButton = styled.button`
   flex: 1;
-  background-color: ${props => props.isSelected ? '#4a7a5c' : '#bbb'};
+  background-color: ${(props) => (props.isSelected ? '#4a7a5c' : '#bbb')};
   color: white;
   border: none;
   border-radius: 20px;
@@ -180,7 +184,7 @@ export const TagButton = styled.button`
 export const TextAreaBox = styled.textarea`
   width: 100%;
   height: 120px;
-  border: 2px solid #3B7D5A;
+  border: 2px solid #3b7d5a;
   border-radius: 12px;
   padding: 16px;
   font-size: 14px;
@@ -191,20 +195,20 @@ export const TextAreaBox = styled.textarea`
   line-height: 1.6;
 
   &::placeholder {
-    color: #3B7D5A;
+    color: #3b7d5a;
   }
 `;
 
 export const SubmitButton = styled.button`
   width: 100%;
-  background-color: ${props => props.disabled ? '#b0b0b0' : '#4a7a5c'};
+  background-color: ${(props) => (props.disabled ? '#b0b0b0' : '#4a7a5c')};
   color: white;
   border: none;
   border-radius: 12px;
   padding: 16px 0;
   font-size: 18px;
   font-weight: bold;
-  cursor: ${props => props.disabled ? 'not-allowed' : 'pointer'};
+  cursor: ${(props) => (props.disabled ? 'not-allowed' : 'pointer')};
   margin-top: auto;
   margin-bottom: 80px;
   transition: background-color 0.3s ease;

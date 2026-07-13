@@ -399,6 +399,7 @@ export const ListIcon = styled.img`
 `;
 
 export const StatIcon = styled.img`
+  margin-right: 4px;
   width: 20px; /* 시안 파일 크기에 맞춘 너비 설정 */
   height: 20px; /* 시안 파일 크기에 맞춘 높이 설정 */
   object-fit: contain;

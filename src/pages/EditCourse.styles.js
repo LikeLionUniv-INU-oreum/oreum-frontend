@@ -2,10 +2,10 @@ import styled from 'styled-components';
 
 // 카테고리별 고유 테마 색상 정의 (시안 기준)
 const categoryThemes = {
-  교내: { border: '#C6B5F5', activeBg: '#C6B5F5', color: '#1c7ed6' },
-  대외활동: { border: '#F3E530', activeBg: '#F3E530', color: '#e67e22' },
+  교내: { border: '#D0EBFF', activeBg: '#D0EBFF', color: '#1c7ed6' },
+  대외활동: { border: '#FFF795', activeBg: '#FFF795', color: '#e67e22' },
   자격증: { border: '#57E094', activeBg: '#57E094', color: '#2b5c3d' },
-  인턴: { border: '#D7C997', activeBg: '#D7C997', color: '#ae3ec9' },
+  인턴: { border: '#EEBEFA', activeBg: '#EEBEFA', color: '#ae3ec9' },
 };
 
 export const Container = styled.div`
@@ -54,8 +54,8 @@ export const CategoryGrid = styled.div`
 `;
 
 export const CategoryButton = styled.button`
-  background-color: ${props => props.isSelected ? categoryThemes[props.category]?.activeBg : '#ffffff'};
-  border: 2px solid ${props => categoryThemes[props.category]?.border || '#ddd'};
+  background-color: ${(props) => (props.isSelected ? categoryThemes[props.category]?.activeBg : '#ffffff')};
+  border: 2px solid ${(props) => categoryThemes[props.category]?.border || '#ddd'};
   color: #111111;
   font-size: 16px;
   font-weight: bold;
@@ -107,14 +107,14 @@ export const TextAreaBox = styled.textarea`
 /* 하단 코스 설정 완료 버튼 */
 export const SubmitButton = styled.button`
   width: 100%;
-  background-color: ${props => props.disabled ? '#b0b0b0' : '#3b7d5a'};
+  background-color: ${(props) => (props.disabled ? '#b0b0b0' : '#3b7d5a')};
   color: white;
   border: none;
   border-radius: 12px;
   padding: 16px 0;
   font-size: 16px;
   font-weight: bold;
-  cursor: ${props => props.disabled ? 'not-allowed' : 'pointer'};
+  cursor: ${(props) => (props.disabled ? 'not-allowed' : 'pointer')};
   margin-top: auto;
   //margin-bottom: 80px; /* 하단 탭바를 가리지 않기 위한 여백 */
   transition: background-color 0.3s ease;
@@ -147,4 +147,4 @@ export const DeleteButton = styled.button`
   &:hover {
     opacity: 0.8;
   }
-`  
+`;

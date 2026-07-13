@@ -72,7 +72,7 @@ export const Subtitle = styled.div`
     props.$isIntro &&
     css`
       opacity: 0;
-      animation: ${fadeSlideUp} 1s cubic-bezier(0.2, 0.8, 0.2, 1) 0.5s forwards;
+      animation: ${fadeSlideUp} 1s cubic-bezier(0.2, 0.8, 0.2, 1) 0.8s forwards;
     `}
 `;
 
@@ -84,7 +84,7 @@ export const LogoImg = styled.img`
     props.$isIntro &&
     css`
       opacity: 0;
-      animation: ${fadeIn} 1.2s ease-out 1.2s forwards;
+      animation: ${fadeIn} 2s ease-out 1.5s forwards;
     `}
 `;
 
@@ -110,7 +110,7 @@ export const BottomSection = styled.div`
   margin-bottom: 20px;
   opacity: 0;
 
-  animation: ${fadeIn} 1s ease-out 4s forwards;
+  animation: ${fadeIn} 1s ease-out 3s forwards;
 `;
 
 export const LoginButton = styled.button`

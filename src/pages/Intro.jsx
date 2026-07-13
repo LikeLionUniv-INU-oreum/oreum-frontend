@@ -24,7 +24,7 @@ export default function Intro() {
         <S.LoginButton $isIntro onClick={() => navigate('/login')}>
           시작하기
         </S.LoginButton>
-        <S.FooterText>A Carrer navigation for university life</S.FooterText>
+        <S.FooterText>A Carrer Navigation for University Life</S.FooterText>
       </S.BottomSection>
     </S.Container>
   );
