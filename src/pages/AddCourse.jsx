@@ -15,7 +15,7 @@ export default function AddCourse() {
 
   const tipPlaceholder = `TIP\n• 1주차: 공부법 정리, 교재 구매\n• 2-5주차: 주 5일 이론 진도 나가기\n• 6-7주차: 시간 재고 실습하기\n• 8주차: 모의시험 치기`;
 
-  const isFormValid = selectedCategory !== null && courseName.trim().length > 0;
+  const isFormValid = selectedCategory !== null && courseName.trim().length > 0 && weeklyPlan.trim().length > 0;
 
   const categoryMap = {
     '교내': 3,
