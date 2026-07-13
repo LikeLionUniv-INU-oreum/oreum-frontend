@@ -182,6 +182,10 @@ export default function MainPage() {
                           <S.ActionIcon
                             src={Goaddreview}
                             onClick={() => {
+                              if (isCompleted) {
+                                alert('이미 리뷰 작성을 완료한 코스입니다.');
+                                return;
+                              }
                               navigate('/addreview', { state: { todoId: todo.todoId, courseName: todo.courseName } });
                             }}
                           />

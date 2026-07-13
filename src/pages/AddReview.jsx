@@ -22,6 +22,17 @@ export default function AddReview() {
   const semesterOptions = ['1학년', '2학년', '3학년', '4학년', 'ALL'];
   const tipPlaceholder = `TIP\n• 만족도\n• 활동 관련\n• 조언`;
 
+  // 드롭다운 옵션 배열 생성
+  const climbPeriodOptions = [
+    '1학년 1학기', '1학년 2학기',
+    '2학년 1학기', '2학년 2학기',
+    '3학년 1학기', '3학년 2학기',
+    '4학년 1학기', '4학년 2학기'
+  ];
+
+  // 1개월부터 36개월까지 배열 자동 생성
+  const durationOptions = Array.from({ length: 36 }, (_, i) => `${i + 1}개월`);
+
   const calculateRating = (e) => {
     if (!ratingRef.current) return 0;
     const { left, width } = ratingRef.current.getBoundingClientRect();
@@ -64,25 +75,10 @@ export default function AddReview() {
     }
   };
 
-  const isFormValid = climbPeriod.trim().length > 0 && duration.trim().length > 0 && selectedSemesters.length > 0;
+  const isFormValid = climbPeriod !== '' && duration !== '' && selectedSemesters.length > 0;
 
   // 현재 화면에 보여줄 최종 별점 비율 (hover 상태면 hover 값을, 아니면 클릭된 값을 사용)
   const displayRating = hoverRating !== null ? hoverRating : rating;
-
-  // 백엔드 Enum 규격으로 텍스트 매핑하는 헬퍼 함수
-  const parseClimbPeriod = (periodStr) => {
-    let grade = "FIRST_GRADE";
-    let semester = "FIRST_HALF";
-
-    if (periodStr.includes('1학년')) grade = 'FIRST_GRADE';
-    else if (periodStr.includes('2학년')) grade = 'SECOND_GRADE';
-    else if (periodStr.includes('3학년')) grade = 'THIRD_GRADE';
-    else if (periodStr.includes('4학년')) grade = 'FOURTH_GRADE';
-
-    if (periodStr.includes('2학기') || periodStr.includes('하반기')) semester = 'SECOND_HALF';
-
-    return { ascentGrade: grade, ascentSemester: semester };
-  };
 
   const mapRecommendedGrades = (semesters) => {
     if (semesters.includes('ALL')) return ['ALL'];
@@ -98,13 +94,11 @@ export default function AddReview() {
 
   // 다음 페이지로 데이터 전달
   const handleNext = () => {
-    const { ascentGrade, ascentSemester } = parseClimbPeriod(climbPeriod);
     const recommendedGrades = mapRecommendedGrades(selectedSemesters);
 
     const reviewData = {
       rating: displayRating,
-      ascentGrade,
-      ascentSemester,
+      ascentPeriod: climbPeriod,
       recommendedGrades,
       duration,
       tip: tipComment
@@ -147,22 +141,32 @@ export default function AddReview() {
 
       <S.FormSection>
         <h3>등반 시기 <span>*</span></h3>
-        <S.InputBox
-          type="text"
-          placeholder="ex. 2학년 1학기"
+        <S.SelectBox
           value={climbPeriod}
           onChange={(e) => setClimbPeriod(e.target.value)}
-        />
+        >
+          <option value="" disabled hidden>등반 시기를 선택해주세요.</option>
+          {climbPeriodOptions.map((option) => (
+            <option key={option} value={option}>
+              {option}
+            </option>
+          ))}
+        </S.SelectBox>
       </S.FormSection>
 
       <S.FormSection>
         <h3>소요 기간 <span>*</span></h3>
-        <S.InputBox
-          type="text"
-          placeholder="ex. 1개월"
+        <S.SelectBox
           value={duration}
           onChange={(e) => setDuration(e.target.value)}
-        />
+        >
+          <option value="" disabled hidden>소요 기간을 선택해주세요.</option>
+          {durationOptions.map((option) => (
+            <option key={option} value={option}>
+              {option}
+            </option>
+          ))}
+        </S.SelectBox>
       </S.FormSection>
 
       <S.FormSection>

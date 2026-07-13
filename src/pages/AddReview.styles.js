@@ -68,7 +68,7 @@ export const StarRatingContainer = styled.div`
   font-size: 24px;
   color: #ddd; /* 빈 별 색상 */
   
-  /* 🚩 마우스 드래그로 인해 별 글자가 파랗게 선택되는 현상 방지 */
+  /* 마우스 드래그로 인해 별 글자가 파랗게 선택되는 현상 방지 */
   user-select: none; 
 
   .stars-filled {
@@ -79,7 +79,7 @@ export const StarRatingContainer = styled.div`
     left: 0;
     overflow: hidden;
     white-space: nowrap;
-    pointer-events: none; /* 🚩 자식 요소가 마우스 이벤트를 방해하지 않도록 차단 */
+    pointer-events: none; /* 자식 요소가 마우스 이벤트를 방해하지 않도록 차단 */
   }
 `
 
@@ -106,6 +106,7 @@ export const FormSection = styled.div`
 
 export const InputBox = styled.input`
   width: 100%;
+  height: 54px;
   border: 2px solid #3B7D5A;
   border-radius: 12px;
   padding: 16px;
@@ -117,6 +118,36 @@ export const InputBox = styled.input`
   &::placeholder {
     color: #3B7D5A;
     font-weight: 300;
+  }
+`;
+
+export const SelectBox = styled.select`
+  width: 100%;
+  height: 52px;
+  border: 2px solid #3B7D5A;
+  border-radius: 12px;
+  padding: 0 40px 0 16px; /* 우측 화살표 공간 확보 */
+  font-size: 15px;
+  box-sizing: border-box;
+  outline: none;
+  color: #333;
+  cursor: pointer;
+
+  /* 브라우저 기본 화살표 제거 */
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+
+  /* 💡 깔끔한 다운 화살표(▼) 배경 이미지 추가 */
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%233B7D5A' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><polyline points='6 9 12 15 18 9'></polyline></svg>");
+  background-repeat: no-repeat;
+  background-position: calc(100% - 16px) center;
+  background-size: 18px;
+  background-color: #ffffff;
+
+  &:disabled {
+    background-color: #f5f5f5;
+    cursor: not-allowed;
   }
 `;
 
