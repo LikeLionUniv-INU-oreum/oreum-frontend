@@ -1,0 +1,68 @@
+// 사용자 정보 관련
+import api from './axios';
+
+// 최초 이용자 온보딩
+export const onboarding = async (status, major, job) => {
+  const response = await api.post('/users/me/onboarding', {
+    academicStatus: status,
+    majorId: major,
+    jobId: job,
+  });
+
+  return response.data;
+};
+
+// 학과 검색
+export const searchMajors = async (keyword) => {
+  const response = await api.get('/majors', {
+    params: {
+      keyword: keyword,
+    },
+  });
+
+  return response.data;
+};
+
+// 직무 검색
+export const searchJobs = async (keyword) => {
+  const response = await api.get('/jobs', {
+    params: {
+      keyword: keyword,
+    },
+  });
+
+  return response.data;
+};
+
+// 홈 화면 조회
+export const getUserProfile = async () => {
+  const response = await api.get('/home');
+
+  return response.data;
+};
+
+// 설정창 유저 정보 조회
+export const getUserInfo = async () => {
+  const response = await api.get('/users/me');
+
+  return response.data;
+};
+
+// 베이스캠프 분기별 정보 조회
+export const getBasecampInfo = async (year, termType) => {
+  const response = await api.get('/terms/dashboard', {
+    params: {
+      year,
+      termType,
+    },
+  });
+
+  return response.data;
+};
+
+// 조회 가능 분기 목록
+export const getTerms = async () => {
+  const response = await api.get('/terms');
+
+  return response.data;
+};
