@@ -87,7 +87,7 @@ export default function WriteStar() {
           <br />
           언제, 어디서 일어난 일인지 구체적인 정황을 간략하게 제시하면 돼요.
         </p>
-        <S.TextAreaBox placeholder="예시 예시 예시" value={situation} onChange={(e) => setSituation(e.target.value)} />
+        <S.TextAreaBox placeholder="ex. 방학 2달 동안 전공 공부와 병행하며 무역영어 1급 자격증 취득에 도전하던 상황" value={situation} onChange={(e) => setSituation(e.target.value)} />
       </S.FormSection>
 
       {/* [T] - Task (과제) */}
@@ -96,7 +96,7 @@ export default function WriteStar() {
         <p className="desc">
           당시에 주어진 목표, 해결해야 할 과제, 또는 직면했던 문제 상황이 무엇이었는지 명확히 밝히면 돼요.
         </p>
-        <S.TextAreaBox placeholder="예시 예시 예시" value={task} onChange={(e) => setTask(e.target.value)} />
+        <S.TextAreaBox placeholder="ex. 방대한 기출문제 범위를 효율적으로 독학하고 오답률을 20% 이하로 낮춰야 하는 과제" value={task} onChange={(e) => setTask(e.target.value)} />
       </S.FormSection>
 
       {/* [A] - Action (행동) */}
@@ -107,7 +107,7 @@ export default function WriteStar() {
           <br />
           목표를 달성하기 위해 구체적으로 어떤 생각과 행동을 했는지를 자세히 설명하면 돼요.
         </p>
-        <S.TextAreaBox placeholder="예시 예시 예시" value={action} onChange={(e) => setAction(e.target.value)} />
+        <S.TextAreaBox placeholder="ex. 오답 노트를 주차별로 데이터화하여 자주 틀리는 개념만 집중 반복 학습함" value={action} onChange={(e) => setAction(e.target.value)} />
       </S.FormSection>
 
       {/* [R] - Result (결과) */}
@@ -118,7 +118,7 @@ export default function WriteStar() {
           <br />
           정량적 수치와 정성적 성과를 포함하는 것이 좋아요.
         </p>
-        <S.TextAreaBox placeholder="예시 예시 예시" value={result} onChange={(e) => setResult(e.target.value)} />
+        <S.TextAreaBox placeholder="ex. 목표했던 8주 만에 평균 85점으로 자격증 취득에 성공함" value={result} onChange={(e) => setResult(e.target.value)} />
       </S.FormSection>
 
       <S.SubmitButton onClick={handleSubmit}>코스 등반 완료</S.SubmitButton>
