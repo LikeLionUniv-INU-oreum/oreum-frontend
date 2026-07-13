@@ -43,6 +43,8 @@ export default function Settings() {
       if (modalState.type === 'job') {
         if (!inputValue.trim()) return alert('직무를 입력해주세요.');
         const response = await changeJob(inputValue);
+        localStorage.setItem('currentJobId', response.data.result.jobId);
+        localStorage.setItem('currentJobName', response.data.result.jobName);
         if (response.data.isSuccess) alert('직무가 변경되었습니다!');
       }
 
