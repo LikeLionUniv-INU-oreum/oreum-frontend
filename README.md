@@ -25,7 +25,7 @@
 
 <br/>
 
-## 🔥 Trouble Shooting (핵심 문제 해결 경험)
+## 🔥 핵심 문제 해결
 ### 1. [Architecture] 브라우저 알림창을 단일 통합 모달 컴포넌트로 리팩토링
 - **문제 상황**: 학적 변경, 직무 설정, 비밀번호 변경 등의 상호작용에서 기본 `alert`를 사용하면 UI/UX가 저해됨. 각각의 기능을 별도의 모달로 만들 경우 코드 중복과 상태 관리의 복잡도 증가 예상.
 - **해결 방안**: `isOpen`과 `type` 상태를 객체로 관리하는 통합 모달 컴포넌트를 설계. 하나의 모달 껍데기 안에서 조건부 렌더링을 통해 내용물만 교체하도록 최적화하고, `styled-components`의 Keyframes를 활용해 등장 애니메이션 추가.
@@ -43,7 +43,7 @@
 
 <br/>
 
-## ⚡ 주요 기능 (Key Features)
+## ⚡ 주요 기능
 
 ### 1. 나의 학년/직무 비교 통계 대시보드
 - 사용자의 현재 스펙을 희망 직무 평균과 비교하는 동적 그래프 구현.
@@ -55,7 +55,7 @@
 
 <br/>
 
-## 📂 Folder Structure
+## 📂 폴더 구조
 ```text
 📦 src
  ┣ 📂 api         # Axios 인스턴스 및 비동기 통신 함수
@@ -66,5 +66,55 @@
 ```
 
 <br />
+
+## 👥 팀 구성
+
+<table border="0">
+  <tbody>
+    <tr>
+      <td align="center">
+          <img src="https://github.com/github.png" width="80px;" alt=""/><br />
+          <sub><b>김지유/무역학부</b></sub> <br />
+        PM
+      </td>
+      <td align="center">
+        <a href="https://github.com/jiin-jung">
+          <img src="https://github.com/jiin-jung.png" width="80px;" alt=""/><br />
+          <sub><b>정지인/정보통신공학과</b></sub>
+        </a><br />
+        Design
+      </td>
+      <td align="center">
+        <a href="https://github.com/namyoon0418">
+          <img src="https://github.com/namyoon0418.png" width="80px;" alt=""/><br />
+          <sub><b>김남윤/정보통신공학과</b></sub>
+        </a><br />
+        Frontend
+      </td>
+      <td align="center">
+        <a href="https://github.com/sh2624">
+          <img src="https://github.com/sh2624.png" width="80px;" alt=""/><br />
+          <sub><b>임상현/영어영문학과</b></sub>
+        </a><br />
+        Frontend
+      </td>
+      <td align="center">
+        <a href="https://github.com/yim0327">
+          <img src="https://github.com/yim0327.png" width="80px;" alt=""/><br />
+          <sub><b>임재영/정보통신공학과</b></sub>
+        </a><br />
+        Backend
+      </td>
+      <td align="center">
+        <a href="https://github.com/sujincyan">
+          <img src="https://github.com/sujincyan.png" width="80px;" alt=""/><br />
+          <sub><b>조수진/전자공학부</b></sub>
+        </a><br />
+        Backend
+      </td>
+    </tr>
+  </tbody>
+</table>
+
 
 © 2026 LikeLion INU. All rights reserved.
